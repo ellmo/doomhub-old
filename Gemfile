@@ -9,7 +9,6 @@ gem 'simple_form'
 gem 'haml-rails'
 gem 'devise', '1.5.3'
 gem 'cancan'
-gem 'pry'
 
 # Gems used only for assets and not required
 # in production environments by default.

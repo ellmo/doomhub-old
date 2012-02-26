@@ -58,8 +58,4 @@ Doomhub::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  silence_warnings do
-    require 'pry'
-    IRB = Pry
-  end
 end
