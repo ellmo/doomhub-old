@@ -1,0 +1,10 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @map.name
+
+.form-links
+  = link_to 'Edit', edit_project_map_path(@project)
+  \|
+  = link_to 'Back', project_maps_path

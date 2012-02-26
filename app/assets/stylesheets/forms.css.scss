@@ -45,9 +45,18 @@ select {
     float: none !important;
   }
   clear: both;
+  float: left;
 }
 
 .form-actions {
+  clear: both;
+  float: left;
+  margin-top: 10px;
+}
+
+.form-links {
+  clear: both;
+  float: left;
   margin-top: 10px;
 }
 

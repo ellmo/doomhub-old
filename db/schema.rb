@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120226171007) do
+ActiveRecord::Schema.define(:version => 20120226200518) do
 
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
@@ -25,6 +25,22 @@ ActiveRecord::Schema.define(:version => 20120226171007) do
 
   create_table "games", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "map_users", :force => true do |t|
+    t.integer  "map_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "maps", :force => true do |t|
+    t.integer  "project_id"
+    t.string   "name"
+    t.text     "desc"
+    t.string   "lump"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

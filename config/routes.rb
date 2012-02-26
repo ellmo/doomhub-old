@@ -2,7 +2,9 @@ Doomhub::Application.routes.draw do
 
   root :to => 'home#index'
 
-  resources :projects
+  resources :projects do
+    resources :maps
+  end
 
   devise_for :users
 

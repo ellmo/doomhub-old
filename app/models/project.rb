@@ -4,4 +4,6 @@ class Project < ActiveRecord::Base
 
   belongs_to :game
   belongs_to :source_port
+
+  has_many :maps
 end
