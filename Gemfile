@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
+gem 'rails', '3.1.3'
 gem 'mysql2'
 gem 'json'
 gem 'therubyracer'
@@ -27,6 +27,7 @@ group :development, :test do
   gem 'cucumber-rails', '~> 1.2.1'
   gem 'minitest', '~> 2.10.0'
   gem 'database_cleaner'
+  gem 'mongrel'
 end
 
 
