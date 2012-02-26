@@ -4,6 +4,12 @@ gem 'rails', '3.1.0'
 gem 'mysql2'
 gem 'json'
 gem 'therubyracer'
+gem 'jquery-rails'
+gem 'simple_form'
+gem 'haml-rails'
+gem 'devise', '1.5.3'
+gem 'cancan'
+gem 'pry'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -13,14 +19,5 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'jquery-rails'
 
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug'
 

@@ -4,7 +4,7 @@ log/*.log
 tmp/
 .sass-cache/
 config/database.yml
-Gemfile.lock
 .rvmrc
 public/.htaccess
 public/dispatch.fcgi
+*.sublime-workspace
