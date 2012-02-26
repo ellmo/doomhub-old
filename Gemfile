@@ -11,13 +11,14 @@ gem 'devise', '1.5.3'
 gem 'cancan'
 gem 'inherited_resources'
 gem 'friendly_id'
+gem 'paperclip', '~> 2.7.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'zurb-foundation'
-  gem 'sass-rails', "  ~> 3.1.0"
-  gem 'coffee-rails', "~> 3.1.0"
+  gem 'sass-rails', '~> 3.1.0'
+  gem 'coffee-rails', '~> 3.1.0'
   gem 'uglifier'
 end
 
