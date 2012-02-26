@@ -5,3 +5,14 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
+Game.create(:name => "Doom")
+Game.create(:name => "Doom 2")
+Game.create(:name => "Heretic")
+Game.create(:name => "Hexen")
+Game.create(:name => "Strife")
+
+SourcePort.create(:name => "vanilla")
+SourcePort.create(:name => "PRB")
+SourcePort.create(:name => "Eternity Engine")
+SourcePort.create(:name => "ZDoom")
+SourcePort.create(:name => "GZDoom")
