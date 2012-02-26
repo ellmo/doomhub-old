@@ -1,0 +1,11 @@
+.form-border
+  %h2 Log in
+  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    %div
+      = f.input :login, :required => false, :autofocus => true, :label => "Login or e-mail"
+      = f.input :password, :required => false
+      #forgot-pass-link
+        = link_to "I forgot...", new_password_path(resource_name)
+      = f.input :remember_me, :as => :boolean if devise_mapping.rememberable?
+    .centered-actions
+      = f.button :submit, "Log in", :class => "nice"

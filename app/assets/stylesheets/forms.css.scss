@@ -1,0 +1,91 @@
+label {
+  float: left;
+  text-align: right;
+  width: 120px;
+  margin-bottom: 0px !important;
+  padding-top: 8px;
+  padding-right: 20px;
+  font-size: 16px !important;
+}
+
+textarea {
+  float: left;
+  margin-left: 2px;
+  margin-top: 2px !important;
+  width: 331px;
+}
+
+select {
+  float: left;
+  margin-left: 2px;
+  margin-top: 2px !important;
+  height: 24px;
+  width: 339px;
+}
+
+select {
+  float: left;
+}
+
+.actions {
+  margin-left: 140px;
+  margin-top: 20px;
+}
+
+.centered-actions{
+  margin-top: 10px;
+  text-align: center;
+}
+
+.form-field {
+  min-height: 32px;
+  input.boolean {
+    margin-top: 11px;
+    margin-left: 0px;
+    float: none !important;
+  }
+  clear: both;
+}
+
+.form-actions {
+  margin-top: 10px;
+}
+
+.form-border{
+  border: 1px solid #222;
+  width: 500px;
+  margin: 40px auto;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  h2 {
+    margin-left: 10px;
+  }
+}
+
+.bordered {
+  float: none;
+}
+
+#forgot-pass-link {
+  float: right;
+  margin-right: 20px;
+}
+
+.orange.button {
+  background-color: #D26E1E;
+}
+
+.nice.orange.button {
+  border: 1px solid #D26E1E;
+  border-image: initial;
+}
+
+.green.button {
+  background-color: #21BE50;
+}
+
+.nice.green.button {
+  border: 1px solid #21BE50;
+  border-image: initial;
+}
