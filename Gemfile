@@ -18,5 +18,9 @@ group :assets do
   gem 'uglifier'
 end
 
+group :development, :test do
+  gem 'pry'
+end
+
 
 
