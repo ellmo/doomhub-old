@@ -21,6 +21,12 @@ end
 
 group :development, :test do
   gem 'pry'
+  gem 'rspec-rails', '2.7.0'
+  gem 'factory_girl_rails', '1.4.0'
+  gem 'capybara', '~> 1.1.2'
+  gem 'cucumber-rails', '~> 1.2.1'
+  gem 'minitest', '~> 2.10.0'
+  gem 'database_cleaner'
 end
 
 
