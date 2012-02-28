@@ -1,3 +1,5 @@
+require(Rails.root + "secret.rb")
+
 Doomhub::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -54,7 +56,7 @@ Doomhub::Application.configure do
       :port                 => 587,
       :domain               => 'gmail.com',
       :user_name            => 'doomhub@gmail.com',
-      :password             => ENV['DOOMHUB_GMAIL_PASS'],
+      :password             => Secret::GMAIL_PASS,
       :authentication       => 'plain',
       :enable_starttls_auto => true
   }
