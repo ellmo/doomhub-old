@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120226200518) do
+ActiveRecord::Schema.define(:version => 20120301220426) do
 
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
@@ -43,6 +43,11 @@ ActiveRecord::Schema.define(:version => 20120226200518) do
     t.string   "lump"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "wadfile_file_size"
+    t.datetime "wadfile_updated_at"
+    t.string   "wadfile_file_name"
+    t.string   "wadfile_content_type"
+    t.string   "slug"
   end
 
   create_table "projects", :force => true do |t|

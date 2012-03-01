@@ -1,0 +1,9 @@
+development:
+    bucket_name: doomhub
+    access_key_id: %{Secret::S3_DOOMHUB_KEY}
+    aws_secret_access_key: %{Secret::S3_DOOMHUB_SECRET_KEY}
+
+production:
+    bucket_name: doomhub
+    access_key_id: %{Secret::S3_DOOMHUB_KEY}
+    aws_secret_access_key: %{Secret::S3_DOOMHUB_SECRET_KEY}

@@ -9,9 +9,9 @@ gem 'simple_form'
 gem 'haml-rails'
 gem 'devise', '1.5.3'
 gem 'cancan'
-gem 'inherited_resources'
 gem 'friendly_id'
 gem 'paperclip', '~> 2.7.0'
+gem 'aws-sdk'
 
 # Gems used only for assets and not required
 # in production environments by default.

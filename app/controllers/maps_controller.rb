@@ -1,7 +1,7 @@
 class MapsController < ApplicationController
 
   before_filter :find_parent_resource
-  #before_filter :find_resource
+  before_filter :find_resource, :only => [:show, :edit, :update, :destroy, :download]
 
 private
 
@@ -10,7 +10,7 @@ private
   end
 
   def find_resource
-    @map = Map.find()
+    @map = Map.find(params[:id])
   end
 
 public
@@ -25,8 +25,6 @@ public
   end
 
   def show
-    @map = Map.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @map }
@@ -43,7 +41,6 @@ public
   end
 
   def edit
-    @map = Map.find(params[:id])
   end
 
   def create
@@ -61,8 +58,6 @@ public
   end
 
   def update
-    @map = Map.find(params[:id])
-
     respond_to do |format|
       if @map.update_attributes(params[:map])
         format.html { redirect_to project_map_path(@project, @map), :notice => 'Project was successfully updated.' }
@@ -75,7 +70,6 @@ public
   end
 
   def destroy
-    @map = Map.find(params[:id])
     @map.destroy
 
     respond_to do |format|
@@ -83,4 +77,14 @@ public
       format.json { head :ok }
     end
   end
+
+  def download
+    # binding.pry
+    if @map.downloadable?(current_user)
+      redirect_to @map.wadfile.expiring_url(10)
+    else
+      render :text => "SHIT"
+    end
+  end
+
 end

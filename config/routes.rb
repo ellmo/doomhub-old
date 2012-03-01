@@ -1,9 +1,13 @@
 Doomhub::Application.routes.draw do
-
+  
   root :to => 'home#index'
 
   resources :projects do
-    resources :maps
+    resources :maps do
+      member do
+        get :download
+      end
+    end
   end
 
   devise_for :users
@@ -15,5 +19,4 @@ Doomhub::Application.routes.draw do
   end
 
   get "home/index"
-
 end
