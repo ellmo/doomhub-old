@@ -34,15 +34,15 @@ class User < ActiveRecord::Base
   ###########
 
   def superadmin?
-    self.role and self.user_role_id == 3
+    self.role and self.user_role_id == 1
   end
 
   def admin?
     self.role and self.user_role_id == 2
   end
 
-  def user?
-    self.role and self.user_role_id == 1
+  def registered?
+    self.role and self.user_role_id == 3
   end
 
   def guest?
