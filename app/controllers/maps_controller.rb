@@ -45,7 +45,7 @@ public
 
   def create
     @map = @project.maps.build(params[:map])
-    binding.pry
+    
     @map.author = current_user
     respond_to do |format|
       if @map.save
@@ -71,7 +71,6 @@ public
   end
 
   def destroy
-    @map.delete
 
     respond_to do |format|
       format.html { redirect_to project_maps_url(@project) }
