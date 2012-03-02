@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   # ASSOC #
   #########
 
-  belongs_to :user_role
+  belongs_to :role, :class_name => "UserRole", :foreign_key => :user_role_id
   has_many :maps, :as => :author
   has_many :projects
 
@@ -28,5 +28,25 @@ class User < ActiveRecord::Base
 
   validates :login, :uniqueness => true
   validates :email, :uniqueness => true
+
+  ###########
+  # METHODS #
+  ###########
+
+  def superadmin?
+    self.role and self.user_role_id == 3
+  end
+
+  def admin?
+    self.role and self.user_role_id == 2
+  end
+
+  def user?
+    self.role and self.user_role_id == 1
+  end
+
+  def guest?
+    self.id.nil?
+  end
 
 end
