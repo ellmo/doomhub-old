@@ -6,6 +6,7 @@ class Map < ActiveRecord::Base
   #########
 
   belongs_to :project
+  belongs_to :author, :polymorphic => true
 
   ###############
   # FRIENDLY_ID #
@@ -44,6 +45,7 @@ class Map < ActiveRecord::Base
   # VALIDATIONS #
   ###############
 
+  validates :name, :presence => true
   validates_attachment_presence :wadfile
   validates_attachment_content_type :wadfile, :content_type => ["application/zip", "application/x-7z-compressed"]
   validates_attachment_size :wadfile, :less_than => 1.megabyte

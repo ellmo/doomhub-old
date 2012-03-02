@@ -10,7 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120302194522) do
+ActiveRecord::Schema.define(:version => 20120302205703) do
+
+  create_table "authors", :force => true do |t|
+    t.integer  "authorable_id"
+    t.string   "authorable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
@@ -48,6 +55,8 @@ ActiveRecord::Schema.define(:version => 20120302194522) do
     t.string   "wadfile_file_name"
     t.string   "wadfile_content_type"
     t.string   "slug"
+    t.integer  "author_id"
+    t.string   "author_type"
   end
 
   create_table "projects", :force => true do |t|
@@ -59,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20120302194522) do
     t.integer  "source_port_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "projects", ["slug"], :name => "index_projects_on_slug", :unique => true

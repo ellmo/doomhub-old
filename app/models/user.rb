@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   #########
 
   belongs_to :user_role
+  has_many :maps, :as => :author
+  has_many :projects
 
   ########
   # ATTR #
@@ -26,6 +28,5 @@ class User < ActiveRecord::Base
 
   validates :login, :uniqueness => true
   validates :email, :uniqueness => true
-
 
 end
