@@ -45,8 +45,7 @@ public
 
   def create
     @map = @project.maps.build(params[:map])
-    
-    @map.author = current_user
+    @map.author = current_user unless (params[:map][:author_id] and admin?)
     respond_to do |format|
       if @map.save
         format.html { redirect_to [@project, @map], :notice => 'Project was successfully created.' }
