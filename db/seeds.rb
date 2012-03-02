@@ -16,3 +16,7 @@ SourcePort.create(:name => "PRB")
 SourcePort.create(:name => "Eternity Engine")
 SourcePort.create(:name => "ZDoom")
 SourcePort.create(:name => "GZDoom")
+
+UserRole.create(:name => "superadmin")
+UserRole.create(:name => "admin")
+UserRole.create(:name => "user")

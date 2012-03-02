@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120301220426) do
+ActiveRecord::Schema.define(:version => 20120302194522) do
 
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
@@ -69,6 +69,12 @@ ActiveRecord::Schema.define(:version => 20120301220426) do
     t.datetime "updated_at"
   end
 
+  create_table "user_roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
     t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
@@ -83,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20120301220426) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "login"
+    t.integer  "user_role_id",                          :default => 3
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

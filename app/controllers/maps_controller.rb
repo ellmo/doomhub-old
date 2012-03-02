@@ -79,7 +79,6 @@ public
   end
 
   def download
-    # binding.pry
     if @map.downloadable?(current_user)
       redirect_to @map.wadfile.expiring_url(10)
     else
