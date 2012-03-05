@@ -3,6 +3,7 @@
 
   .form-inputs
     = f.input :name
+    = f.input :lump, :placeholder => @project.game.default_lumpname
     = f.input :desc
     = f.input :wadfile
 

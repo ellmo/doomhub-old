@@ -1,8 +1,9 @@
 class ProjectsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
+  load_and_authorize_resource
 
   def index
     @projects = Project.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @projects }

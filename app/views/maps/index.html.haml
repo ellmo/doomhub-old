@@ -18,5 +18,6 @@
 
 %br
 
-.form-links
-  = link_to 'New Map', new_project_map_path
+-if can? :create, Map
+  .form-links
+    = link_to 'New Map', new_project_map_path

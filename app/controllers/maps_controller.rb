@@ -1,7 +1,9 @@
 class MapsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
+  load_and_authorize_resource
 
   before_filter :find_parent_resource
-  before_filter :find_resource, :only => [:show, :edit, :update, :destroy, :download]
+  before_filter :find_resource, :except => [:index, :new, :create]
 
 private
 
@@ -45,7 +47,9 @@ public
 
   def create
     @map = @project.maps.build(params[:map])
-    @map.author = current_user unless (params[:map][:author_id] and admin?)
+    @map.author = current_user unless (params[:map][:author_id].present? and admin?)
+    @map.lump = @project.game.default_lumpname unless (params[:map][:lump].present?)
+
     respond_to do |format|
       if @map.save
         format.html { redirect_to [@project, @map], :notice => 'Project was successfully created.' }
@@ -70,6 +74,7 @@ public
   end
 
   def destroy
+    @map.destroy
 
     respond_to do |format|
       format.html { redirect_to project_maps_url(@project) }

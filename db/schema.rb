@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120302205703) do
+ActiveRecord::Schema.define(:version => 20120303005542) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20120302205703) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "default_lumpname"
   end
 
   create_table "map_users", :force => true do |t|

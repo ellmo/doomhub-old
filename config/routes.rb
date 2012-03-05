@@ -16,6 +16,7 @@ Doomhub::Application.routes.draw do
     get "/login" => "devise/sessions#new"
     get "/logout" => "devise/sessions#destroy"
     get "/register" => "devise/registrations#new"
+    get "/edit_profile" => "devise/registrations#edit"
   end
 
   get "home/index"

@@ -19,9 +19,10 @@ class Map < ActiveRecord::Base
   #############
 
   has_attached_file :wadfile,
+                    :keep_old_files => true,
                     :storage => :s3,
                     :bucket => "doomhub",
-                    :url => "projects/:project_id/:map_id/:map_slug.:extension",
+                    :url => "projects/:project_id/maps/:map_id/:map_slug.:extension",
                     :path => ":url",
                     :s3_permissions => :private,
                     :s3_credentials => {
@@ -29,16 +30,17 @@ class Map < ActiveRecord::Base
                       :secret_access_key => Secret::S3_DOOMHUB_SECRET_KEY
                     }
 
-  Paperclip.interpolates :project_id  do |attachment, style|
+  Paperclip.interpolates :project_id do |attachment, style|
     attachment.instance.project.id
   end
 
-  Paperclip.interpolates :map_id  do |attachment, style|
+  Paperclip.interpolates :map_id do |attachment, style|
     attachment.instance.id
   end
 
-  Paperclip.interpolates :map_slug  do |attachment, style|
-    attachment.instance.slug
+  Paperclip.interpolates :map_slug do |attachment, style|
+    m = attachment.instance
+    "#{m.lump}_#{m.slug}"
   end
 
   ###############
@@ -55,7 +57,7 @@ class Map < ActiveRecord::Base
   ###########
 
   def downloadable?(user)
-    user == User.first
+    user == self.author
   end
 
 end
