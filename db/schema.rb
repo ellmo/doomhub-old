@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120302205703) do
+ActiveRecord::Schema.define(:version => 20120305211336) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20120302205703) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "default_lumpname"
   end
 
   create_table "map_users", :force => true do |t|
@@ -43,6 +44,19 @@ ActiveRecord::Schema.define(:version => 20120302205703) do
     t.datetime "updated_at"
   end
 
+  create_table "map_wadfiles", :force => true do |t|
+    t.integer  "map_id"
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+  end
+
   create_table "maps", :force => true do |t|
     t.integer  "project_id"
     t.string   "name"
@@ -50,10 +64,6 @@ ActiveRecord::Schema.define(:version => 20120302205703) do
     t.string   "lump"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "wadfile_file_size"
-    t.datetime "wadfile_updated_at"
-    t.string   "wadfile_file_name"
-    t.string   "wadfile_content_type"
     t.string   "slug"
     t.integer  "author_id"
     t.string   "author_type"

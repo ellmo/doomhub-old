@@ -4,8 +4,10 @@ Doomhub::Application.routes.draw do
 
   resources :projects do
     resources :maps do
-      member do
-        get :download
+      resources :map_wadfiles do
+        member do
+          get :download
+        end
       end
     end
   end
@@ -16,6 +18,7 @@ Doomhub::Application.routes.draw do
     get "/login" => "devise/sessions#new"
     get "/logout" => "devise/sessions#destroy"
     get "/register" => "devise/registrations#new"
+    get "/edit_profile" => "devise/registrations#edit"
   end
 
   get "home/index"

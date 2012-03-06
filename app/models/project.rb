@@ -15,7 +15,7 @@ class Project < ActiveRecord::Base
   belongs_to :game
   belongs_to :source_port
 
-  has_many :maps
+  has_many :maps, :dependent => :delete_all
 
   ###############
   # VALIDATIONS #

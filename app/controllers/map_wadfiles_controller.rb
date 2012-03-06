@@ -1,4 +1,4 @@
-class MapsController < ApplicationController
+class MapWadfilesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
   load_and_authorize_resource
 
@@ -8,37 +8,37 @@ class MapsController < ApplicationController
 private
 
   def find_parent_resource
-    @project = Project.find_by_slug(params[:project_id])
+    @map = map.find_by_slug(params[:map_id])
   end
 
   def find_resource
-    @map = Map.find(params[:id])
+    @wadfile = MapWadfile.find(params[:id])
   end
 
 public
 
   def index
-    @maps = @project.maps
+    @wadfiles = @map.wadfiles
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @map }
+      format.json { render :json => @wadfile }
     end
   end
 
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @map }
+      format.json { render :json => @wadfile }
     end
   end
 
   def new
-    @map = Map.new
+    @wadfile = @map.wadfiles.build
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render :json => @map }
+      format.json { render :json => @wadfile }
     end
   end
 
@@ -46,9 +46,8 @@ public
   end
 
   def create
-    @map = @project.maps.build(params[:map])
-    @map.author = current_user unless (params[:map][:author_id].present? and admin?)
-    @map.lump = @project.game.default_lumpname unless (params[:map][:lump].present?)
+    @wadfile = @map.wadfiles.build(params[:map_wadfile])
+    @wadfile.author = current_user unless (params[:map_wadfile][:author_id].present? and admin?)
 
     respond_to do |format|
       if @map.save

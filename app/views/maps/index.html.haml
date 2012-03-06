@@ -14,9 +14,10 @@
       %td= link_to 'Show', project_map_path(@project, map)
       %td= link_to 'Edit', edit_project_map_path(@project, map)
       %td= link_to 'Destroy', project_map_path(@project, map), :confirm => 'Are you sure?', :method => :delete
-      %td= link_to 'Download', download_project_map_path(@project, map)
+      //%td= link_to 'Download', download_project_map_path(@project, map)
 
 %br
 
-.form-links
-  = link_to 'New Map', new_project_map_path
+-if can? :create, Map
+  .form-links
+    = link_to 'New Map', new_project_map_path

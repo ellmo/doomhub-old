@@ -5,11 +5,11 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
-Game.create(:name => "Doom")
-Game.create(:name => "Doom 2")
-Game.create(:name => "Heretic")
-Game.create(:name => "Hexen")
-Game.create(:name => "Strife")
+Game.create(:name => "Doom", :default_lumpname => "E1M1")
+Game.create(:name => "Doom 2", :default_lumpname => "MAP01")
+Game.create(:name => "Heretic", :default_lumpname => "E1M1")
+Game.create(:name => "Hexen", :default_lumpname => "MAP01")
+Game.create(:name => "Strife", :default_lumpname => "MAP01")
 
 SourcePort.create(:name => "vanilla")
 SourcePort.create(:name => "PRB")
