@@ -11,28 +11,22 @@ class Ability
       cannot :manage, User
       can :update, User, :user_id => user.id
     elsif user.regular?
+      # projects
       can [:read, :create], Project
       can [:destroy, :update], Project, :creator => {:id => user.id}
+      # maps
       can [:read, :create], Map
       can [:destroy, :update, :download], Map do |m|; m.author == user; end
+      # map wadfiles
+      can [:read, :create], MapWadfile
+      can [:destroy, :update, :download], MapWadfile do |mw|; mw.author == user; end
+      # users
       can :update, User, :user_id => user.id
     else
       can :read, Project
-      can [:read, :download], Map
+      can :read, Map
+      can :read, MapWadfile
     end
-    #
-    # The first argument to `can` is the action you are giving the user permission to do.
-    # If you pass :manage it will apply to every action. Other common actions here are
-    # :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on. If you pass
-    # :all it will apply to every resource. Otherwise pass a Ruby class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
+    
   end
 end

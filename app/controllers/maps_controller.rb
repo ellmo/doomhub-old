@@ -36,10 +36,10 @@ public
   def new
     @map = Map.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @map }
-    end
+    # respond_to do |format|
+    #   format.html # new.html.erb
+    #   format.json { render :json => @map }
+    # end
   end
 
   def edit
@@ -79,14 +79,6 @@ public
     respond_to do |format|
       format.html { redirect_to project_maps_url(@project) }
       format.json { head :ok }
-    end
-  end
-
-  def download
-    if @map.downloadable?(current_user)
-      redirect_to @map.wadfile.expiring_url(10)
-    else
-      render :text => "SHIT"
     end
   end
 

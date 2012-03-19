@@ -1,0 +1,9 @@
+= simple_form_for([@project, @map, @map_wadfile]) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :wadfile
+
+  .form-actions
+    = f.button :submit

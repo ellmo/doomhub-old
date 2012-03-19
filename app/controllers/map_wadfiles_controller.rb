@@ -1,14 +1,17 @@
 class MapWadfilesController < ApplicationController
+  respond_to :html, :js
+
   before_filter :authenticate_user!, :except => [:show, :index]
   load_and_authorize_resource
 
-  before_filter :find_parent_resource
+  before_filter :find_parent_resources
   before_filter :find_resource, :except => [:index, :new, :create]
 
 private
 
-  def find_parent_resource
-    @map = map.find_by_slug(params[:map_id])
+  def find_parent_resources
+    @map = Map.find_by_slug(params[:map_id])
+    @project = @map.project
   end
 
   def find_resource
@@ -36,10 +39,11 @@ public
   def new
     @wadfile = @map.wadfiles.build
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @wadfile }
-    end
+    # respond_to do |format|
+    #   # binding.pry
+    #   format.html # new.html.erb
+    #   format.json { render :json => @wadfile }
+    # end
   end
 
   def edit
