@@ -9,3 +9,6 @@ window.Doomhub =
   Collections: {}
   Routers: {}
   Views: {}
+
+$ ->
+  Doomhub.Initializer()
