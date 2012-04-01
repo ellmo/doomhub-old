@@ -6,7 +6,7 @@ class @Doomhub.Helper
     @debug = $('body').data('debug')
 
   log: (obj)->
-    console.log(obj)
+    console.log(obj) if @debug
 
   timestamp: ()->
     new Date().getTime()

@@ -11,4 +11,3 @@
 
 $ ->
   init = new Doomhub.Initializer()
-  init.run()
