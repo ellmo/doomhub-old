@@ -5,7 +5,8 @@
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
-  %body{:data => { :controller => controller_name, :action => action_name }}
+  -#a smart merge
+  %body{:data => { :controller => controller_name, :action => action_name }.merge(Rails.env.development? ? {:debug => 'true'}:{}) }
     .container#topmost
       .row{ :style => "background-color: #222;"}
         .three.columns
