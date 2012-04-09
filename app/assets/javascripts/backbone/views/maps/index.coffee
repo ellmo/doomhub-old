@@ -1,8 +1,12 @@
 class @Doomhub.Views.Maps.Index extends Backbone.View
   
-  constructor: () ->
-    alert 'asd'
+  events:
+    'load': 'asd'
 
-  # events:
-  #   'onload': 'asd'
+  constructor: () ->
+    super
+    H.view = @ if H.debug
+
+  asd: (e) ->
+    alert 'qwe'
     

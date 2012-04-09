@@ -1,4 +1,7 @@
 class @Doomhub.Routers.Map extends Backbone.Router
+
+  constructor: ()->
+    H.router = @ if H.debug
   
-  index_action: ()->
+  index: ()->
     @view ?= new Doomhub.Views.Maps.Index({ el: $('#topmost') })

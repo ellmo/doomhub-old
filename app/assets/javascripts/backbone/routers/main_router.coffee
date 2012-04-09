@@ -1,4 +1,4 @@
-class @Doomhub.Routers.General extends Backbone.Router
+class @Doomhub.Routers.Main extends Backbone.Router
 
   routes:
     'maps/:action': 'maps'
