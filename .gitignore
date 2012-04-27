@@ -7,5 +7,5 @@ config/database.yml
 .rvmrc
 public/.htaccess
 public/dispatch.fcgi
-*.sublime-workspace
+*.sublime*
 secret.rb
