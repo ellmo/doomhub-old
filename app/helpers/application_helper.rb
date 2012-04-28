@@ -1,5 +1,11 @@
 module ApplicationHelper
 
+  def backbone_data_hash
+    data_hash = { :params => SafeParams.filter_params(params).to_json }
+    data_hash.merge!({:debug => 'true'}) if Rails.env.development?
+    data_hash
+  end
+
   def user_login_span_tag(user = nil)
     str = "[ "
     if user

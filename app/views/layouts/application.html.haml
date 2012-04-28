@@ -5,8 +5,7 @@
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
-  -#a smart merge
-  %body{:data => { :controller => controller_name, :action => action_name }.merge(Rails.env.development? ? {:debug => 'true'}:{}) }
+  %body{ :data => backbone_data_hash }
     .container#topmost
       .row{ :style => "background-color: #222;"}
         .three.columns
@@ -20,5 +19,5 @@
     .container#footer
       .row{ :style => "background-color: #222;"}
         .twelve.columns#author
-          by ellmo 2011
+          by ellmo 2012
       

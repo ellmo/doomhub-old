@@ -236,7 +236,6 @@ DEPENDENCIES
   haml-rails
   haml_coffee_assets
   jquery-rails
-  json
   minitest (~> 2.10.0)
   mongrel
   mysql2
