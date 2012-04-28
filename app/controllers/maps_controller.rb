@@ -22,7 +22,7 @@ public
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @map }
+      format.json { render :json => @maps }
     end
   end
 

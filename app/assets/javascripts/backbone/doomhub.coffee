@@ -6,8 +6,11 @@
 
 @Doomhub ?= {}
 @Doomhub.Routers ?= {}
-@Doomhub.Views ?= {}
-@Doomhub.Views.Maps ?= {}
+@Doomhub.Views ?=
+  Maps : {},
+  Projects : {}
+@Doomhub.Models ?= {}
+@Doomhub.Collections ?= {}
 
 $ ->
   init = new Doomhub.Initializer()
