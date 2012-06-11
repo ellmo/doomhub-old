@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
-  
-  ##########
-  # DEVISE #
-  ##########
+
+#=========
+#= DEVISE
+#=======
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -12,32 +12,32 @@ class User < ActiveRecord::Base
     self.find_by_email conditions[:login]
   end
 
-  #########
-  # ASSOC #
-  #########
+#========
+#= ASSOC
+#======
 
   belongs_to :role, :class_name => "UserRole", :foreign_key => :user_role_id
   has_many :maps, :as => :author
   has_many :projects
   has_many :map_wadfiles
 
-  ########
-  # ATTR #
-  ########
+#=======
+#= ATTR
+#=====
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :login
 
-  ##############
-  # VALIDATION #
-  ##############
+#=============
+#= VALIDATION
+#===========
 
   validates :login, :uniqueness => true
   validates :email, :uniqueness => true
 
-  ###########
-  # METHODS #
-  ###########
+#==========
+#= METHODS
+#========
 
   def superadmin?
     registered? and self.user_role_id == 1

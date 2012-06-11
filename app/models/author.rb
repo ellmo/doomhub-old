@@ -1,8 +1,8 @@
 class Author < ActiveRecord::Base
 
-  #########
-  # ASSOC #
-  #########
+#========
+#= ASSOC
+#======
 
   has_many :maps, :as => :author
 

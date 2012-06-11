@@ -1,15 +1,15 @@
 class Project < ActiveRecord::Base
 
-  ###############
-  # FRIENDLY_ID #
-  ###############
+#==============
+#= FRIENDLY_ID
+#============
 
   extend FriendlyId
   friendly_id :url_name, :use => [:slugged, :history]
 
-  #########
-  # ASSOC #
-  #########
+#========
+#= ASSOC
+#======
 
   belongs_to :creator, :class_name => "User", :foreign_key => "user_id"
   belongs_to :game
@@ -17,9 +17,9 @@ class Project < ActiveRecord::Base
 
   has_many :maps, :dependent => :delete_all
 
-  ###############
-  # VALIDATIONS #
-  ###############
+#==============
+#= VALIDATIONS
+#============
 
   validates :name, :presence => true, :uniqueness => true
   validates :url_name, :presence => true, :uniqueness => true

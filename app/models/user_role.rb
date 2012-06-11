@@ -1,9 +1,9 @@
 class UserRole < ActiveRecord::Base
 
-  #########
-  # ASSOC #
-  #########
+#========
+#= ASSOC
+#======
 
   has_many :users
-  
+
 end

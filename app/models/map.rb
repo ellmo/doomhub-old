@@ -1,33 +1,33 @@
 class Map < ActiveRecord::Base
   extend FriendlyId
 
-  #########
-  # ASSOC #
-  #########
+#========
+#= ASSOC
+#======
 
   belongs_to :project
   belongs_to :author, :polymorphic => true
   has_many :wadfiles, :class_name => "MapWadfile"
 
-  ###############
-  # FRIENDLY_ID #
-  ###############
+#==============
+#= FRIENDLY_ID
+#============
 
   friendly_id :name, :use => [:slugged, :history]
 
-  ###############
-  # VALIDATIONS #
-  ###############
+#==============
+#= VALIDATIONS
+#============
 
   validates :name, :presence => true
   validate :has_5_wadfiles_max
 
-  ###########
-  # METHODS #
-  ###########
+#==========
+#= METHODS
+#========
 
   def has_5_wadfiles_max
     errors.add_to_base("cannot have more than 5 wadfiles") if wadfiles.size > 5
   end
-  
+
 end

@@ -1,15 +1,15 @@
 class MapWadfile < ActiveRecord::Base
 
-  #########
-  # ASSOC #
-  #########
+#========
+#= ASSOC
+#======
 
   belongs_to :map
   belongs_to :author, :polymorphic => true
 
-  #############
-  # PAPERCLIP #
-  #############
+#============
+#= PAPERCLIP
+#==========
 
   has_attached_file :wadfile,
                     :keep_old_files => true,
@@ -19,8 +19,8 @@ class MapWadfile < ActiveRecord::Base
                     :path => ":url",
                     :s3_permissions => :private,
                     :s3_credentials => {
-                      :access_key_id => Secret::S3_DOOMHUB_KEY,
-                      :secret_access_key => Secret::S3_DOOMHUB_SECRET_KEY
+                      :access_key_id => Settings.secret.s3.key,
+                      :secret_access_key => Settings.secret.s3.access_key
                     }
 
   Paperclip.interpolates :project_id do |attachment, style|
@@ -36,19 +36,20 @@ class MapWadfile < ActiveRecord::Base
     "#{m.lump}_#{m.slug}"
   end
 
-  ###############
-  # VALIDATIONS #
-  ###############
+#==============
+#= VALIDATIONS
+#============
 
   validates_attachment_presence :wadfile
   validates_attachment_content_type :wadfile, :content_type => ["application/zip", "application/x-7z-compressed"]
   validates_attachment_size :wadfile, :less_than => 1.megabyte
 
-  ###########
-  # METHODS #
-  ###########
+#==========
+#= METHODS
+#========
 
   def downloadable?(user)
     user == self.author
   end
+
 end
