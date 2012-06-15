@@ -1,5 +1,10 @@
 %h1 Listing projects
 
+%br
+- if can? :create, Project
+  .form-links
+    = link_to 'New Project', new_project_path
+
 %table
   %tr
     %th Name

@@ -52,7 +52,7 @@ public
 
     respond_to do |format|
       if @map.save
-        format.html { redirect_to [@project, @map], :notice => 'Project was successfully created.' }
+        format.html { redirect_to edit_project_map_path(@project, @map), :notice => 'Map was successfully created.' }
         format.json { render :json => @map, :status => :created, :location => @map }
       else
         format.html { render :action => "new" }
@@ -64,7 +64,7 @@ public
   def update
     respond_to do |format|
       if @map.update_attributes(params[:map])
-        format.html { redirect_to project_map_path(@project, @map), :notice => 'Project was successfully updated.' }
+        format.html { redirect_to edit_project_map_path(@project, @map), :notice => 'Map was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render :action => "edit" }
