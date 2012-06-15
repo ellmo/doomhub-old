@@ -186,9 +186,6 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.31)
-    uglifier (1.2.3)
-      execjs (>= 0.3.0)
-      multi_json (>= 1.0.2)
     uuidtools (2.1.2)
     warden (1.1.1)
       rack (>= 1.0)
@@ -224,5 +221,4 @@ DEPENDENCIES
   sass-rails (~> 3.1.0)
   settingslogic
   simple_form
-  uglifier
   zurb-foundation

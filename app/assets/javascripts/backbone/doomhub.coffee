@@ -4,13 +4,13 @@
 #= require_tree ./views
 #= require_tree ./routers
 
-@Doomhub ?= {}
-@Doomhub.Routers ?= {}
-@Doomhub.Views ?=
-  Maps : {},
-  Projects : {}
-@Doomhub.Models ?= {}
-@Doomhub.Collections ?= {}
+window.Doomhub =
+  Routers: {}
+  Views:
+    Maps: {}
+    Projects : {}
+  Models: {}
+  Collections: {}
 
 $ ->
   init = new Doomhub.Initializer()

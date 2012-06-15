@@ -1,4 +1,5 @@
 class @Doomhub.Initializer
+
   constructor: ->
     window.H = new Doomhub.Helper
     H.initializer = @ if H.debug
