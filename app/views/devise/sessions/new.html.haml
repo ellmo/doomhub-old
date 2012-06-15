@@ -1,6 +1,9 @@
 .form-border
   %h2 Log in
   = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    -if alert
+      .error_div
+        = alert
     = f.input :login, :required => false, :autofocus => true, :label => "Login or e-mail"
     = f.input :password, :required => false
     #forgot-pass-link
