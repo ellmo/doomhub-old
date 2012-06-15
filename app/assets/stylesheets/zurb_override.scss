@@ -28,8 +28,8 @@
 
 .form-field {
   min-height: 32px;
+  margin-top: 15px !important;
   input.boolean {
-    margin-top: 11px;
     margin-left: 0px;
     float: none !important;
   }
@@ -68,10 +68,10 @@ select {
 
 .form-field.error {
   small {
-    margin-left: 142px;
-    margin-right: 2px;
+    margin: -1px 2px 0 142px !important;
     width: auto !important;
-    padding-top: 12px !important;
-    background-color: #F66 !important;
+    border-color: #C66 !important;
+    background-color: #FFF !important;
+    color: #C00 !important;
   }
 }
