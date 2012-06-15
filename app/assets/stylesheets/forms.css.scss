@@ -110,3 +110,11 @@ select {
   position: relative;
   top: 10px !important;
 }
+
+.form-field.error {
+  small {
+    margin-left: 142px;
+    margin-right: 2px;
+    width: auto !important;
+  }
+}
