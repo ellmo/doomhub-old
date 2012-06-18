@@ -54,7 +54,7 @@ Doomhub::Application.configure do
       :port                 => 587,
       :domain               => 'doomhub.com',
       :user_name            => 'admin@doomhub.com',
-      :password             => Secret::DREAMHOST_MAIL_PASS_ADMIN,
+      :password             => nil,
       :authentication       => 'login',
       :enable_starttls_auto => false
   }
