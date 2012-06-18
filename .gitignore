@@ -4,7 +4,5 @@ log/*.log
 tmp/
 .sass-cache/
 config/database.yml
-public/.htaccess
-public/dispatch.fcgi
+public/assets/*
 *.sublime*
-secret.rb
