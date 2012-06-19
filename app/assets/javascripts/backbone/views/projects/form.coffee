@@ -1,9 +1,9 @@
 class @Doomhub.Views.Projects.Form extends Doomhub.Views.BASE
 
   events:
-    'keyup input#project_name' : 'on_project_name_change'
+    'keyup input#project_name' : 'refresh_project_url_name_placeholder'
+    'focus input#project_url_name' : 'refresh_project_url_name_placeholder'
+    'blur input#project_url_name' : 'refresh_project_url_name_placeholder'
 
-  on_project_name_change: (e)->
-    input_url_name = $('input#project_url_name')
-    if input_url_name.val() == ''
-      input_url_name.attr('placeholder', e.target.value)
+  refresh_project_url_name_placeholder: (e)->
+    $('input#project_url_name').attr('placeholder', $('input#project_name').val())

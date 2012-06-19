@@ -5,11 +5,15 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
     @view ?= new Doomhub.Views.Projects.Index({ el: $('#topmost'), col: @collection })
 
   new: ->
-    H.log 'tryin` to add-a new project now, are ya?'
     @form()
 
   create: ->
-    H.log 'tryin` to add-a new project now, are ya?'
+    @form()
+
+  edit: ->
+    @form()
+
+  update: ->
     @form()
 
   form: ->

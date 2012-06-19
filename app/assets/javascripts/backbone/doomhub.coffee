@@ -8,7 +8,8 @@ window.Doomhub =
   Routers: {}
   Views:
     Maps: {}
-    Projects : {}
+    Projects: {}
+    MapWadfiles: {}
   Models: {}
   Collections: {}
 
