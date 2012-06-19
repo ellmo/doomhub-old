@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -37,13 +38,6 @@ ActiveRecord::Schema.define(:version => 20120305211336) do
     t.string   "default_lumpname"
   end
 
-  create_table "map_users", :force => true do |t|
-    t.integer  "map_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "map_wadfiles", :force => true do |t|
     t.integer  "map_id"
     t.integer  "author_id"
@@ -51,10 +45,10 @@ ActiveRecord::Schema.define(:version => 20120305211336) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "file_file_size"
-    t.datetime "file_updated_at"
-    t.string   "file_file_name"
-    t.string   "file_content_type"
+    t.string   "wadfile_file_name"
+    t.string   "wadfile_content_type"
+    t.integer  "wadfile_file_size"
+    t.datetime "wadfile_updated_at"
   end
 
   create_table "maps", :force => true do |t|

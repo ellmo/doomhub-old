@@ -6,6 +6,7 @@ class MapWadfile < ActiveRecord::Base
 
   belongs_to :map
   belongs_to :author, :polymorphic => true
+  delegate :project, :to => :map
 
 #============
 #= PAPERCLIP
@@ -15,7 +16,7 @@ class MapWadfile < ActiveRecord::Base
                     :keep_old_files => true,
                     :storage => :s3,
                     :bucket => "doomhub",
-                    :url => "projects/:project_id/maps/:map_id/:map_slug.:extension",
+                    :url => "projects/:project_id/maps/:map_id/:name-:id.:extension",
                     :path => ":url",
                     :s3_permissions => :private,
                     :s3_credentials => {
@@ -28,13 +29,19 @@ class MapWadfile < ActiveRecord::Base
   end
 
   Paperclip.interpolates :map_id do |attachment, style|
-    attachment.instance.id
+    attachment.instance.map.id
   end
 
-  Paperclip.interpolates :map_slug do |attachment, style|
-    m = attachment.instance
-    "#{m.lump}_#{m.slug}"
+  Paperclip.interpolates :name do |attachment, style|
+    attachment.instance.name.parameterize
   end
+
+#=======
+#= ATTR
+#=====
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :wadfile, :name
 
 #==============
 #= VALIDATIONS

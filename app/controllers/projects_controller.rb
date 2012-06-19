@@ -36,6 +36,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(params[:project])
     @project.creator = current_user
+    @project.url_name = @project.name unless (params[:project][:url_name].present?)
 
     respond_to do |format|
       if @project.save
@@ -50,6 +51,7 @@ class ProjectsController < ApplicationController
 
   def update
     @project = Project.find(params[:id])
+    params[:project][:url_name] = @project.name unless (params[:project][:url_name].present?)
 
     respond_to do |format|
       if @project.update_attributes(params[:project])

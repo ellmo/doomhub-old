@@ -38,12 +38,6 @@ public
 
   def new
     @wadfile = @map.wadfiles.build
-
-    # respond_to do |format|
-    #   # binding.pry
-    #   format.html # new.html.erb
-    #   format.json { render :json => @wadfile }
-    # end
   end
 
   def edit
@@ -54,8 +48,8 @@ public
     @wadfile.author = current_user unless (params[:map_wadfile][:author_id].present? and admin?)
 
     respond_to do |format|
-      if @map.save
-        format.html { redirect_to [@project, @map], :notice => 'Project was successfully created.' }
+      if @wadfile.save
+        format.html { redirect_to [@project, @map], :notice => 'Wad file was successfully added.' }
         format.json { render :json => @map, :status => :created, :location => @map }
       else
         format.html { render :action => "new" }
