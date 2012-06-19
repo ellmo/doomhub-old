@@ -16,6 +16,7 @@ html, body {
   position: relative;
   min-height: 100%;
   margin: 0 auto -18px;
+  line-height:18px;
 }
 
 .row{
@@ -61,4 +62,8 @@ form {
   margin: 0 12.5%;
   width: auto;
   margin-bottom: 20px;
+}
+
+.dh_title {
+  font-size: 4.6em;
 }
