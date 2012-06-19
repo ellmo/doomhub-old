@@ -8,7 +8,7 @@
     = f.input :password, :required => false
     #forgot-pass-link
       = link_to "I forgot...", new_password_path(resource_name)
-    %div{:style => "background-color: yellow"}
+    %div
       = f.input :remember_me, :as => :zurb_boolean, :label_html => {:style => "width: auto;"} if devise_mapping.rememberable?
     .centered-actions
       = f.button :submit, "Log in", :class => "nice"

@@ -8,8 +8,8 @@
   %body{ :data => backbone_data_hash }
     #mother_of_all_containers
       .container#topmost
-        .row{ :style => "background-color: #222;"}
-          .three.columns
+        .row.almostblack#toolbar
+          .three.columns#login_logout
             = user_login_span_tag(current_user)
           .six.columns{ :style => "text-align: center;"}
             = link_to "Go home", root_path
@@ -19,6 +19,6 @@
             = yield
         .push
       .container#footer
-        .row{ :style => "background-color: #222;"}
+        .row.almostblack
           .twelve.columns#author
             by ellmo 2012

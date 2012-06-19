@@ -9,16 +9,20 @@ module ApplicationHelper
   end
 
   def user_login_span_tag(user = nil)
-    str = "[ "
     if user
-      str << "Hello, #{user.login}. | "
-      str << link_to("Log out", logout_path)
-      str << "]"
+      str = <<-HTML
+      <div>
+        <span>#{user.login} |<span>
+        <span>#{link_to("Log out", logout_path)}</span>
+      </div>
+      HTML
     else
-      str << link_to("Log in", login_path)
-      str << " | "
-      str << link_to("Register", register_path)
-      str << " ]"
+      str = <<-HTML
+      <div>
+        <span>#{link_to("Log in", login_path)}<span> |
+        <span>#{link_to("Register", register_path)}</span>
+      </div>
+      HTML
     end
     raw str
   end

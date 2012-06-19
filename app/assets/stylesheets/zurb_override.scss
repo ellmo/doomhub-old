@@ -35,10 +35,11 @@
   }
   input.string, input.password, input.file {
     width: 320px;
-    margin-left: 2px;
   }
-  clear: both;
-  float: left;
+  textarea {
+    margin-top: 2px !important;
+    width: 320px;
+  }
 }
 
 select {
@@ -55,12 +56,7 @@ label {
   font-size: 16px !important;
 }
 
-textarea {
-  float: left;
-  margin-left: 2px;
-  margin-top: 2px !important;
-  width: 320px;
-}
+
 
 select {
   float: left;
@@ -72,10 +68,16 @@ select {
 
 .form-field.error {
   small {
-    margin: -1px 0 0 142px !important;
+    margin: -1px 30px 0 142px !important;
     width: auto !important;
     border-color: #C66 !important;
     background-color: #FFF !important;
     color: #C00 !important;
   }
+}
+
+.panel {
+  padding: 20px !important;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #F6F6F0), color-stop(100%, #F4F4DD)) !important;
+  background: -moz-linear-gradient(top, #F6F6F0 0%, #F4F4DD 100%) !important;
 }

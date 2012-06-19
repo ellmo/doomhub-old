@@ -1,6 +1,12 @@
-%h1 New map
+.panel
+  %h5= "Looks like you're trying to add a new WAD archive for \"#{@map.name}\", keep in mind:"
+  %p Only Zip and 7z archives are allowed
+  %p The maximum size of an archive is 1 MB
+  %p You can add up to 5 archives per map.
 
-= render 'form'
+.form-border
+  %h2 New map
+  = render 'form'
 
 .form-links
   = link_to 'Back'

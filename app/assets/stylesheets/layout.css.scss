@@ -15,7 +15,7 @@ html, body {
 .container#topmost{
   position: relative;
   min-height: 100%;
-  margin: 0 auto -18px;
+  margin: 0 auto -24px;
   line-height:18px;
 }
 
@@ -29,13 +29,15 @@ form {
 
 #footer, .push {
   position: relative;
-  height: 18px;
+  height: 24px;
   margin: 0 auto;
 }
 
 .twelve.columns#author{
   text-align: center;
   position: relative;
+  height: 100%;
+  line-height: 22px;
 }
 
 .error_div {
@@ -66,4 +68,19 @@ form {
 
 .dh_title {
   font-size: 4.6em;
+}
+
+.almostblack{
+  background-color: #222;
+  height: 24px;
+}
+
+#toolbar {
+  color: white;
+  height: 100%;
+  line-height: 2;
+}
+
+#login_logout {
+  padding-left: 8px;
 }
