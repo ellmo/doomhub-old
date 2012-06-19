@@ -15,13 +15,13 @@ private
   end
 
   def find_resource
-    @wadfile = MapWadfile.find(params[:id])
+    @map_wadfile = MapWadfile.find(params[:id])
   end
 
 public
 
   def index
-    @wadfiles = @map.wadfiles
+    @map_wadfile = @map.wadfiles
 
     respond_to do |format|
       format.html # index.html.erb
@@ -37,18 +37,20 @@ public
   end
 
   def new
-    @wadfile = @map.wadfiles.build
+    @map_wadfile = @map.wadfiles.build
   end
 
   def edit
   end
 
   def create
-    @wadfile = @map.wadfiles.build(params[:map_wadfile])
-    @wadfile.author = current_user unless (params[:map_wadfile][:author_id].present? and admin?)
+    params[:map_wadfile][:name] = @map.slug
+    @map_wadfile = @map.wadfiles.build(params[:map_wadfile])
+    @map_wadfile.author = current_user unless (params[:map_wadfile][:author_id].present? and admin?)
+
 
     respond_to do |format|
-      if @wadfile.save
+      if @map_wadfile.save
         format.html { redirect_to [@project, @map], :notice => 'Wad file was successfully added.' }
         format.json { render :json => @map, :status => :created, :location => @map }
       else
@@ -71,7 +73,7 @@ public
   end
 
   def destroy
-    @map.destroy
+    @map_wadfile.destroy
 
     respond_to do |format|
       format.html { redirect_to project_maps_url(@project) }
@@ -80,8 +82,8 @@ public
   end
 
   def download
-    if @map.downloadable?(current_user)
-      redirect_to @map.wadfile.expiring_url(10)
+    if @map_wadfile.downloadable?(current_user)
+      redirect_to @map_wadfile.wadfile.expiring_url(10)
     else
       render :text => "SHIT"
     end
