@@ -81,3 +81,12 @@ select {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #F6F6F0), color-stop(100%, #F4F4DD)) !important;
   background: -moz-linear-gradient(top, #F6F6F0 0%, #F4F4DD 100%) !important;
 }
+
+.small.button.slim {
+  padding: 2px 20px 4px !important;
+}
+
+.small.button.slim.black {
+  background-color: #666 !important;
+  background-position: 0 -40px !important;
+}

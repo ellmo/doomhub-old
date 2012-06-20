@@ -6,14 +6,17 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body{ :data => backbone_data_hash }
-    #mother_of_all_containers
+    #mother-of-all-containers
       .container#topmost
         .row.almostblack#toolbar
-          .three.columns#login_logout
-            = user_login_span_tag(current_user)
+          .three.columns
+            #login-logout
+              = user_login_span_tag(current_user)
           .six.columns{ :style => "text-align: center;"}
             = link_to "Go home", root_path
-          .three.columns
+          .three.columns#profile-management
+            - if can? :create, Project
+              = link_to 'Manage projects', '', :class => 'small nice black button radius slim'
         .row
           .twelve.columns
             = yield

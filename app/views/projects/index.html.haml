@@ -2,33 +2,21 @@
 
 %br
 - if can? :create, Project
-  .form-links
-    = link_to 'New Project', new_project_path
+  = link_to 'New Project', new_project_path
 
-%table
-  %tr
-    %th Name
-    %th Url name
-    %th Description
-    %th Game
-    %th Source port
-    %th
-    %th
-    %th
-
-  - @projects.each do |project|
-    %tr
-      %td= project.name
-      %td= project.url_name
-      %td= project.description
-      %td= project.game.name
-      %td= project.source_port.name
-      %td= link_to 'Show', project
-      %td= link_to 'Maps', project_maps_path(project)
-      %td= link_to 'Edit', edit_project_path(project)
-      %td= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete
+- @projects.each do |project|
+  .panel.project-panel
+    %h4= link_to project.name, project
+    .project-game-data
+      %span= project.game.name
+      %span= project.source_port.name
+    .project-description
+      = project.description
+    .project-actions
+      = link_to 'Maps', project_maps_path(project), :class => 'small white nice button radius'
+      = link_to 'Edit', edit_project_path(project), :class => 'small white nice button radius'
+      = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete, :class => 'small white nice button radius'
 
 %br
 - if can? :create, Project
-  .form-links
-    = link_to 'New Project', new_project_path
+  = link_to 'New Project', new_project_path

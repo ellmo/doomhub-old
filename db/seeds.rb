@@ -13,3 +13,7 @@ SourcePort.create(:name => "GZDoom")
 UserRole.create(:name => "superadmin")
 UserRole.create(:name => "admin")
 UserRole.create(:name => "user")
+
+ItemAccess.create(:name => 'Public')
+ItemAccess.create(:name => 'Closed')
+ItemAccess.create(:name => 'Private')

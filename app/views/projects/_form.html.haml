@@ -1,6 +1,6 @@
 = simple_form_for(@project) do |f|
   -if notice
-    .notice_div
+    .notice-div
       = notice
       = link_to "Back to projects list.", projects_path
   = f.error_notification
@@ -8,6 +8,7 @@
   .form-inputs
     = f.input :name
     = f.input :url_name
+    = f.association :item_access, :as => :radio_buttons
     = f.input :description, :rows => 15
     = f.association :game, :include_blank => false
     = f.association :source_port, :include_blank => false

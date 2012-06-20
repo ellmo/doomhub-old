@@ -2,7 +2,7 @@ html, body {
   height: 100%;
 }
 
-#mother_of_all_containers {
+#mother-of-all-containers {
   margin: auto;
   width: 980px;
   height: 100%;
@@ -40,7 +40,7 @@ form {
   line-height: 22px;
 }
 
-.error_div {
+.error-div {
   border: 2px solid #C00;
   padding: 8px;
   background-color: #F66 !important;
@@ -53,7 +53,7 @@ form {
   margin-bottom: 20px;
 }
 
-.notice_div {
+.notice-div {
   padding: 8px;
   border: 2px solid #55D;
   background-color: #AAD !important;
@@ -66,7 +66,7 @@ form {
   margin-bottom: 20px;
 }
 
-.dh_title {
+.dh-title {
   font-size: 4.6em;
 }
 
@@ -81,6 +81,10 @@ form {
   line-height: 2;
 }
 
-#login_logout {
+#login-logout {
   padding-left: 8px;
+}
+
+#profile-management {
+  text-align: right;
 }
