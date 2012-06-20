@@ -36,6 +36,7 @@ GEM
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
     bcrypt-ruby (3.0.1)
+    breadcrumbs_on_rails (2.2.0)
     builder (3.0.0)
     cancan (1.6.7)
     capybara (1.1.2)
@@ -209,6 +210,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk
+  breadcrumbs_on_rails
   cancan
   capybara (~> 1.1.2)
   coffee-rails (~> 3.1.0)

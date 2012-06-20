@@ -1,10 +1,18 @@
 %p#notice= notice
 
-.panel.project-panel
-  %h2= @project.name
-  .project-game-data
-    %span= @project.game.name
-    %span= @project.source_port.name
-  .project-map-list
+%dl.nice.contained.tabs
+  %dd= link_to 'Overwiew', '#overview', :class => 'active'
+  %dd= link_to 'Maps', '#maps'
+  %dd= link_to 'Resources', '#resources'
+
+%ul.nice.contained.tabs-content
+  %li.panel.project-overview.active#overviewTab
+    %h2= @project.name
+    .project-game-data
+      %span= @project.game.name
+      %span= @project.source_port.name
+  %li.panel.project-map-list#mapsTab
     - @project.maps.each do |map|
       = link_to map.name, [@project, map]
+  %li.panel.resource-list#resourcesTab
+    %p coming soon

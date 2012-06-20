@@ -3,6 +3,8 @@ class ProjectsController < ApplicationController
 
   load_and_authorize_resource
 
+  add_breadcrumb "doomhub", :root_path
+
   def index
     respond_to do |format|
       format.html # index.html.erb
@@ -11,6 +13,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    add_breadcrumb @project.name, project_path(@project)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @project }

@@ -19,6 +19,7 @@
               = link_to 'Manage projects', '', :class => 'small nice black button radius slim'
         .row
           .twelve.columns
+            = render_breadcrumbs :builder => DoomhubBreadcrumbsBuilder
             = yield
         .push
       .container#footer

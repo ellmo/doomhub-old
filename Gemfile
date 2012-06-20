@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'aws-sdk'
+gem 'breadcrumbs_on_rails'
 gem 'cancan'
 gem 'devise', '1.5.3'
 gem 'execjs'

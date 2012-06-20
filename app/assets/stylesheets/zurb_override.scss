@@ -91,3 +91,9 @@ select {
   background-color: #666 !important;
   background-position: 0 -40px !important;
 }
+
+.nice.tabs {
+  a.active {
+    background-color: #F6F6F0 !important;
+  }
+}
