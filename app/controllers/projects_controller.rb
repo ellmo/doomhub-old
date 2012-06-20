@@ -4,7 +4,6 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @projects = Project.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @projects }
@@ -12,8 +11,6 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @project }
@@ -21,8 +18,6 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = Project.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @project }
@@ -30,11 +25,9 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @project = Project.find(params[:id])
   end
 
   def create
-    @project = Project.new(params[:project])
     @project.creator = current_user
     @project.url_name = @project.name unless (params[:project][:url_name].present?)
 
@@ -50,8 +43,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    @project = Project.find(params[:id])
-    params[:project][:url_name] = @project.name unless (params[:project][:url_name].present?)
+    @project.url_name = @project.name unless (params[:project][:url_name].present?)
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
@@ -65,7 +57,6 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find(params[:id])
     @project.destroy
 
     respond_to do |format|

@@ -1,6 +1,6 @@
 = simple_form_for([@project, @map]) do |f|
   -if notice
-    .notice_div
+    .notice-div
       = notice
       = link_to "Back to maps list.", project_maps_path(@project)
   = f.error_notification
