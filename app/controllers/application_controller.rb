@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  add_breadcrumb "DoomHub.com", :root_path
+
   def superadmin?
     current_user.superadmin?
   end

@@ -97,3 +97,16 @@ select {
     background-color: #F6F6F0 !important;
   }
 }
+
+ul.breadcrumbs {
+  margin-top: 12px;
+  li {
+    padding: 0 4px 0 0 !important;
+    a, span {
+      text-transform: none !important;
+      font-size: 13px !important;
+      padding-left: 0px !important;
+    }
+  }
+  li::before { content: "" !important; }
+}

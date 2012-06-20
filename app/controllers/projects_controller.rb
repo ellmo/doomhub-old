@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
 
   load_and_authorize_resource
 
-  add_breadcrumb "doomhub", :root_path
+  add_breadcrumb 'Projects', :projects_path
 
   def index
     respond_to do |format|

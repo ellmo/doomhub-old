@@ -19,7 +19,6 @@ public
 
   def index
     @maps = @project.maps
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @maps }
@@ -27,6 +26,8 @@ public
   end
 
   def show
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb @map.name, project_map_path(@project, @map)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @map }

@@ -5,6 +5,7 @@ class Devise::RegistrationsController < ApplicationController
 
   # GET /resource/sign_up
   def new
+    add_breadcrumb "registration", request.path
     resource = build_resource({})
     respond_with_navigational(resource){ render_with_scope :new }
   end
