@@ -230,6 +230,6 @@ DEPENDENCIES
   sass-rails (~> 3.1.0)
   settingslogic
   simple_form
-  uglifier
   squeel
+  uglifier
   zurb-foundation

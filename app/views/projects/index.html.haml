@@ -13,9 +13,10 @@
     .project-description
       = project.description
     .project-actions
-      = link_to 'Maps', project_maps_path(project), :class => 'small white nice button radius'
-      = link_to 'Edit', edit_project_path(project), :class => 'small white nice button radius'
-      = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete, :class => 'small white nice button radius'
+      =# link_to 'Maps', project_maps_path(project), :class => 'small white nice button radius'
+      - if can? :destroy, project
+        = link_to 'Edit', edit_project_path(project), :class => 'small white nice button radius'
+        = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete, :class => 'small white nice button radius'
 
 %br
 - if can? :create, Project

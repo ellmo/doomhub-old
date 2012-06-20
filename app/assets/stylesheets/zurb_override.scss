@@ -80,6 +80,7 @@ select {
   padding: 20px !important;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #F6F6F0), color-stop(100%, #F4F4DD)) !important;
   background: -moz-linear-gradient(top, #F6F6F0 0%, #F4F4DD 100%) !important;
+  position: relative;
 }
 
 .small.button.slim {
