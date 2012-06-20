@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120305211336) do
+ActiveRecord::Schema.define(:version => 20120619235729) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -36,6 +36,20 @@ ActiveRecord::Schema.define(:version => 20120305211336) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "default_lumpname"
+  end
+
+  create_table "item_accesses", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "item_invites", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "invitable_id"
+    t.string   "invitable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "map_wadfiles", :force => true do |t|
@@ -64,15 +78,16 @@ ActiveRecord::Schema.define(:version => 20120305211336) do
   end
 
   create_table "projects", :force => true do |t|
-    t.string   "name",           :null => false
-    t.string   "url_name",       :null => false
-    t.string   "slug",           :null => false
+    t.string   "name",                          :null => false
+    t.string   "url_name",                      :null => false
+    t.string   "slug",                          :null => false
     t.text     "description"
-    t.integer  "game_id",        :null => false
-    t.integer  "source_port_id", :null => false
+    t.integer  "game_id",                       :null => false
+    t.integer  "source_port_id",                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "item_access_id", :default => 1, :null => false
   end
 
   add_index "projects", ["slug"], :name => "index_projects_on_slug", :unique => true
