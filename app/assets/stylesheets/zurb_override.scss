@@ -110,3 +110,16 @@ ul.breadcrumbs {
   }
   li::before { content: "" !important; }
 }
+
+
+form.custom div.custom.dropdown {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  height: 28px;
+  margin-bottom: 9px;
+}
+
+label.radio {
+  text-align: left;
+}

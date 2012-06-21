@@ -28,6 +28,8 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb 'Edit', edit_project_path(@project)
   end
 
   def create
@@ -46,7 +48,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    @project.url_name = @project.name unless (params[:project][:url_name].present?)
+    params[:project][:url_name] = @project.name unless (params[:project][:url_name].present?)
 
     respond_to do |format|
       if @project.update_attributes(params[:project])

@@ -33,6 +33,11 @@
   }
 }
 
+.form-600-border {
+  @extend .form-border;
+  width: 600px;
+}
+
 .bordered {
   float: none;
 }
