@@ -20,6 +20,8 @@
               = link_to 'Mine', user_projects_path(current_user), :class => 'small nice black button radius slim'
           .three.columns#profile-management
             %div{:style => 'margin-right: 8px;'}
+              - if can? :create, Project
+                = link_to 'New Project', new_project_path, :class => 'small nice black button radius slim'
               - if can? :update, current_user
                 = link_to 'Profile', current_user, :class => 'small nice black button radius slim'
         .row
