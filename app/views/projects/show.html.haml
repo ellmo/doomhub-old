@@ -7,14 +7,7 @@
 
 %ul.nice.contained.tabs-content
   %li.panel.project-overview.active#overviewTab
-    %h2= @project.name
-    .project-game-data
-      %div
-        %span{:style => "font-weight: bold;"} Game:
-        %span= @project.game.name
-      %div
-        %span{:style => "font-weight: bold;"} Source Port:
-        %span= @project.source_port.name
+    = render @project
   %li.panel.project-map-list#mapsTab
     - @project.maps.each do |map|
       = link_to map.name, [@project, map]

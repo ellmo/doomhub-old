@@ -1,19 +1,5 @@
 %h2= (@user ? "My projects" : "All projects")
 
 - @projects.each do |project|
-  .panel.project-panel
-    %h4= link_to project.name, project
-    .project-game-data
-      %div
-        %span{:style => "font-weight: bold;"} Game:
-        %span= project.game.name
-      %div
-        %span{:style => "font-weight: bold;"} Source Port:
-        %span= project.source_port.name
-    .project-description
-      = project.description
-    .project-actions
-      =# link_to 'Maps', project_maps_path(project), :class => 'small white nice button radius'
-      - if can? :destroy, project
-        = link_to 'Edit', edit_project_path(project), :class => 'small white nice button radius'
-        = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete, :class => 'small white nice button radius'
+  .panel.project-overview
+    =render project

@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   inherit_resources
   belongs_to :user, :optional => true, :finder => :find_by_login!
   load_and_authorize_resource :user
-  load_and_authorize_resource :project, :through => :user
+  load_and_authorize_resource :project
 
 #===============
 #= CRUD ACTIONS
@@ -91,7 +91,7 @@ class ProjectsController < ApplicationController
 #= METHODS
 #========
 
-protected
+  protected
 
   def build_breadcrumbs
     add_breadcrumb "Users", :users_path, :allowed => @user.superadmin? if @user
