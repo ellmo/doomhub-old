@@ -1,8 +1,25 @@
 class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
 
+  routes:
+    '' : 'overview'
+    'overview' : 'overview'
+    'maps' : 'maps'
+    'resources' : 'resources'
+
+  constructor: ->
+    @ztb = new Doomhub.Libs.ZurbTabFunctions()
+    H.log @ztb
+    super
+
+#================
+#= RAILS ACTIONS
+#==============
+
   index: ->
     H.log 'hello'
     @view ?= new Doomhub.Views.Projects.Index({ el: $('#topmost'), col: @collection })
+
+  show: ->
 
   new: ->
     @form()
@@ -18,3 +35,18 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
 
   form: ->
     @view ?= new Doomhub.Views.Projects.Form({ el: $('#topmost'), col: @collection })
+
+#============
+#= FRAGMENTS
+#==========
+
+  overview: ->
+    @ztb.switch_to_tab('overview')
+
+  maps: ->
+    @ztb.switch_to_tab('maps')
+
+  resources: ->
+    @ztb.switch_to_tab('resources')
+
+

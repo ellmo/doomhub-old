@@ -1,10 +1,14 @@
 %p#notice= notice
 
-%p
-  %b Name:
-  = @map.name
+%dl.nice.contained.tabs
+  %dd= link_to 'Overwiew', '#overview', :class => 'active'
+  %dd= link_to 'Wadfiles', '#wadfiles'
+  %dd= link_to 'Screens', '#screens'
 
-.form-links
-  = link_to 'Edit', edit_project_map_path(@project)
-  \|
-  = link_to 'Back', project_maps_path
+%ul.nice.contained.tabs-content
+  %li.panel.project-overview.active#overviewTab
+    =render @map
+  %li.panel.map-wadfiles#wadfilesTab
+    %p coming soon
+  %li.panel.map-screens#screensTab
+    %p coming soon

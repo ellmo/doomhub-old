@@ -8,8 +8,13 @@
 %ul.nice.contained.tabs-content
   %li.panel.project-overview.active#overviewTab
     = render @project
-  %li.panel.project-map-list#mapsTab
-    - @project.maps.each do |map|
-      = link_to map.name, [@project, map]
-  %li.panel.resource-list#resourcesTab
+  %li.panel.project-maps#mapsTab
+    .row
+      .nine.columns
+        - @project.maps.each do |map|
+          = link_to map.name, [@project, map]
+      .three.columns.resource-actions
+        - if can? :update, @project
+          = link_to 'New Map', new_project_map_path(@project), :class => 'small white nice button radius'
+  %li.panel.project-resources#resourcesTab
     %p coming soon

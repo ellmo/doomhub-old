@@ -3,6 +3,7 @@
 #= require_tree ./models
 #= require_tree ./views
 #= require_tree ./routers
+#= require_tree ./libs
 
 window.Doomhub =
   Routers: {}
@@ -12,6 +13,7 @@ window.Doomhub =
     MapWadfiles: {}
   Models: {}
   Collections: {}
+  Libs: {}
 
 $ ->
   init = new Doomhub.Initializer()

@@ -1,15 +1,15 @@
-= simple_form_for([@project, @map]) do |f|
-  -if notice
-    .notice-div
-      = notice
-      = link_to "Back to maps list.", project_maps_path(@project)
-  = f.error_notification
+.form-600-border
+  %h2= form_title
+  = simple_form_for([@project, @map]) do |f|
+    -if notice
+      .notice-div
+        = notice
+        = link_to "Back to maps list.", project_maps_path(@project)
+    = f.error_notification
 
-  .form-inputs
-    = f.input :name
-    = f.input :lump, :placeholder => @project.game.default_lumpname
-    = f.input :desc
-
-  .form-actions
-    = link_to "new wadfile", new_project_map_map_wadfile_path(@project, @map) unless @map.new_record?
-    = f.button :submit
+    .form-inputs
+      = f.input :name
+      = f.input :lump, :placeholder => @project.game.default_lumpname
+      = f.input :desc
+      .centered-actions
+        = f.button :submit

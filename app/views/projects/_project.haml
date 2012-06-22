@@ -1,9 +1,10 @@
 .row
-  .nine.columns
+  .eight.columns
     %h4= link_to_unless_current project.name, project
-  .three.columns.project-actions
+  .four.columns.resource-actions
     - if can? :update, project
       = link_to 'Edit', edit_project_path(project), :class => 'small white nice button radius'
+      = link_to 'New Map', new_project_map_path(project), :class => 'small white nice button radius'
     - if can? :destroy, project
       = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete, :class => 'small white nice button radius'
 .row.project-game-data

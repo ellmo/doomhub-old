@@ -1,0 +1,8 @@
+.row
+  .nine.columns
+    %h4= map.name
+  .three.columns.resource-actions
+    - if can? :update, map
+      = link_to 'Edit', edit_project_map_path(@project, map), :class => 'small white nice button radius'
+    - if can? :destroy, map
+      = link_to 'Destroy', project_map_path(@project, map), :confirm => 'Are you sure?', :method => :delete, :class => 'small white nice button radius'

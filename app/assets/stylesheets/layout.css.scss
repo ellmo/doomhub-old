@@ -85,6 +85,10 @@ form {
 
 #project-links { text-align: center; }
 
-.panel.project-overview{
-  .project-actions { text-align: right; }
+.panel.project-overview,
+.panel.project-maps,
+.panel.map-overview,
+.panel.map-wadfiles,
+.panel.map-screens{
+  .resource-actions { text-align: right; }
 }

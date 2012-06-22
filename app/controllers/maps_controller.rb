@@ -1,50 +1,41 @@
 class MapsController < ApplicationController
+
+#==========
+#= FILTERS
+#========
+
   before_filter :authenticate_user!, :except => [:show, :index]
-  load_and_authorize_resource
 
-  before_filter :find_parent_resource
-  before_filter :find_resource, :except => [:index, :new, :create]
+#============
+#= RESOURCES
+#==========
 
-private
+  inherit_resources
+  belongs_to :project, :optional => true, :finder => :find_by_slug!
+  load_and_authorize_resource :project
+  load_and_authorize_resource :map
 
-  def find_parent_resource
-    @project = Project.find_by_slug(params[:project_id])
-  end
-
-  def find_resource
-    @map = Map.find(params[:id])
-  end
+#===============
+#= CRUD ACTIONS
+#=============
 
 public
 
   def index
-    @maps = @project.maps
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @maps }
-    end
   end
 
   def show
-    add_breadcrumb @project.name, project_path(@project)
-    add_breadcrumb @map.name, project_map_path(@project, @map)
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @map }
-    end
+    build_breadcrumbs
   end
 
   def new
-    @map = Map.new
-
-    # respond_to do |format|
-    #   format.html # new.html.erb
-    #   format.json { render :json => @map }
-    # end
+    build_breadcrumbs
+    add_breadcrumb "New", new_project_map_path(@project)
   end
 
   def edit
-
+    build_breadcrumbs
+    add_breadcrumb "Edit", edit_project_map_path(@project)
   end
 
   def create
@@ -82,6 +73,19 @@ public
       format.html { redirect_to project_maps_url(@project) }
       format.json { head :ok }
     end
+  end
+
+#==========
+#= METHODS
+#========
+
+  protected
+
+  def build_breadcrumbs
+    add_breadcrumb "Projects", :projects_path
+    add_breadcrumb @project.name, project_path(@project)
+    add_breadcrumb "Maps", project_path(@project, :anchor => 'maps')
+    add_breadcrumb @map.name, project_map_path(@project, @map) if @map and !@map.new_record?
   end
 
 end
