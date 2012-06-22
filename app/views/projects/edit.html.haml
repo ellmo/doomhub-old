@@ -1,5 +1,2 @@
 .panel
-  %h5= "Editing \"#{@project.name}\""
-
-.form-600-border
-  = render 'form'
+  = render 'form', :form_title => "Editing \"#{@project.name}\""

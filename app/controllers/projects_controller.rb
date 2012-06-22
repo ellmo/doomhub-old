@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   inherit_resources
   belongs_to :user, :optional => true, :finder => :find_by_login!
   load_and_authorize_resource :user
-  load_and_authorize_resource :project
+  load_and_authorize_resource :project, :through => :user
 
 #===============
 #= CRUD ACTIONS
@@ -29,7 +29,6 @@ class ProjectsController < ApplicationController
 
   def show
     build_breadcrumbs
-    add_breadcrumb @project.name, project_path(@project)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @project }
@@ -37,6 +36,8 @@ class ProjectsController < ApplicationController
   end
 
   def new
+    build_breadcrumbs
+    add_breadcrumb 'New', new_project_path
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @project }
@@ -44,7 +45,7 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    add_breadcrumb @project.name, project_path(@project)
+    build_breadcrumbs
     add_breadcrumb 'Edit', edit_project_path(@project)
   end
 
@@ -93,9 +94,10 @@ class ProjectsController < ApplicationController
 protected
 
   def build_breadcrumbs
-    add_breadcrumb "Users", :users_path, :allowed => (can? :index, User) if @user
+    add_breadcrumb "Users", :users_path, :allowed => @user.superadmin? if @user
     add_breadcrumb @user.login, user_path(@user) if @user
     add_breadcrumb (@user ? "#{@user.login}'s projects" : 'Projects'), :collection_path
+    add_breadcrumb @project.name, project_path(@project) if @project and !@project.new_record?
   end
 
 end
