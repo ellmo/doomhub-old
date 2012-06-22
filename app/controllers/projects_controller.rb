@@ -28,6 +28,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    build_breadcrumbs
     add_breadcrumb @project.name, project_path(@project)
     respond_to do |format|
       format.html # show.html.erb
