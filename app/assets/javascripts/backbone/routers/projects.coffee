@@ -8,7 +8,6 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
 
   constructor: ->
     @ztb = new Doomhub.Libs.ZurbTabFunctions()
-    H.log @ztb
     super
 
 #================
