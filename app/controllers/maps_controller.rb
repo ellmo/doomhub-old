@@ -39,7 +39,6 @@ public
   end
 
   def create
-    @map = @project.maps.build(params[:map])
     @map.author = current_user unless (params[:map][:author_id].present? and admin?)
     @map.lump = @project.game.default_lumpname unless (params[:map][:lump].present?)
 
@@ -51,27 +50,6 @@ public
         format.html { render :action => "new" }
         format.json { render :json => @map.errors, :status => :unprocessable_entity }
       end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @map.update_attributes(params[:map])
-        format.html { redirect_to edit_project_map_path(@project, @map), :notice => 'Map was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @map.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    @map.destroy
-
-    respond_to do |format|
-      format.html { redirect_to project_maps_url(@project) }
-      format.json { head :ok }
     end
   end
 

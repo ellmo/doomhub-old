@@ -2,8 +2,8 @@ Doomhub::Application.routes.draw do
 
   root :to => 'home#index'
 
-  match "/projects/:id/maps" => redirect("/projects/%{id}#maps")
-  match "/projects/:project_id/maps/:id/wadfiles" => redirect("/projects/%{project_id}/maps/%{id}#wadfiles")
+  get "/projects/:id/maps" => redirect("/projects/%{id}#maps")
+  get "/projects/:project_id/maps/:id/wadfiles" => redirect("/projects/%{project_id}/maps/%{id}#wadfiles")
 
   resources :projects do
     resources :maps, :except => [:index] do
