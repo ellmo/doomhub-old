@@ -1,4 +1,4 @@
-%h1 All projects
+%h2= (@user ? "My projects" : "All projects")
 
 - @projects.each do |project|
   .panel.project-panel
