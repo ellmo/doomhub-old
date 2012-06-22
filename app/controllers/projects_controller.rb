@@ -1,11 +1,26 @@
 class ProjectsController < ApplicationController
+
+#==========
+#= FILTERS
+#========
+
   before_filter :authenticate_user!, :except => [:show, :index]
 
-  load_and_authorize_resource
+#============
+#= RESOURCES
+#==========
 
-  add_breadcrumb 'Projects', :projects_path
+  inherit_resources
+  belongs_to :user, :optional => true, :finder => :find_by_login!
+  load_and_authorize_resource :user
+  load_and_authorize_resource :project
+
+#===============
+#= CRUD ACTIONS
+#=============
 
   def index
+    build_breadcrumbs
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @projects }
@@ -69,4 +84,17 @@ class ProjectsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+#==========
+#= METHODS
+#========
+
+protected
+
+  def build_breadcrumbs
+    add_breadcrumb "Users", :users_path, :allowed => (can? :index, User) if @user
+    add_breadcrumb @user.login, user_path(@user) if @user
+    add_breadcrumb (@user ? "#{@user.login}'s projects" : 'Projects'), :collection_path
+  end
+
 end

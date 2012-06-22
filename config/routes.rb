@@ -1,5 +1,5 @@
 Doomhub::Application.routes.draw do
-  
+
   root :to => 'home#index'
 
   resources :projects do
@@ -10,6 +10,10 @@ Doomhub::Application.routes.draw do
         end
       end
     end
+  end
+
+  resources :users, :only => [:show, :index] do
+    resources :projects
   end
 
   devise_for :users

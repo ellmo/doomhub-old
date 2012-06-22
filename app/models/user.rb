@@ -12,6 +12,13 @@ class User < ActiveRecord::Base
     self.find_by_email conditions[:login]
   end
 
+#==============
+#= FRIENDLY_ID
+#============
+
+  extend FriendlyId
+  friendly_id :login
+
 #========
 #= ASSOC
 #======

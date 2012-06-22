@@ -27,7 +27,7 @@ class Ability
       can [:read, :create], MapWadfile
       can [:destroy, :update, :download], MapWadfile do |mw|; mw.author == user; end
       # users
-      can :update, User, :user_id => user.id
+      can [:update, :show], User, :id => user.id
     else
       can :read, Project, :item_access_id => 1
       can :read, Map
