@@ -13,16 +13,7 @@ class MapWadfile < ActiveRecord::Base
 #==========
 
   has_attached_file :wadfile,
-                    :keep_old_files => true,
-                    :storage => :s3,
-                    :bucket => "doomhub",
-                    :url => "projects/:project_id/maps/:map_id/:name-:id.:extension",
-                    :path => ":url",
-                    :s3_permissions => :private,
-                    :s3_credentials => {
-                      :access_key_id => Settings.secret.s3.key,
-                      :secret_access_key => Settings.secret.s3.access_key
-                    }
+                    :keep_old_files => true
 
   Paperclip.interpolates :project_id do |attachment, style|
     attachment.instance.project.id

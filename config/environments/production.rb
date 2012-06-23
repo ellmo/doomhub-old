@@ -69,4 +69,16 @@ Doomhub::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+  Paperclip::Attachment.default_options.merge!({
+    :storage => :s3,
+    :bucket => "doomhub",
+    :url => "projects/:project_id/maps/:map_id/:name-:id.:extension",
+    :path => ":url"
+    :s3_permissions => :private,
+    :s3_credentials => {
+      :access_key_id => Settings.secret.s3.key,
+      :secret_access_key => Settings.secret.s3.access_key
+    }
+  })
+
 end

@@ -46,7 +46,11 @@ class MapWadfilesController < ApplicationController
 #==============
 
   def download
-    redirect_to @map_wadfile.wadfile.expiring_url(10)
+    unless Rails.env.development?
+      redirect_to @map_wadfile.wadfile.expiring_url(10)
+    else
+      redirect_to @map_wadfile.wadfile.url
+    end
   end
 
 #==========
