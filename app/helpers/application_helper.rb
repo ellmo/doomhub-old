@@ -13,14 +13,14 @@ module ApplicationHelper
       str = <<-HTML
       <div>
         <span>#{user.login} |<span>
-        <span>#{link_to("Log out", destroy_user_session_path)}</span>
+        <span>#{link_to("Log out", destroy_user_session_path, :method => :delete)}</span>
       </div>
       HTML
     else
       str = <<-HTML
       <div>
         <span>#{link_to("Log in", new_user_session_path)}<span> |
-        <span>#{link_to("Register", user_session_path)}</span>
+        <span>#{link_to("Register", new_user_registration_path)}</span>
       </div>
       HTML
     end
