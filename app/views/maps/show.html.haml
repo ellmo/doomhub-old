@@ -9,6 +9,21 @@
   %li.panel.project-overview.active#overviewTab
     =render @map
   %li.panel.map-wadfiles#wadfilesTab
-    %p coming soon
+    .row
+      .ten.columns
+        - @map.map_wadfiles.each do |mwf|
+          .row
+            .three.columns
+              %div
+                = mwf.wadfile_updated_at.strftime('%c')
+            .nine.columns
+              %span= mwf.name
+              -if mwf.downloadable_by?(current_user)
+                %span (
+                %span= link_to 'download', download_project_map_map_wadfile_path(@project, @map, mwf)
+                %span )
+      .two.columns.resource-actions
+        - if @project.mappable_by? current_user
+          = link_to 'New Wadfile', new_project_map_map_wadfile_path(@project, @map), :class => 'small white nice button radius'
   %li.panel.map-screens#screensTab
     %p coming soon

@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   inherit_resources
   belongs_to :user, :optional => true, :finder => :find_by_login!
   load_and_authorize_resource :user
-  load_and_authorize_resource :project
+  load_and_authorize_resource :project, :through => :user
 
 #===============
 #= CRUD ACTIONS
@@ -75,15 +75,6 @@ class ProjectsController < ApplicationController
         format.html { render :action => "edit" }
         format.json { render :json => @project.errors, :status => :unprocessable_entity }
       end
-    end
-  end
-
-  def destroy
-    @project.destroy
-
-    respond_to do |format|
-      format.html { redirect_to projects_url }
-      format.json { head :ok }
     end
   end
 

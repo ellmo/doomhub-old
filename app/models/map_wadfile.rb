@@ -47,23 +47,23 @@ class MapWadfile < ActiveRecord::Base
 #= VALIDATIONS
 #============
 
-  # validates_attachment_presence :wadfile, :message => "you have to attach a file"
-  # validates_attachment_content_type :wadfile, :content_type => ["application/zip", "application/x-7z-compressed"]
-  validate :check_content_type
+  validate :check_attachment
 
-  def check_content_type
+  def check_attachment
     unless["application/zip", "application/x-7z-compressed"].include?(wadfile.content_type)
-      errors[:wadfile] << "File is not a valid zip / 7z achive"
+      errors[:wadfile] << "File must be a valid zip / 7z achive"
+    end
+    if wadfile.size > 1.megabyte
+      errors[:wadfile] << "File must not be over 1 MB"
     end
   end
-  # validates_attachment_size :wadfile, :less_than => 1.megabyte
 
 #==========
 #= METHODS
 #========
 
-  def downloadable?(user)
-    user == self.author
+  def downloadable_by?(user)
+    project.mappable_by?(user)
   end
 
 end

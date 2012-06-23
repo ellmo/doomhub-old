@@ -1,7 +1,9 @@
 .row
-  .nine.columns
+  .eight.columns
     %h4= map.name
-  .three.columns.resource-actions
+  .four.columns.resource-actions
+    - if can? :create, @project.mappable_by?(current_user)
+      = link_to 'New Wadfile', new_project_map_map_wadfile_path(@project, map), :class => 'small white nice button radius'
     - if can? :update, map
       = link_to 'Edit', edit_project_map_path(@project, map), :class => 'small white nice button radius'
     - if can? :destroy, map

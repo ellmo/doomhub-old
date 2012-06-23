@@ -12,9 +12,15 @@
     .row
       .nine.columns
         - @project.maps.each do |map|
-          = link_to map.name, [@project, map]
+          .row
+            %span= "#{map.lump}:"
+            %span= link_to map.name, [@project, map]
+            -unless map.map_wadfiles.empty?
+              %span (
+              = link_to "wadfiles", project_map_path(@project, map, :anchor => 'wadfiles')
+              %span )
       .three.columns.resource-actions
-        - if can? :update, @project
+        - if @project.mappable_by? current_user
           = link_to 'New Map', new_project_map_path(@project), :class => 'small white nice button radius'
   %li.panel.project-resources#resourcesTab
     %p coming soon

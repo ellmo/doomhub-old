@@ -13,16 +13,11 @@ class MapsController < ApplicationController
   inherit_resources
   belongs_to :project, :optional => true, :finder => :find_by_slug!
   load_and_authorize_resource :project
-  load_and_authorize_resource :map
+  load_and_authorize_resource :map, :through => :project
 
 #===============
 #= CRUD ACTIONS
 #=============
-
-public
-
-  def index
-  end
 
   def show
     build_breadcrumbs

@@ -13,30 +13,25 @@ class Ability
     elsif user.regular?
       # projects
       can :create, Project
-      can :read, Project, Project.includes(:item_invites).where(
-                            "projects.user_id = #{user.id} OR
-                            item_access_id = 1 OR
-                            (item_access_id = 3 AND projects.user_id = #{user.id}) OR
-                            (item_access_id = 2 AND item_invites.user_id = #{user.id})") do |p|
-        p.creator == user or
-        p.item_access_id == 1 or
-        (p.item_access_id == 2 and p.users.include? user) or
-        (p.item_access_id == 3 and p.creator == user)
+      can :read, Project, Project.readable_by(user) do |p|
+        p.users.include? user or p.item_access_id != 3
       end
       can [:destroy, :update], Project, :creator => {:id => user.id}
       # maps
-      can [:read, :create], Map
-      can [:destroy, :update, :download], Map do |m|; m.author == user; end
+      can :read, Map
+      can :create, Map, :project_id => Project.mappable_by(user).map(&:id)
+      can [:destroy, :update], Map do |m|; m.author == user; end
       # map wadfiles
-      can [:read, :create], MapWadfile
-      can [:destroy, :update, :download], MapWadfile do |mw|; mw.author == user; end
+      can [:read, :create], MapWadfile, :map => {:project_id => Project.mappable_by(user).map(&:id)}
+      can [:destroy, :update], MapWadfile do |mw|; mw.author == user; end
+      can :download, MapWadfile, :map => {:project_id => Project.mappable_by(user).map(&:id)}
       # users
       can [:update, :show], User, :id => user.id
     else
       can :show, User, :id => nil
       can :read, Project, :item_access_id => 1
       can :read, Map
-      can :read, MapWadfile
+      can [:read, :download], MapWadfile
     end
 
   end

@@ -7,7 +7,7 @@ class Map < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :author, :polymorphic => true
-  has_many :wadfiles, :class_name => "MapWadfile"
+  has_many :map_wadfiles#, :class_name => "MapWadfile"
 
 #==============
 #= FRIENDLY_ID
@@ -27,7 +27,7 @@ class Map < ActiveRecord::Base
 #========
 
   def has_5_wadfiles_max
-    errors.add_to_base("cannot have more than 5 wadfiles") if wadfiles.size > 5
+    errors.add_to_base("cannot have more than 5 wadfiles") if map_wadfiles.size > 5
   end
 
 end
