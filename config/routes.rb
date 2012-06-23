@@ -19,14 +19,20 @@ Doomhub::Application.routes.draw do
     resources :projects
   end
 
-  devise_for :users
 
-  devise_scope :user do
-    get "/login" => "devise/sessions#new"
-    get "/logout" => "devise/sessions#destroy"
-    get "/register" => "devise/registrations#new"
-    get "/edit_profile" => "devise/registrations#edit"
+  devise_for :users, :skip => [:sessions]
+  as :user do
+    get '/login' => 'devise/sessions#new', :as => :new_user_session
+    post '/register' => 'devise/sessions#create', :as => :user_session
+    delete '/logout' => 'devise/sessions#destroy', :as => :destroy_user_session
   end
+
+  # devise_scope :user do
+  #   get "/login" => "devise/sessions#new"
+  #   delete "/logout" => "devise/sessions#destroy"
+  #   get "/register" => "devise/registrations#new"
+  #   get "/edit_profile" => "devise/registrations#edit"
+  # end
 
   get "home/index"
 end

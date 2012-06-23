@@ -13,14 +13,14 @@ module ApplicationHelper
       str = <<-HTML
       <div>
         <span>#{user.login} |<span>
-        <span>#{link_to("Log out", logout_path)}</span>
+        <span>#{link_to("Log out", destroy_user_session_path)}</span>
       </div>
       HTML
     else
       str = <<-HTML
       <div>
-        <span>#{link_to("Log in", login_path)}<span> |
-        <span>#{link_to("Register", register_path)}</span>
+        <span>#{link_to("Log in", new_user_session_path)}<span> |
+        <span>#{link_to("Register", user_session_path)}</span>
       </div>
       HTML
     end
