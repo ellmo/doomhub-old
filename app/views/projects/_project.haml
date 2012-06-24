@@ -14,6 +14,6 @@
   %div
     %span{:style => "font-weight: bold;"} Source Port:
     %span= project.source_port.name
-.project-description
+.project-description{ :id => "project_desc_#{project.id}", :style => 'max-height:120px; overflow: auto;'}
   = project.description.html_safe
 
