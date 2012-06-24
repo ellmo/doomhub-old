@@ -1,3 +1,5 @@
+= tinymce_assets
+
 .form-600-border
   %h2= form_title
   = simple_form_for(@project) do |f|
@@ -11,7 +13,8 @@
       = f.input :name
       = f.input :url_name
       = f.association :item_access, :as => :radio_buttons
-      = f.input :description, :rows => 15
+      = f.input :description, :input_html => {:class => 'tinymce'}
+      = tinymce
       = f.association :game, :include_blank => false
       = f.association :source_port, :include_blank => false
       .centered-actions
