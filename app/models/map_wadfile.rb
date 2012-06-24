@@ -1,4 +1,5 @@
 class MapWadfile < ActiveRecord::Base
+  ALLOWED_MIMES = ["application/zip", "application/x-7z-compressed"]
 
 #========
 #= ASSOC
@@ -41,7 +42,7 @@ class MapWadfile < ActiveRecord::Base
   validate :check_attachment
 
   def check_attachment
-    unless["application/zip", "application/x-7z-compressed"].include?(wadfile.content_type)
+    if (MIME::Types.type_for(wadfile_file_name).map(&:to_s) & ALLOWED_MIMES).empty?
       errors[:wadfile] << "File must be a valid zip / 7z achive"
     end
     if wadfile.size > 1.megabyte
