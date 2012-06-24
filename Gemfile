@@ -10,13 +10,14 @@ gem 'haml-rails'
 gem 'haml_coffee_assets'
 gem 'inherited_resources'
 gem 'jquery-rails'
-gem 'squeel'
 gem 'mysql2'
 gem 'paperclip', '~> 2.7.0'
 gem 'rails', '3.1.3'
 gem 'rails-backbone'
 gem 'settingslogic'
 gem 'simple_form'
+gem 'squeel'
+gem 'tinymce-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

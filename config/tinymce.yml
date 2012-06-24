@@ -1,0 +1,15 @@
+theme: advanced
+width: 328px
+theme_advanced_buttons1:
+  - bold
+  - italic
+  - undersocre
+  - link
+  - unlink
+  - bullist
+  - numlist
+  - forecolor
+  - backcolor
+  - code
+theme_advanced_buttons2: ""
+theme_advanced_buttons3: ""
