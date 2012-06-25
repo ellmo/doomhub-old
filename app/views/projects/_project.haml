@@ -9,11 +9,16 @@
       = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete, :class => 'small white nice button radius'
 .row.project-game-data
   %div
+    %span{:style => "font-weight: bold;"} Author:
+    %span= project.creator.login
+  %div
     %span{:style => "font-weight: bold;"} Game:
     %span= project.game.name
   %div
     %span{:style => "font-weight: bold;"} Source Port:
     %span= project.source_port.name
-.project-description
-  = project.description.html_safe
+-unless project.description.empty?
+  .project-description-container
+    .project-description
+      = project.description.html_safe
 

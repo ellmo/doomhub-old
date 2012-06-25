@@ -7,8 +7,18 @@
 }
 
 .project-index.project-overview {
+  .project-description-container{
+    margin-top: 12px;
+    border-top: 2px solid #B4AFA5;
+    border-bottom: 2px solid #B4AFA5;
+    padding: 10px 0;
+  }
   .project-description{
     max-height:150px;
     overflow: auto;
+    ul {
+      padding-left: 24px !important;
+      list-style-type: disc;
+    }
   }
 }
