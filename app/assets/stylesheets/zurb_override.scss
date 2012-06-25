@@ -111,6 +111,8 @@ ul.breadcrumbs {
   li::before { content: "" !important; }
 }
 
+li { margin-bottom: 0px !important;}
+ul, ol { margin-bottom: 0px !important;}
 
 form.custom div.custom.dropdown {
   position: relative;
