@@ -1,0 +1,12 @@
+.panel.project-overview,
+.panel.project-maps,
+.panel.map-overview,
+.panel.map-wadfiles,
+.panel.map-screens{
+  .resource-actions { text-align: right !important; }
+}
+
+.project-index.project-overview {
+  max-height:120px;
+  overflow: auto;
+}
