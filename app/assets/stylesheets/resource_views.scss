@@ -9,9 +9,11 @@
 .project-index.project-overview {
   .project-description-container{
     margin-top: 12px;
-    border-top: 2px solid #B4AFA5;
-    border-bottom: 2px solid #B4AFA5;
-    padding: 10px 0;
+    border: 2px solid #B4AFA5;
+    padding: 10px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    background: white;
   }
   .project-description{
     max-height:150px;
