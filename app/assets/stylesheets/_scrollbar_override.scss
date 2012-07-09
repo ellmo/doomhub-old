@@ -1,0 +1,19 @@
+.jspVerticalBar{
+  z-index: 100 !important;
+  width: 12px;
+}
+
+.jspTrack {
+  background: #333 !important;
+  -webkit-box-shadow: 0 0 12px #000 inset;
+  -moz-box-shadow: 0 0 12px #000 inset;
+  box-shadow: 0 0 12px #000 inset;
+}
+
+.jspDrag{
+  left: 2px;
+  margin-right: 3px;
+  box-shadow: 0 0 4px black inset;
+  border-radius: 20px;
+  background: #555;
+}
