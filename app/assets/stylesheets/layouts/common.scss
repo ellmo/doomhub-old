@@ -1,0 +1,25 @@
+html { height: 100%; }
+body {
+  background-color: #444 !important;
+  @extend html;
+}
+
+.black {
+  background-color: black;
+}
+
+.gray {
+  background-color: #444;
+}
+
+.left-floate {
+  float: left;
+}
+
+.clear-floater {
+  clear: both;
+}
+
+h1, h2, h3, h4, h5 {
+  color: #ff9;
+}
