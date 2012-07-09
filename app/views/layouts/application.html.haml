@@ -7,26 +7,31 @@
     = csrf_meta_tags
     = favicon_link_tag
   %body{ :data => backbone_data_hash }
-    .container#topmost
-      .row.black#toolbar
-        .three.columns
-          #login-logout
-            = user_login_span_tag(current_user)
-        .six.columns#project-links
-          %div
-            .left Projects:
-            .left
-              %ul.nav-bar
-                =nav_link 'All', projects_path
-                - if can? :create, Project
-                  = nav_link 'Mine', user_projects_path(current_user)
-        .three.columns#profile-management
-          %div{ :style => 'margin-right: 8px;' }
-            - if can? :create, Project
-              = link_to 'New Project', new_project_path, :class => 'tiny nice button radius slim'
-            - if can? :update, current_user
-              = link_to 'Profile', current_user, :class => 'tiny nice button radius slim'
-      .row
+    .container#sticky_fadeout
+      .row{:style => "height:80px"}
         .twelve.columns
-          = render_breadcrumbs :builder => DoomhubBreadcrumbsBuilder
-          = yield
+          .row.black#toolbar
+            .three.columns
+              #login-logout
+                = user_login_span_tag(current_user)
+            .six.columns#project-links
+              %div
+                .left Projects:
+                .left
+                  %ul.nav-bar
+                    =nav_link 'All', projects_path
+                    - if can? :create, Project
+                      = nav_link 'Mine', user_projects_path(current_user)
+            .three.columns#profile-management
+              %div{ :style => 'margin-right: 8px;' }
+                - if can? :create, Project
+                  = link_to 'New Project', new_project_path, :class => 'tiny nice button radius slim'
+                - if can? :update, current_user
+                  = link_to 'Profile', current_user, :class => 'tiny nice button radius slim'
+          .row#breadcrumbs
+            .twelve.columns
+              = render_breadcrumbs :builder => DoomhubBreadcrumbsBuilder
+    .container#topmost
+      %div{:style => "dispaly:block; height:80px;"}
+      .row#main-yield
+        = yield

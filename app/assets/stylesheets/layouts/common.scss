@@ -5,11 +5,31 @@ body {
 }
 
 .black {
-  background-color: black;
+  background-color: black !important;
 }
 
-.gray {
-  background-color: #444;
+.black-border {
+  border: 1px black solid !important;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 4px 6px #000;
+  -moz-box-shadow: 0 4px 6px #000;
+  box-shadow: 0 4px 6px #000;
+}
+
+.c444 {
+  background-color: #444 !important;
+}
+
+.c333 {
+  background-color: #333 !important;
+}
+
+.c222 {
+  background-color: #222 !important;
+}
+
+.c111 {
+  background-color: #111 !important;
 }
 
 .left-floate {
@@ -21,5 +41,5 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-  color: #ff9;
+  color: $secondaryColor;
 }
