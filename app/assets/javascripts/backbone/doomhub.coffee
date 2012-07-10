@@ -33,6 +33,11 @@ $ ->
 
       isResizing = false
       container.jScrollPane()
+      $('#topmost > .jspContainer > .jspPane').css
+        width: '100%'
   ).trigger "resize"
-  $("body").css "overflow", "hidden"
-  win.trigger "resize"  unless $("#topmost").width() is win.width()
+
+  $("body").css
+    overflow: 'hidden'
+  win.trigger "resize" unless $("#topmost").width() is win.width()
+
