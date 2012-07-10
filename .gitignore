@@ -7,3 +7,4 @@ config/database.yml
 public/assets/*
 public/system/*
 *.sublime*
+app/assets/images/source_ports_logos/*
