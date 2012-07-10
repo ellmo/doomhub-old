@@ -6,9 +6,9 @@
   %dd= link_to 'Resources', '#resources'
 
 %ul.nice.contained.tabs-content.project-show
-  %li.panel.project-overview.active#overviewTab
+  %li.panel.c333.black-border.project-overview.active#overviewTab
     = render @project
-  %li.panel.project-maps#mapsTab
+  %li.panel.c333.black-border.project-maps#mapsTab
     .row
       .nine.columns
         - @project.maps.each do |map|
@@ -22,5 +22,5 @@
       .three.columns.resource-actions
         - if @project.mappable_by? current_user
           = link_to 'New Map', new_project_map_path(@project), :class => 'small white nice button radius'
-  %li.panel.project-resources#resourcesTab
+  %li.panel.c333.black-border.project-resources#resourcesTab
     %p coming soon

@@ -16,6 +16,14 @@ body {
   box-shadow: 0 4px 6px #000;
 }
 
+.tabs-content {
+  .black-border{
+    border-top: 0px !important;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+}
+
 .c444 {
   background-color: #444 !important;
 }
