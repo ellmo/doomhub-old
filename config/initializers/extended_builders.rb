@@ -21,10 +21,11 @@ module SimpleForm
       end
 
       def build_check_box(unchecked_value='0')
-        template.tag(:input, {:type => "checkbox", :style=> "display: none;",
-          :name => "#{object_name}[#{attribute_name}]",
+        name = "#{object_name}[#{attribute_name}]"
+        template.tag(:input, {:type => "checkbox", :tabindex => -1, :style => "display: none;",
+          :name => name,
           :id => [object_name.to_s, attribute_name.to_s].join("_")}) +
-        template.content_tag(:span, "", {:class => "custom checkbox zurb-checkbox-span-thingy"})
+        template.content_tag(:span, "", { :rel => name, :tabindex => 0, :class => "custom checkbox zurb-checkbox-span-thingy"})
       end
 
     end
