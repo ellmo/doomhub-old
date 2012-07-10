@@ -32,6 +32,7 @@
             .twelve.columns
               = render_breadcrumbs :builder => DoomhubBreadcrumbsBuilder
     .container#topmost
-      %div{:style => "dispaly:block; height:80px;"}
+      %div{:style => "dispaly:block; height:95px;"}
       .row#main-yield
-        = yield
+        .twelve.columns
+          = yield

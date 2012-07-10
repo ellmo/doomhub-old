@@ -4,8 +4,8 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
 */
 @import 'settings';
-@import 'layouts/*';
+@import 'layouts/*.scss';
 @import 'foundation';
 @import 'zurb_override';
-@import 'scrollbars/*';
+@import 'scrollbars/jscrollpane.css';
 @import 'scrollbar_override';
