@@ -50,4 +50,20 @@ body {
 
 h1, h2, h3, h4, h5 {
   color: $secondaryColor;
+  text-shadow: 2px 2px 8px black;
+}
+
+.dh-title {
+  height: 60px;
+  line-height:60px;
+  font-family: impact;
+  font-size: 4.6em;
+  color: #555;
+  .colored {
+    color: $secondaryColor;
+  }
+  span {
+    margin-left:-8px;
+    text-shadow: 2px 2px 14px black;
+  }
 }
