@@ -50,13 +50,13 @@ Doomhub::Application.configure do
   config.action_mailer.default_url_options = { :host => 'doomhub.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :address              => "mail.doomhub.com",
+      :address              => "smtp.gmail.com",
       :port                 => 587,
       :domain               => 'doomhub.com',
-      :user_name            => 'admin@doomhub.com',
-      :password             => nil,
-      :authentication       => 'login',
-      :enable_starttls_auto => false
+      :user_name            => Settings.secret.mail.admin_mail,
+      :password             => Settings.secret.mail.admin_pass,
+      :authentication       => 'plain',
+      :enable_starttls_auto => true
   }
 
   # Enable threaded mode
