@@ -23,7 +23,7 @@ $ ->
   #=================
   win = $(window)
   isResizing = false
-  win.bind("resize", ->
+  win.live("resize", ->
     unless isResizing
       isResizing = true
       container = $("#topmost")
@@ -44,15 +44,16 @@ $ ->
   #=========================================
   #= RESPONSIVE AND FOCUSABLE ZURB CHECKBOX
   #=======================================
-  zurb_chkbox = $('form input + .zurb-checkbox-span-thingy')
-  zurb_chkbox_input = $("form input[name='#{zurb_chkbox.attr('rel')}']")
-  window.zrb = zurb_chkbox_input
-  zurb_chkbox.keydown (e) ->
-    if e.keyCode is 32 or e.keyCode is 13
-      zurb_chkbox.toggleClass 'checked'
-      zurb_chkbox_input.attr('checked', zurb_chkbox.is('.checked'));
-
-
+  zurb_chkboxes = $('form input + .zurb-checkbox-span-thingy')
+  for _zurb_chekbox in zurb_chkboxes
+    do (_zurb_chekbox) ->
+      _zurb_chekbox = $(_zurb_chekbox)
+      _zurb_chkbox_input = $("form input[name='#{_zurb_chekbox.attr('rel')}']")
+      _zurb_chekbox.keydown (e) ->
+        if e.keyCode is 32 or e.keyCode is 13
+          e.preventDefault()
+          _zurb_chekbox.toggleClass 'checked'
+          _zurb_chekbox.attr('checked', _zurb_chekbox.is('.checked'));
 
   $("body").css
     overflow: 'hidden'
