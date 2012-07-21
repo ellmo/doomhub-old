@@ -32,17 +32,19 @@ class Project < ActiveRecord::Base
 #=======
 
   scope :readable_by, lambda { |user|
-    includes(:item_invites).where(
-      "projects.user_id = #{user.id} OR
-      item_access_id = 1 OR item_access_id = 2 OR
-      (item_access_id = 3 AND item_invites.user_id = #{user.id})")
+    includes(:item_invites).where {
+      (user_id == user.id) |
+      (public_view == true) |
+      (item_invites.user_id == user.id)
+    }
   }
 
   scope :mappable_by, lambda { |user|
-    includes(:item_invites).where(
-      "projects.user_id = #{user.id} OR
-      item_access_id = 1 OR
-      ((item_access_id = 2 OR item_access_id = 3) AND item_invites.user_id = #{user.id})")
+    includes(:item_invites).where{
+      (user_id == user.id) |
+      (public_join == true) |
+      (item_invites.user_id == user.id)
+    }
   }
 
 #==========
@@ -51,13 +53,13 @@ class Project < ActiveRecord::Base
 
   def readable_by?(user)
     user == creator or
-    item_access_id < 3 or
+    public_view or
     users.include? user
   end
 
   def mappable_by?(user)
     user == creator or
-    item_access_id == 1 or
+    public_join or
     users.include? user
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120619235729) do
+ActiveRecord::Schema.define(:version => 20120721012137) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -78,16 +78,17 @@ ActiveRecord::Schema.define(:version => 20120619235729) do
   end
 
   create_table "projects", :force => true do |t|
-    t.string   "name",                          :null => false
-    t.string   "url_name",                      :null => false
-    t.string   "slug",                          :null => false
+    t.string   "name",                              :null => false
+    t.string   "url_name",                          :null => false
+    t.string   "slug",                              :null => false
     t.text     "description"
-    t.integer  "game_id",                       :null => false
-    t.integer  "source_port_id",                :null => false
+    t.integer  "game_id",                           :null => false
+    t.integer  "source_port_id",                    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.integer  "item_access_id", :default => 1, :null => false
+    t.boolean  "public_view",    :default => true,  :null => false
+    t.boolean  "public_join",    :default => false, :null => false
   end
 
   add_index "projects", ["slug"], :name => "index_projects_on_slug", :unique => true

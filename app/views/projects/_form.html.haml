@@ -12,7 +12,8 @@
     .form-inputs
       = f.input :name
       = f.input :url_name
-      = f.association :item_access, :as => :radio_buttons
+      = f.input :public_view, :as => :zurb_boolean
+      = f.input :public_join, :as => :zurb_boolean
       = f.input :description, :input_html => {:class => 'tinymce'}
       = tinymce
       = f.association :game, :include_blank => false

@@ -65,3 +65,8 @@ form{
     color: white;
   }
 }
+
+abbr, acronym {
+  color: $secondaryColor;
+  border: 0px;
+}

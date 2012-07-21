@@ -14,7 +14,7 @@ class Ability
       # projects
       can :create, Project
       can :read, Project, Project.readable_by(user) do |p|
-        p.users.include? user or p.item_access_id != 3
+        p.users.include? user or p.public_view
       end
       can [:destroy, :update], Project, :creator => {:id => user.id}
       # maps
@@ -29,7 +29,7 @@ class Ability
       can [:update, :show], User, :id => user.id
     else
       can :show, User, :id => nil
-      can :read, Project, :item_access_id => 1
+      can :read, Project, :public_view => true
       can :read, Map
       can [:read, :download], MapWadfile
     end
