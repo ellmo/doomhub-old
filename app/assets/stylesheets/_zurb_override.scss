@@ -66,6 +66,13 @@ form{
   }
 }
 
+fieldset {
+  legend {
+    background: transparent;
+    color: $secondaryColor;
+  }
+}
+
 abbr, acronym {
   color: $secondaryColor;
   border: 0px;
