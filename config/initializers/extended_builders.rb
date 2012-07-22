@@ -25,12 +25,12 @@ module SimpleForm
         name = "#{object_name}[#{attribute_name}]"
         checked = object[attribute_name]
         hidden_input = template.tag(:input, {
-          :type => "checkbox",
+          :type => "text",
           :tabindex => -1,
+          :value => checked ? "1" : "0",
           :style => "display: none;",
           :name => name,
-          :id => [object_name.to_s, attribute_name.to_s].join("_"),
-          :checked => checked
+          :id => [object_name.to_s, attribute_name.to_s].join("_")
         })
         dummy_span = template.content_tag(:span, "", {
           :rel => name,
