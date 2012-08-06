@@ -72,7 +72,7 @@ Doomhub::Application.configure do
   Paperclip::Attachment.default_options.merge!({
     :storage => :s3,
     :bucket => "doomhub",
-    :url => "projects/:project_id/maps/:map_id/:name-:id.:extension",
+    :url => ":parent_class/:parent_id/:object_class/:object_id/:attachment_type/:name-:id.:extension",
     :path => ":url",
     :s3_permissions => :private,
     :s3_credentials => {

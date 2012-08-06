@@ -26,7 +26,7 @@ class MapWadfilesController < ApplicationController
   end
 
   def create
-    params[:map_wadfile][:name] = @map.slug
+    params[:map_wadfile][:name] ||= @map.slug
     @map_wadfile = @map.map_wadfiles.build(params[:map_wadfile])
     @map_wadfile.author = current_user unless (params[:map_wadfile][:author_id].present? and admin?)
 

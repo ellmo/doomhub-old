@@ -1,5 +1,4 @@
 class MapWadfile < ActiveRecord::Base
-  ALLOWED_MIMES = ["application/zip", "application/x-7z-compressed"]
 
 #========
 #= ASSOC
@@ -7,26 +6,8 @@ class MapWadfile < ActiveRecord::Base
 
   belongs_to :map
   belongs_to :author, :polymorphic => true
+
   delegate :project, :to => :map
-
-#============
-#= PAPERCLIP
-#==========
-
-  has_attached_file :wadfile,
-                    :keep_old_files => true
-
-  Paperclip.interpolates :project_id do |attachment, style|
-    attachment.instance.project.id
-  end
-
-  Paperclip.interpolates :map_id do |attachment, style|
-    attachment.instance.map.id
-  end
-
-  Paperclip.interpolates :name do |attachment, style|
-    attachment.instance.name.parameterize
-  end
 
 #=======
 #= ATTR
@@ -34,6 +15,38 @@ class MapWadfile < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :wadfile, :name
+
+#============
+#= PAPERCLIP
+#==========
+  ALLOWED_MIMES = ["application/zip", "application/x-7z-compressed"]
+
+  has_attached_file :wadfile,
+                    :keep_old_files => true
+
+  Paperclip.interpolates :parent_class do |attachment, style|
+    "projects"
+  end
+
+  Paperclip.interpolates :parent_id do |attachment, style|
+    attachment.instance.project.id
+  end
+
+  Paperclip.interpolates :object_class do |attachment, style|
+    'maps'
+  end
+
+  Paperclip.interpolates :object_id do |attachment, style|
+    attachment.instance.map.id
+  end
+
+  Paperclip.interpolates :attachment_type do |attachment, style|
+    'map_wadfiles'
+  end
+
+  Paperclip.interpolates :name do |attachment, style|
+    attachment.instance.name.parameterize
+  end
 
 #==============
 #= VALIDATIONS

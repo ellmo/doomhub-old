@@ -50,4 +50,9 @@ Doomhub::Application.configure do
       :enable_starttls_auto => true
   }
 
+  Paperclip::Attachment.default_options.merge!({
+    :url => "public/uploads/:parent_class/:parent_id/:object_class/:object_id/:attachment_type/:name-:id.:extension",
+    :path => ":url"
+  })
+
 end
