@@ -4,8 +4,8 @@ log/*.log
 tmp/
 .sass-cache/
 config/database.yml
+config/secret.yml
 public/assets/*
 public/system/*
 *.sublime*
 app/assets/images/source_ports_logos/*
-secretz.yml

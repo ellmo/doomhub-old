@@ -44,9 +44,10 @@ Doomhub::Application.configure do
       :address              => "smtp.gmail.com",
       :port                 => 587,
       :domain               => 'doomhub.com',
-      :user_name            => Settings.secret.mail.admin_mail,
-      :password             => Settings.secret.mail.admin_pass,
+      :user_name            => Secret.mail.admin_mail,
+      :password             => Secret.mail.admin_pass,
       :authentication       => 'plain',
       :enable_starttls_auto => true
   }
+
 end

@@ -53,8 +53,8 @@ Doomhub::Application.configure do
       :address              => "smtp.gmail.com",
       :port                 => 587,
       :domain               => 'doomhub.com',
-      :user_name            => Settings.secret.mail.admin_mail,
-      :password             => Settings.secret.mail.admin_pass,
+      :user_name            => Secret.mail.admin_mail,
+      :password             => Secret.mail.admin_pass,
       :authentication       => 'plain',
       :enable_starttls_auto => true
   }
@@ -76,8 +76,8 @@ Doomhub::Application.configure do
     :path => ":url",
     :s3_permissions => :private,
     :s3_credentials => {
-      :access_key_id => Settings.secret.s3.key,
-      :secret_access_key => Settings.secret.s3.access_key
+      :access_key_id => Secret.s3.key,
+      :secret_access_key => Secret.s3.access_key
     }
   })
 
