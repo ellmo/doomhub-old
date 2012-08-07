@@ -1,5 +1,24 @@
 class User < ActiveRecord::Base
 
+#========
+#= ASSOC
+#======
+
+  belongs_to :role, :class_name => "UserRole", :foreign_key => :user_role_id
+
+  has_many :comments
+  has_many :map_wadfiles
+  has_many :map_images
+  has_many :maps, :as => :author
+  has_many :projects
+
+#=======
+#= ATTR
+#=====
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :login
+
 #=========
 #= DEVISE
 #=======
@@ -18,22 +37,6 @@ class User < ActiveRecord::Base
 
   extend FriendlyId
   friendly_id :login
-
-#========
-#= ASSOC
-#======
-
-  belongs_to :role, :class_name => "UserRole", :foreign_key => :user_role_id
-  has_many :maps, :as => :author
-  has_many :projects
-  has_many :map_wadfiles
-
-#=======
-#= ATTR
-#=====
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :login
 
 #=============
 #= VALIDATION

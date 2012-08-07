@@ -1,11 +1,11 @@
-class MapWadfile < ActiveRecord::Base
+class MapImage < ActiveRecord::Base
 
 #========
 #= ASSOC
 #======
 
   belongs_to :map
-  belongs_to :author, :polymorphic => true
+  belongs_to :user
 
   delegate :project, :to => :map
 
@@ -13,17 +13,17 @@ class MapWadfile < ActiveRecord::Base
 #= ATTR
 #=====
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :wadfile, :name
+  attr_accessible :author_id, :author_type, :map_id, :name, :image
+  attr_accessor :image_file_name
 
 #============
 #= PAPERCLIP
 #==========
-  ALLOWED_MIMES = ["application/zip", "application/x-7z-compressed"]
 
-  has_attached_file :wadfile,
+  has_attached_file :image,
                     :keep_old_files => true,
-                    :url => Settings.paperclip.simple_storage_url
+                    :styles => { :thumb => "320x200>" },
+                    :url => Settings.paperclip.styled_storage_url
 
   Paperclip.interpolates :parent_class do |attachment, style|
     "projects"
@@ -42,7 +42,7 @@ class MapWadfile < ActiveRecord::Base
   end
 
   Paperclip.interpolates :attachment_type do |attachment, style|
-    'wadfiles'
+    'images'
   end
 
   Paperclip.interpolates :name do |attachment, style|
@@ -52,24 +52,18 @@ class MapWadfile < ActiveRecord::Base
 #==============
 #= VALIDATIONS
 #============
+  ALLOWED_MIMES = ["image/jpeg", "image/png", "image/tiff"]
 
   validate :check_attachment
 
   def check_attachment
-    if (MIME::Types.type_for(wadfile_file_name).map(&:to_s) & ALLOWED_MIMES).empty?
-      errors[:wadfile] << "File must be a valid zip / 7z achive"
+    if (MIME::Types.type_for(image_file_name).map(&:to_s) & ALLOWED_MIMES).empty?
+      errors[:wadfile] << "File must be a valid JPG / PNG / TIFF image"
     end
-    if wadfile.size > 1.megabyte
+    if image.size > 1.megabyte
       errors[:wadfile] << "File must not be over 1 MB"
     end
   end
 
-#==========
-#= METHODS
-#========
-
-  def downloadable_by?(user)
-    project.mappable_by?(user)
-  end
 
 end

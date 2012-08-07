@@ -12,6 +12,7 @@ Doomhub::Application.routes.draw do
           get :download
         end
       end
+      resources :map_images, :except => [:index]
     end
   end
 

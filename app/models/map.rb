@@ -5,9 +5,12 @@ class Map < ActiveRecord::Base
 #= ASSOC
 #======
 
-  belongs_to :project
   belongs_to :author, :polymorphic => true
-  has_many :map_wadfiles#, :class_name => "MapWadfile"
+  belongs_to :project
+
+  has_many :comments, :as => :commentable
+  has_many :map_images
+  has_many :map_wadfiles
 
 #==============
 #= FRIENDLY_ID
