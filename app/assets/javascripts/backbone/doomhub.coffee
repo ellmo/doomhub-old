@@ -26,13 +26,6 @@ $ ->
     do (_zurb_chekbox) ->
       _zurb_chekbox = $(_zurb_chekbox)
       _zurb_chkbox_input = $("form input[name='#{_zurb_chekbox.attr('rel')}']")
-<<<<<<< .merge_file_5vif5I
-      _zurb_chekbox.keydown (e) ->
-        if e.keyCode is 32 or e.keyCode is 13
-          e.preventDefault()
-          _zurb_chekbox.toggleClass 'checked'
-          _zurb_chkbox_input.attr('checked', _zurb_chekbox.is('.checked'));
-=======
       _zurb_chekbox.live "keydown", (e) ->
         if e.keyCode is 32 or e.keyCode is 13
           e.preventDefault()
@@ -41,7 +34,6 @@ $ ->
 
       _zurb_chekbox.live "click", (e) ->
         _zurb_chkbox_input.val( if $(e.target).is('.checked') then "0" else "1");
->>>>>>> .merge_file_Bl7JXH
 
   #===================
   #= FULL jScrollPane

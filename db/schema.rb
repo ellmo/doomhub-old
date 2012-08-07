@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< .merge_file_9S8U2k
-ActiveRecord::Schema.define(:version => 20120721012137) do
-=======
 ActiveRecord::Schema.define(:version => 20120806163930) do
->>>>>>> .merge_file_VW813l
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"

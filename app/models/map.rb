@@ -6,17 +6,12 @@ class Map < ActiveRecord::Base
 #======
 
   belongs_to :author, :polymorphic => true
-<<<<<<< .merge_file_9umQfT
-  has_many :map_wadfiles#, :class_name => "MapWadfile"
-
-=======
   belongs_to :project
 
   has_many :comments, :as => :commentable
   has_many :map_images
   has_many :map_wadfiles
 
->>>>>>> .merge_file_Dl1jiQ
 #==============
 #= FRIENDLY_ID
 #============

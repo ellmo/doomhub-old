@@ -1,14 +1,5 @@
 development:
     bucket_name: doomhub
-<<<<<<< .merge_file_601KPi
-    access_key_id: %{Settings.secret.s3.key}
-    aws_secret_access_key: %{Settings.secret.s3.access_key}
-
-production:
-    bucket_name: doomhub
-    access_key_id: %{Settings.secret.s3.key}
-    aws_secret_access_key: %{Settings.secret.s3.access_key}
-=======
     access_key_id: %{Secret.s3.key}
     aws_secret_access_key: %{Secret.s3.access_key}
 
@@ -16,4 +7,3 @@ production:
     bucket_name: doomhub
     access_key_id: %{Secret.s3.key}
     aws_secret_access_key: %{Secret.s3.access_key}
->>>>>>> .merge_file_iYLmgg
