@@ -17,3 +17,6 @@ UserRole.create(:name => "user")
 ItemAccess.create(:name => 'Public')
 ItemAccess.create(:name => 'Closed')
 ItemAccess.create(:name => 'Private')
+
+# User.create(:email => 'ellmo@ellmo.net', :password => 'asdasd', :login => 'ellmo', :user_role_id => 1)
+# User.create(:email => 'ellmo+1@ellmo.net', :password => 'asdasd', :login => 'ellmo2', :user_role_id => 3)
