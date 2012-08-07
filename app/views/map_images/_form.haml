@@ -1,0 +1,7 @@
+= simple_form_for([@project, @map, @map_image]) do |f|
+  = f.error_notification
+
+  = f.input :name
+  = f.input :image
+  .centered-actions
+    = f.button :submit

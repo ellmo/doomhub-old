@@ -53,8 +53,13 @@ Doomhub::Application.configure do
       :address              => "smtp.gmail.com",
       :port                 => 587,
       :domain               => 'doomhub.com',
+<<<<<<< .merge_file_eYOYu7
       :user_name            => Settings.secret.mail.admin_mail,
       :password             => Settings.secret.mail.admin_pass,
+=======
+      :user_name            => Secret.mail.admin_mail,
+      :password             => Secret.mail.admin_pass,
+>>>>>>> .merge_file_lMnKP3
       :authentication       => 'plain',
       :enable_starttls_auto => true
   }
@@ -72,12 +77,20 @@ Doomhub::Application.configure do
   Paperclip::Attachment.default_options.merge!({
     :storage => :s3,
     :bucket => "doomhub",
+<<<<<<< .merge_file_eYOYu7
     :url => "projects/:project_id/maps/:map_id/:name-:id.:extension",
     :path => ":url",
     :s3_permissions => :private,
     :s3_credentials => {
       :access_key_id => Settings.secret.s3.key,
       :secret_access_key => Settings.secret.s3.access_key
+=======
+    :path => ":url",
+    :s3_permissions => :private,
+    :s3_credentials => {
+      :access_key_id => Secret.s3.key,
+      :secret_access_key => Secret.s3.access_key
+>>>>>>> .merge_file_lMnKP3
     }
   })
 

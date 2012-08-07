@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< .merge_file_9S8U2k
 ActiveRecord::Schema.define(:version => 20120721012137) do
+=======
+ActiveRecord::Schema.define(:version => 20120806163930) do
+>>>>>>> .merge_file_VW813l
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -50,6 +54,18 @@ ActiveRecord::Schema.define(:version => 20120721012137) do
     t.string   "invitable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "map_images", :force => true do |t|
+    t.integer  "map_id"
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "imagefile_file_name"
+    t.string   "imagefile_content_type"
+    t.integer  "imagefile_file_size"
+    t.datetime "imagefile_updated_at"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
   create_table "map_wadfiles", :force => true do |t|

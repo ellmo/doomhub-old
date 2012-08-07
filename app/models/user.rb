@@ -1,5 +1,27 @@
 class User < ActiveRecord::Base
 
+<<<<<<< .merge_file_BOHExO
+=======
+#========
+#= ASSOC
+#======
+
+  belongs_to :role, :class_name => "UserRole", :foreign_key => :user_role_id
+
+  has_many :comments
+  has_many :map_wadfiles
+  has_many :map_images
+  has_many :maps, :as => :author
+  has_many :projects
+
+#=======
+#= ATTR
+#=====
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :login
+
+>>>>>>> .merge_file_tIsAuQ
 #=========
 #= DEVISE
 #=======
@@ -15,6 +37,7 @@ class User < ActiveRecord::Base
 #==============
 #= FRIENDLY_ID
 #============
+<<<<<<< .merge_file_BOHExO
 
   extend FriendlyId
   friendly_id :login
@@ -31,9 +54,11 @@ class User < ActiveRecord::Base
 #=======
 #= ATTR
 #=====
+=======
+>>>>>>> .merge_file_tIsAuQ
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :login
+  extend FriendlyId
+  friendly_id :login
 
 #=============
 #= VALIDATION

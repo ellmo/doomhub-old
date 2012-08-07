@@ -1,10 +1,10 @@
-class MapWadfilesController < ApplicationController
+class MapImagesController < ApplicationController
 
 #==========
 #= FILTERS
 #========
 
-  before_filter :authenticate_user!, :except => [:show, :index, :download]
+  before_filter :authenticate_user!, :except => [:show, :index]
 
 #============
 #= RESOURCES
@@ -15,7 +15,7 @@ class MapWadfilesController < ApplicationController
   belongs_to :map, :optional => true, :finder => :find_by_slug!
   load_and_authorize_resource :project
   load_and_authorize_resource :map, :through => :project
-  load_and_authorize_resource :map_wadfile, :through => :map
+  load_and_authorize_resource :map_image, :through => :map
 
 #===============
 #= CRUD ACTIONS
@@ -26,34 +26,18 @@ class MapWadfilesController < ApplicationController
   end
 
   def create
-<<<<<<< .merge_file_l0l2UM
-    params[:map_wadfile][:name] = @map.slug
-=======
-    params[:map_wadfile][:name] ||= @map.slug
->>>>>>> .merge_file_hHkj9O
-    @map_wadfile = @map.map_wadfiles.build(params[:map_wadfile])
-    @map_wadfile.author = current_user unless (params[:map_wadfile][:author_id].present? and admin?)
+    params[:map_image][:name] ||= @map.slug
+    @map_image = @map.map_images.build(params[:map_image])
+    @map_image.user = current_user unless (params[:map_image][:user_id].present? and admin?)
 
     respond_to do |format|
-      if @map_wadfile.save
+      if @map_image.save
         format.html { redirect_to [@project, @map], :notice => 'Wad file was successfully added.' }
         format.json { render :json => @map, :status => :created, :location => @map }
       else
         format.html { render :action => "new" }
         format.json { render :json => @map.errors, :status => :unprocessable_entity }
       end
-    end
-  end
-
-#================
-#= OTHER ACTIONS
-#==============
-
-  def download
-    unless Rails.env.development?
-      redirect_to @map_wadfile.wadfile.expiring_url(10)
-    else
-      redirect_to @map_wadfile.wadfile.url
     end
   end
 
@@ -68,7 +52,7 @@ class MapWadfilesController < ApplicationController
     add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb "Maps", project_path(@project, :anchor => 'maps')
     add_breadcrumb @map.name, project_map_path(@project, @map)
-    add_breadcrumb "Map Wadfiles", project_map_path(@project, @map, :anchor => 'wadfiles')
+    add_breadcrumb "Map Images", project_map_path(@project, @map, :anchor => 'images')
   end
 
 end

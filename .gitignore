@@ -4,6 +4,10 @@ log/*.log
 tmp/
 .sass-cache/
 config/database.yml
+<<<<<<< .merge_file_UWVVRC
+=======
+config/secret.yml
+>>>>>>> .merge_file_v2OIhC
 public/assets/*
 public/system/*
 *.sublime*

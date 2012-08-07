@@ -44,9 +44,22 @@ Doomhub::Application.configure do
       :address              => "smtp.gmail.com",
       :port                 => 587,
       :domain               => 'doomhub.com',
+<<<<<<< .merge_file_fFS5w1
       :user_name            => Settings.secret.mail.admin_mail,
       :password             => Settings.secret.mail.admin_pass,
       :authentication       => 'plain',
       :enable_starttls_auto => true
   }
+=======
+      :user_name            => Secret.mail.admin_mail,
+      :password             => Secret.mail.admin_pass,
+      :authentication       => 'plain',
+      :enable_starttls_auto => true
+  }
+
+  Paperclip::Attachment.default_options.merge!({
+    :path => ":url"
+  })
+
+>>>>>>> .merge_file_HAftR0
 end
