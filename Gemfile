@@ -37,4 +37,5 @@ group :development, :test do
   gem 'factory_girl_rails', '1.4.0'
   gem 'minitest', '~> 2.10.0'
   gem 'rspec-rails', '2.7.0'
+  gem 'sextant'
 end
