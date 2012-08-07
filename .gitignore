@@ -7,5 +7,6 @@ config/database.yml
 config/secret.yml
 public/assets/*
 public/system/*
+public/uploads/*
 *.sublime*
 app/assets/images/source_ports_logos/*
