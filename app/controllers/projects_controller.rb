@@ -21,18 +21,10 @@ class ProjectsController < ApplicationController
 
   def index
     build_breadcrumbs
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @projects }
-    end
   end
 
   def show
     build_breadcrumbs
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @project }
-    end
   end
 
   def new
@@ -69,7 +61,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
-        format.html { redirect_to edit_project_path(@project), :notice => 'Project was successfully updated.' }
+        format.html { redirect_to @project, :notice => 'Project was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render :action => "edit" }
