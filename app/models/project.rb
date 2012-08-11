@@ -1,12 +1,5 @@
 class Project < ActiveRecord::Base
 
-#==============
-#= FRIENDLY_ID
-#============
-
-  extend FriendlyId
-  friendly_id :url_name, :use => [:slugged, :history]
-
 #========
 #= ASSOC
 #======
@@ -19,6 +12,13 @@ class Project < ActiveRecord::Base
   has_many :item_invites, :as => :invitable
   has_many :maps, :dependent => :delete_all
   has_many :users, :through => :item_invites
+
+#==============
+#= FRIENDLY_ID
+#============
+
+  extend FriendlyId
+  friendly_id :url_name, :use => [:slugged, :history]
 
 #==============
 #= VALIDATIONS

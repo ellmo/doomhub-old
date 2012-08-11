@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 #=====
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :login
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :login, :user_role_id
 
 #=========
 #= DEVISE
