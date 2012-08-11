@@ -22,7 +22,7 @@ class MapImage < ActiveRecord::Base
 
   has_attached_file :image,
                     :keep_old_files => true,
-                    :styles => { :thumb => "320x200>" },
+                    :styles => { :thumb => "240x150", :medium => "320x200" },
                     :url => Settings.paperclip.styled_storage_url
 
   Paperclip.interpolates :parent_class do |attachment, style|
