@@ -11,13 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120806163930) do
+ActiveRecord::Schema.define(:version => 20120806170058) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
     t.string   "authorable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.integer  "user_id"
+    t.text     "content"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "friendly_id_slugs", :force => true do |t|
@@ -33,35 +42,35 @@ ActiveRecord::Schema.define(:version => 20120806163930) do
 
   create_table "games", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "default_lumpname"
   end
 
   create_table "item_accesses", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "item_invites", :force => true do |t|
     t.integer  "user_id"
     t.integer  "invitable_id"
     t.string   "invitable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "map_images", :force => true do |t|
     t.integer  "map_id"
     t.integer  "user_id"
     t.string   "name"
-    t.string   "imagefile_file_name"
-    t.string   "imagefile_content_type"
-    t.integer  "imagefile_file_size"
-    t.datetime "imagefile_updated_at"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "map_wadfiles", :force => true do |t|
@@ -69,8 +78,8 @@ ActiveRecord::Schema.define(:version => 20120806163930) do
     t.integer  "author_id"
     t.string   "author_type"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.string   "wadfile_file_name"
     t.string   "wadfile_content_type"
     t.integer  "wadfile_file_size"
@@ -82,8 +91,8 @@ ActiveRecord::Schema.define(:version => 20120806163930) do
     t.string   "name"
     t.text     "desc"
     t.string   "lump"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "slug"
     t.integer  "author_id"
     t.string   "author_type"
@@ -96,8 +105,8 @@ ActiveRecord::Schema.define(:version => 20120806163930) do
     t.text     "description"
     t.integer  "game_id",                           :null => false
     t.integer  "source_port_id",                    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.integer  "user_id"
     t.boolean  "public_view",    :default => true,  :null => false
     t.boolean  "public_join",    :default => false, :null => false
@@ -107,14 +116,14 @@ ActiveRecord::Schema.define(:version => 20120806163930) do
 
   create_table "source_ports", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "user_roles", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -128,8 +137,8 @@ ActiveRecord::Schema.define(:version => 20120806163930) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.string   "login"
     t.integer  "user_role_id",                          :default => 3
   end

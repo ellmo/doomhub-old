@@ -1,0 +1,8 @@
+.c333.black-border.project-short-summary
+  .row
+    .six.column
+      = link_to project.name, project
+    .three.column
+      = "#{project.game.name} / #{project.source_port.name}"
+    .three.column
+      = project.creator.login

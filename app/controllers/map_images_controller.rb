@@ -32,7 +32,7 @@ class MapImagesController < ApplicationController
 
     respond_to do |format|
       if @map_image.save
-        format.html { redirect_to [@project, @map], :notice => 'Wad file was successfully added.' }
+        format.html { redirect_to [@project, @map], :notice => 'Image was successfully added.' }
         format.json { render :json => @map, :status => :created, :location => @map }
       else
         format.html { render :action => "new" }

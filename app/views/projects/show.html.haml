@@ -1,7 +1,7 @@
 %p#notice= notice
 
 %dl.nice.contained.tabs
-  %dd= link_to 'Overwiew', '#overview', :class => 'active'
+  %dd= link_to 'Overview', '#overview', :class => 'active'
   %dd= link_to 'Maps', '#maps'
   %dd= link_to 'Resources', '#resources'
 
@@ -20,7 +20,7 @@
               = link_to "wadfiles", project_map_path(@project, map, :anchor => 'wadfiles')
               %span )
       .three.columns.resource-actions
-        - if @project.mappable_by? current_user
+        -if @project.mappable_by? current_user
           = link_to 'New Map', new_project_map_path(@project), :class => 'small white nice button radius'
   %li.panel.c333.black-border.project-resources#resourcesTab
     %p coming soon

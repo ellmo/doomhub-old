@@ -6,9 +6,9 @@
   %dd= link_to 'Screens', '#screens'
 
 %ul.nice.contained.tabs-content
-  %li.panel.project-overview.active#overviewTab
+  %li.panel.c333.black-border.project-overview.active#overviewTab
     =render @map
-  %li.panel.map-wadfiles#wadfilesTab
+  %li.panel.c333.black-border.map-wadfiles#wadfilesTab
     .row
       .ten.columns
         - @map.map_wadfiles.each do |mwf|
@@ -25,5 +25,5 @@
       .two.columns.resource-actions
         - if @project.mappable_by? current_user
           = link_to 'New Wadfile', new_project_map_map_wadfile_path(@project, @map), :class => 'small white nice button radius'
-  %li.panel.map-screens#screensTab
+  %li.panel.c333.black-border.map-screens#screensTab
     %p coming soon

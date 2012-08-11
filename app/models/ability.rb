@@ -21,6 +21,9 @@ class Ability
       can :read, Map
       can :create, Map, :project_id => Project.mappable_by(user).map(&:id)
       can [:destroy, :update], Map do |m|; m.author == user; end
+      # map images
+      can :create, MapImage, :map => {:project_id => Project.mappable_by(user).map(&:id)}
+      can [:destroy, :update], MapImage do |mw|; mw.author == user; end
       # map wadfiles
       can [:read, :create], MapWadfile, :map => {:project_id => Project.mappable_by(user).map(&:id)}
       can [:destroy, :update], MapWadfile do |mw|; mw.author == user; end
@@ -31,6 +34,7 @@ class Ability
       can :show, User, :id => nil
       can :read, Project, :public_view => true
       can :read, Map
+      can :read, MapImage
       can [:read, :download], MapWadfile
     end
 

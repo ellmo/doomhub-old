@@ -1,24 +1,32 @@
-.row
-  .eight.columns
-    %h4= link_to_unless_current project.name, project
-  .four.columns.resource-actions
-    - if can? :update, project
-      = link_to 'Edit', edit_project_path(project), :class => 'small white nice button radius'
-      = link_to 'New Map', new_project_map_path(project), :class => 'small white nice button radius'
-    - if can? :destroy, project
-      = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete, :class => 'small white nice button radius'
-.row.project-game-data
-  %div
-    %span{:style => "font-weight: bold;"} Author:
-    %span= project.creator.login
-  %div
-    %span{:style => "font-weight: bold;"} Game:
-    %span= project.game.name
-  %div
-    %span{:style => "font-weight: bold;"} Source Port:
-    %span= project.source_port.name
--unless project.description.empty?
-  .project-description-container
-    .project-description
-      = project.description.html_safe
+=render 'titlebar', :project => project
+#project-show
+  .row
+    .seven.columns
+      .row
+        #project-game-data.c222.black-border.tall
+          %div
+            %span{:style => "font-weight: bold;"} Game:
+            %span= project.game.name
+          %div
+            %span{:style => "font-weight: bold;"} Source Port:
+            %span= project.source_port.name
+          %div
+            %span{:style => "font-weight: bold;"} Author:
+            %span= project.creator.login
+          %div
+            %span{:style => "font-weight: bold;"} Founded:
+            %span= project.created_at.strftime("%B #{project.created_at.day.ordinalize}, %Y")
+    .five.columns
+      .row
+        #project-slideshow-container.c222.black-border.tall
+          #project-slideshow
+            #project-orbit
+              - project.map_images.each do |mi|
+                = image_tag image_path(mi.image.url(:medium))
+
+
+  -unless project.description.empty?
+    #project-description-container.row
+      #project-description.c222.black-border
+        = project.description.html_safe
 

@@ -1,5 +1,10 @@
 %h2= (@user ? "My projects" : "All projects")
-
-- @projects.each do |project|
-  .panel.c333.black-border.project-index.project-overview
-    =render project
+.c222.black-border.project-short-summary.header
+  .row
+    .six.column
+      %h5 Project name
+    .three.column
+      %h5 Game / Source Port
+    .three.column
+      %h5 Founder
+= render :partial => 'short_summary', :collection => @projects, :as => :project

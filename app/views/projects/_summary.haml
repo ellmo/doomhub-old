@@ -1,0 +1,13 @@
+.c333.black-border
+  =render 'titlebar', :project => project
+  .row
+    .nine.columns
+      .project-description-container
+        .project-description.c222.black-border
+          = project.description.html_safe
+    .three.columns
+      .row.project-summary
+        .c222.project-slideshow.black-border.short
+          = image_tag 'doommy.jpg', :width => 170
+        .c222.project-game-data.black-border
+          %span= "for #{project.source_port.name} #{project.game.name} by #{project.creator.login}"

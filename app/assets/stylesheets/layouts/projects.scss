@@ -1,0 +1,73 @@
+#project-topbar, .project-topbar {
+  margin-bottom: 15px !important;
+  h4 { margin: 0px !important; }
+}
+
+#project-slideshow, .project-slideshow {
+  text-align: center;
+  line-height: 0;
+}
+
+#project-description, .project-description {
+  padding: 12px;
+}
+
+//===============
+// SHORT SUMMARY
+//=============
+
+.project-short-summary {
+  margin-bottom: 8px;
+  padding: 8px;
+}
+.project-short-summary.header h5 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.project-short-summary.header { margin-bottom: 20px; }
+
+//=========
+// SUMMARY
+//=======
+
+.project-index {
+  .project-game-data{
+    padding: 4px 0 4px 4px;
+    margin: 8px 15px 0 15px;
+    font-size: 11px;
+  }
+  .project-slideshow{
+    margin: 8px 15px 0 15px;
+  }
+  .project-description {
+    margin: 0 15px 0 15px;
+    min-height: 186px;
+    max-height: 186px;
+  }
+}
+
+//======
+// SHOW
+//====
+
+#project-show{
+  #project-game-data{
+    padding: 12px 0 12px 12px;
+    min-height: 203px;
+    max-height: 203px;
+    margin: 0 8px 0 16px;
+  }
+  #project-slideshow-container {
+    margin: 0px 16px 0 8px;
+    min-height: 203px;
+    max-height: 203px;
+    #project-slideshow {
+      margin: auto;
+      height: 200px;
+      width: 320px;
+    }
+  }
+  #project-description {
+    margin: 20px 16px 0 16px;
+  }
+}
