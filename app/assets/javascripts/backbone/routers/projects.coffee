@@ -19,6 +19,7 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
     @view ?= new Doomhub.Views.Projects.Index({ el: $('#topmost'), col: @collection })
 
   show: ->
+    @view ?= new Doomhub.Views.Projects.Show({ el: $('#topmost'), col: @collection })
 
   new: ->
     @form()
