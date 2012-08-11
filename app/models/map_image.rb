@@ -13,8 +13,7 @@ class MapImage < ActiveRecord::Base
 #= ATTR
 #=====
 
-  attr_accessible :author_id, :author_type, :map_id, :name, :image
-  attr_accessor :image_file_name
+  attr_accessible :author_id, :author_type, :map_id, :name, :image, :image_file_name
 
 #============
 #= PAPERCLIP
@@ -23,26 +22,16 @@ class MapImage < ActiveRecord::Base
   has_attached_file :image,
                     :keep_old_files => true,
                     :styles => { :thumb => "240x150", :medium => "320x200" },
-                    :url => Settings.paperclip.styled_storage_url
+                    :path => Settings.paperclip.project.map.image.storage_path,
+                    :url => ( Rails.env.production? ? :path : Settings.paperclip.project.map.image.storage_url)
 
-  Paperclip.interpolates :parent_class do |attachment, style|
-    "projects"
-  end
 
-  Paperclip.interpolates :parent_id do |attachment, style|
+  Paperclip.interpolates :project_id do |attachment, style|
     attachment.instance.project.id
   end
 
-  Paperclip.interpolates :object_class do |attachment, style|
-    'maps'
-  end
-
-  Paperclip.interpolates :object_id do |attachment, style|
+  Paperclip.interpolates :map_id do |attachment, style|
     attachment.instance.map.id
-  end
-
-  Paperclip.interpolates :attachment_type do |attachment, style|
-    'images'
   end
 
   Paperclip.interpolates :name do |attachment, style|

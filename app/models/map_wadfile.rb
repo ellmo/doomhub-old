@@ -23,26 +23,15 @@ class MapWadfile < ActiveRecord::Base
 
   has_attached_file :wadfile,
                     :keep_old_files => true,
-                    :url => Settings.paperclip.simple_storage_url
+                    :path => Settings.paperclip.project.map.wadfile.storage_path,
+                    :url => ( Rails.env.production? ? :path : Settings.paperclip.project.map.wadfile.storage_url)
 
-  Paperclip.interpolates :parent_class do |attachment, style|
-    "projects"
-  end
-
-  Paperclip.interpolates :parent_id do |attachment, style|
+  Paperclip.interpolates :project_id do |attachment, style|
     attachment.instance.project.id
   end
 
-  Paperclip.interpolates :object_class do |attachment, style|
-    'maps'
-  end
-
-  Paperclip.interpolates :object_id do |attachment, style|
+  Paperclip.interpolates :map_id do |attachment, style|
     attachment.instance.map.id
-  end
-
-  Paperclip.interpolates :attachment_type do |attachment, style|
-    'wadfiles'
   end
 
   Paperclip.interpolates :name do |attachment, style|
