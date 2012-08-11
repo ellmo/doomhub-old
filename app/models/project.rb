@@ -12,6 +12,7 @@ class Project < ActiveRecord::Base
   has_many :item_invites, :as => :invitable
   has_many :maps, :dependent => :delete_all
   has_many :users, :through => :item_invites
+  has_many :map_images, :through => :maps
 
 #==============
 #= FRIENDLY_ID
