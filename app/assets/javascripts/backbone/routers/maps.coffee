@@ -27,5 +27,5 @@ class @Doomhub.Routers.Maps extends Doomhub.Routers.BASE
   wadfiles: ->
     @ztb.switch_to_tab('wadfiles')
 
-  resources: ->
-    @ztb.switch_to_tab('resources')
+  screens: ->
+    @ztb.switch_to_tab('screens')
