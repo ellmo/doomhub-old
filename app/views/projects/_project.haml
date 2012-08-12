@@ -20,9 +20,13 @@
       .row
         #project-slideshow-container.c222.black-border.tall
           #project-slideshow
-            #project-orbit
-              - project.map_images.each do |mi|
-                = image_tag image_path(mi.image.expiring_url(5, :medium))
+            -if project.map_images.present?
+              #project-orbit
+                - project.map_images.each do |mi|
+                  = image_tag image_path(mi.image.expiring_url(5, :medium))
+            -else
+              #project-empty-orbit
+                This project has no images :(
 
 
   -unless project.description.empty?
