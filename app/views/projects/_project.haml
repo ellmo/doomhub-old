@@ -22,7 +22,7 @@
           #project-slideshow
             #project-orbit
               - project.map_images.each do |mi|
-                = image_tag image_path(mi.image.url(:medium))
+                = image_tag image_path(mi.image.expiring_url(5, :medium))
 
 
   -unless project.description.empty?

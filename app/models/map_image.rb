@@ -22,8 +22,8 @@ class MapImage < ActiveRecord::Base
   has_attached_file :image,
                     :keep_old_files => true,
                     :styles => { :thumb => "240x150", :medium => "320x200" },
-                    :url => Settings.paperclip.project.map.image.storage_url,
-                    :path => ( Rails.env.production? ? :url : Settings.paperclip.project.map.image.storage_path )
+                    :url => ":path",
+                    :path => Settings.paperclip.project.map.image.storage_path
 
 
 

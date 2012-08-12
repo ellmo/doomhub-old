@@ -1,9 +1,0 @@
-development:
-    bucket_name: doomhub
-    access_key_id: %{Secret.s3.key}
-    aws_secret_access_key: %{Secret.s3.access_key}
-
-production:
-    bucket_name: doomhub
-    access_key_id: %{Secret.s3.key}
-    aws_secret_access_key: %{Secret.s3.access_key}

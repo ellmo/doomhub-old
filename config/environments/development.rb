@@ -51,7 +51,15 @@ Doomhub::Application.configure do
   }
 
   Paperclip::Attachment.default_options.merge!({
-    :path => ":url"
+    :storage => :s3,
+    :bucket => "doomhub",
+    :s3_permissions => :private,
+    :s3_protocol => 'https',
+    :s3_host_name => 's3-eu-west-1.amazonaws.com',
+    :s3_credentials => {
+      :access_key_id => Secret.s3.key,
+      :secret_access_key => Secret.s3.access_key
+    }
   })
 
 end
