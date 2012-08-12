@@ -1,11 +1,11 @@
-.panel
-  %h5= "Looks like you're trying to add a new Image for \"#{@map.name}\", keep in mind:"
-  %p Only PNG, JPG and TIFF images are allowed
-  %p The maximum size of an image is 1 MB
-
-.form-border
-  %h2 New map
-  = render 'form'
-
-.form-links
-  = link_to 'Back'
+.twelve.columns
+  .row
+    .eight.columns.centered.c222.black-border
+      .c222
+        %h5= "Adding a new image for `#{@map.name}`, keep in mind:"
+        %ul
+          %li Only PNG, JPG and TIFF images are allowed
+          %li The maximum size of an image is 1 MB
+      .form-border
+        %h2 New Image
+        = render 'form'
