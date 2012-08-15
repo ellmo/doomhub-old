@@ -1,0 +1,6 @@
+-project.map_images.in_groups_of(3).each do |img_group|
+  .row.image-gallery-row
+    -img_group.compact.each do |img|
+      .four.columns
+        .c444.black-border
+          .image-div{ :"data-original-height" => img.height.to_s, :style => "background:url(#{img.image.expiring_url(nil, :thumb)}) no-repeat center center; height:150px;", :id => "map-image-#{img.id}", :rel => auth_url_project_map_map_image_path(project, img.map, img),  }

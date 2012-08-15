@@ -1,0 +1,3 @@
+.reveal-modal.doomhub-image{ :rel => @image_id }
+  %div{ :style => "background:url(#{@image_url}) no-repeat center center; height:100%; background-size:contain;" }
+  %a.close-reveal-modal &#215

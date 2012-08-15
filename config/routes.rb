@@ -12,7 +12,11 @@ Doomhub::Application.routes.draw do
           get :download
         end
       end
-      resources :map_images, :except => [:index]
+      resources :map_images, :except => [:index] do
+        member do
+          get :auth_url
+        end
+      end
     end
   end
 

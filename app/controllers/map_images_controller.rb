@@ -26,8 +26,8 @@ class MapImagesController < ApplicationController
   end
 
   def create
-    params[:map_image][:name] ||= @map.slug
     @map_image = @map.map_images.build(params[:map_image])
+    @map_image.name = params[:map_image][:name].present? ? params[:map_image][:name] : @map.slug
     @map_image.user = current_user unless (params[:map_image][:user_id].present? and admin?)
 
     respond_to do |format|
@@ -39,6 +39,14 @@ class MapImagesController < ApplicationController
         format.json { render :json => @map.errors, :status => :unprocessable_entity }
       end
     end
+  end
+
+#================
+#= OTHER ACTIONS
+#==============
+
+  def auth_url
+    render :json => { :url => @map_image.image.expiring_url(nil) }
   end
 
 #==========

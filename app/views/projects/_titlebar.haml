@@ -1,9 +1,11 @@
+-title = (defined?(title) ? title : project.name)
 .row.project-topbar
   .eight.columns
-    %h4= link_to_unless_current project.name, project
+    %h4= link_to_unless_current(title || project.name, project)
   .four.columns.resource-actions
-    -if can? :update, project
+    -if can?(:update, project) and buttons.include? :edit
       = link_to 'Edit', edit_project_path(project), :class => 'small white nice button radius'
+    -if can?(:update, project) and buttons.include? :new_map
       = link_to 'New Map', new_project_map_path(project), :class => 'small white nice button radius'
-    -if can? :destroy, project
+    -if can?(:destroy, project) and buttons.include? :destroy
       = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete, :class => 'small white nice button radius alert'
