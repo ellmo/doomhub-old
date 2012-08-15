@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120806170058) do
+ActiveRecord::Schema.define(:version => 20120815154448) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(:version => 20120806170058) do
     t.datetime "image_updated_at"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+    t.integer  "width"
+    t.integer  "height"
   end
 
   create_table "map_wadfiles", :force => true do |t|

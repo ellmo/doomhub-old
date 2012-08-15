@@ -13,7 +13,8 @@ class MapImage < ActiveRecord::Base
 #= ATTR
 #=====
 
-  attr_accessible :author_id, :author_type, :map_id, :name, :image, :image_file_name
+  attr_accessible :author_id, :author_type, :map_id, :name, :height, :width,
+    :image, :image_file_name
 
 #============
 #= PAPERCLIP
@@ -55,5 +56,26 @@ class MapImage < ActiveRecord::Base
     end
   end
 
+#============
+#= CALLBACKS
+#==========
+  before_create :save_geometry
+
+  def save_geometry
+    binding.pry
+    geo = get_geometry
+    if geo
+      self.width = geo.width
+      self.height = geo.height
+    end
+  end
+
+  def get_geometry(style = :original)
+    begin
+      Paperclip::Geometry.from_file(image.queued_for_write[style])
+    rescue
+      nil
+    end
+  end
 
 end
