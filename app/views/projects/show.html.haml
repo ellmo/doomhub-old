@@ -3,12 +3,12 @@
 %dl.nice.contained.tabs
   %dd= link_to 'Overview', '#overview', :class => 'active'
   %dd= link_to 'Maps', '#maps'
+  %dd= link_to 'Images', '#images'
   %dd= link_to 'Resources', '#resources'
-
-%ul.nice.contained.tabs-content.project-show
-  %li.panel.c333.black-border.project-overview.active#overviewTab
+%ul.nice.contained.tabs-content#project-show
+  %li.c333.black-border.project-overview.active#overviewTab
     = render @project
-  %li.panel.c333.black-border.project-maps#mapsTab
+  %li.c333.black-border.project-maps#mapsTab
     .row
       .nine.columns
         - @project.maps.each do |map|
@@ -22,5 +22,7 @@
       .three.columns.resource-actions
         -if @project.mappable_by? current_user
           = link_to 'New Map', new_project_map_path(@project), :class => 'small white nice button radius'
-  %li.panel.c333.black-border.project-resources#resourcesTab
-    %p coming soon
+  %li.c333.black-border.project-images#imagesTab
+    = render 'shared/image_gallery', :project => @project
+  %li.c333.black-border.project-resources#resourcesTab
+    coming soon

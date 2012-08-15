@@ -4,6 +4,7 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
     '' : 'overview'
     'overview' : 'overview'
     'maps' : 'maps'
+    'images' : 'images'
     'resources' : 'resources'
 
   constructor: ->
@@ -45,6 +46,9 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
 
   maps: ->
     @ztb.switch_to_tab('maps')
+
+  images: ->
+    @ztb.switch_to_tab('images')
 
   resources: ->
     @ztb.switch_to_tab('resources')

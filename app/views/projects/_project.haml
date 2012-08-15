@@ -1,36 +1,36 @@
 =render 'titlebar', :project => project
-#project-show
-  .row
-    .seven.columns
-      .row
-        #project-game-data.c222.black-border.tall
-          %div
-            %span{:style => "font-weight: bold;"} Game:
-            %span= project.game.name
-          %div
-            %span{:style => "font-weight: bold;"} Source Port:
-            %span= project.source_port.name
-          %div
-            %span{:style => "font-weight: bold;"} Author:
-            %span= project.creator.login
-          %div
-            %span{:style => "font-weight: bold;"} Founded:
-            %span= project.created_at.strftime("%B #{project.created_at.day.ordinalize}, %Y")
-    .five.columns
-      .row
-        #project-slideshow-container.c222.black-border.tall
-          #project-slideshow
-            -if project.map_images.present?
-              #project-orbit
-                - project.map_images.each do |mi|
-                  = image_tag image_path(mi.image.expiring_url(5, :medium))
-            -else
-              #project-empty-orbit
-                This project has no images :(
+.row
+  .seven.columns
+    .row
+      #project-game-data.c222.black-border.tall
+        %div
+          %span{:style => "font-weight: bold;"} Game:
+          %span= project.game.name
+        %div
+          %span{:style => "font-weight: bold;"} Source Port:
+          %span= project.source_port.name
+        %div
+          %span{:style => "font-weight: bold;"} Author:
+          %span= project.creator.login
+        %div
+          %span{:style => "font-weight: bold;"} Founded:
+          %span= project.created_at.strftime("%B #{project.created_at.day.ordinalize}, %Y")
+  .five.columns
+    .row
+      #project-slideshow-container.c222.black-border.tall
+        #project-slideshow
+          -if project.map_images.present?
+            #project-orbit
+              - project.map_images.each do |mi|
+                %div
+                  = image_tag image_path(mi.image.expiring_url(nil, :medium))
+          -else
+            #project-empty-orbit
+              This project has no images :(
 
 
-  -unless project.description.empty?
-    #project-description-container.row
-      #project-description.c222.black-border
-        = project.description.html_safe
+-unless project.description.empty?
+  #project-description-container.row
+    #project-description.c222.black-border
+      = project.description.html_safe
 
