@@ -5,7 +5,7 @@ class Devise::SessionsController < ApplicationController
 
   # GET /resource/sign_in
   def new
-    add_breadcrumb "login", request.path
+    add_breadcrumb "log in", request.path
     resource = build_resource
     clean_up_passwords(resource)
     respond_with_navigational(resource, stub_options(resource)){ render_with_scope :new }

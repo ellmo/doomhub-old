@@ -4,12 +4,15 @@ class Devise::PasswordsController < ApplicationController
 
   # GET /resource/password/new
   def new
+    add_breadcrumb "forgot password", request.path
+
     build_resource({})
     render_with_scope :new
   end
 
   # POST /resource/password
   def create
+
     self.resource = resource_class.send_reset_password_instructions(params[resource_name])
 
     if successfully_sent?(resource)
@@ -21,6 +24,8 @@ class Devise::PasswordsController < ApplicationController
 
   # GET /resource/password/edit?reset_password_token=abcdef
   def edit
+    add_breadcrumb "change password", request.path
+
     self.resource = resource_class.new
     resource.reset_password_token = params[:reset_password_token]
     render_with_scope :edit

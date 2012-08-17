@@ -1,8 +1,10 @@
-.form-border
-  %h2 Forgot your password?
-  = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
-    = f.error_notification
-    .inputs
-      = f.input :email, :required => true
-    .actions
-      = f.button :submit, "Send me reset password instructions", :class => "nice"
+.twelve.columns
+  .row
+    .eight.columns.centered.c222.black-border
+      %h2 Forgot your password?
+      = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+        = f.error_notification
+        .inputs
+          = f.input :email, :required => true
+        .centered-actions
+          = f.button :submit, "Send me reset password instructions", :class => "nice"
