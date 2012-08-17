@@ -11,6 +11,7 @@ window.Doomhub =
     Maps: {}
     Projects: {}
     MapWadfiles: {}
+    DeviseRegistrations: {}
   Models: {}
   Collections: {}
   Libs: {}
@@ -18,9 +19,9 @@ window.Doomhub =
 $ ->
   init = new Doomhub.Initializer()
 
-  #=========================================
-  #= RESPONSIVE AND FOCUSABLE ZURB CHECKBOX
-  #=======================================
+#=========================================
+#= RESPONSIVE AND FOCUSABLE ZURB CHECKBOX
+#=======================================
   zurb_chkboxes = $('form input + .zurb-checkbox-span-thingy')
   for _zurb_chekbox in zurb_chkboxes
     do (_zurb_chekbox) ->
@@ -35,9 +36,9 @@ $ ->
       _zurb_chekbox.live "click", (e) ->
         _zurb_chkbox_input.val( if $(e.target).is('.checked') then "0" else "1");
 
-  #===================
-  #= FULL jScrollPane
-  #=================
+#===================
+#= FULL jScrollPane
+#=================
 
   win = $(window)
   isResizing = false

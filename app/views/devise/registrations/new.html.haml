@@ -1,11 +1,16 @@
-.form-border
-  %h2 Register
-  = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-    = f.error_notification
-    .inputs
-      = f.input :login, :required => true, :autofocus => true
-      = f.input :email, :required => true
-      = f.input :password, :required => true
-      = f.input :password_confirmation, :required => true
-    .centered-actions
-      = f.button :submit, "Register", :class => "nice"
+.twelve.columns
+  .row
+    .eight.columns.centered.c222.black-border
+      %h2 Register
+      #eula-notice
+        %span By registering you accept the
+        =link_to 'EULA', '#', :id => 'eula-link'
+      = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+        = f.error_notification
+        .inputs
+          = f.input :login, :required => true, :autofocus => true
+          = f.input :email, :required => true
+          = f.input :password, :required => true
+          = f.input :password_confirmation, :required => true
+        .centered-actions
+          = f.button :submit, "Register", :class => "nice"

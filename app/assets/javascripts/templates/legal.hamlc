@@ -1,0 +1,68 @@
+.panel.c333.black-border.reveal-modal.doomhub-popup#eula
+  %a.close-reveal-modal &#215
+  #legal-container
+    .legal
+      %h1 END USER LICENSE AGREEMENT
+      %ol
+        %li
+          %span I will
+          %span.emphasize not
+          %span be a dick.
+        %li
+          %span I am the copyright holder
+          %span.emphasize or
+          %span I was given permission (
+          %span.emphasize and
+          %span still have it ) by the original copyright holders to the contents of stuff I upload.
+        %li
+          %span I will
+          %span.emphasize not
+          %span upload porn, goatse, photos of mutilated corpses and other sick shit like that.
+        %li
+          %span I will
+          %span.emphasize not
+          %span be a dick.
+        %li
+          %span I will
+          %span.emphasize not
+          %span make real-life threats towards other users of Doomhub.com&trade;
+        %li
+          %div
+            %span I will
+            %span.emphasize not
+            %span conduct illegal activities by the means of comments and / or uploads.
+          .cutin
+            %span This includes,
+            %span.emphasize but is not limited
+            %span to:
+            %ul.disc
+              %li
+                %span Trying to hire hitmen.
+              %li
+                %span Selling life insurance policies.
+              %li
+                %span Asking where to download a full pirated copy of Doom.
+              %li
+                %span Answering the aforementioned question.
+        %li
+          %span I will behave.
+        %li
+          %span I understand that
+          %span.emphasize.has-tip{ :title => "who are site admins?" } site-admins
+          %span and
+          %span.emphasize site-mods
+          %span have viewing access to resources otherwise tagged as non-public.
+        %li
+          %span I acknowledge that
+          %span.emphasize site-admins
+          %span and
+          %span.emphasize site-mods
+          %span have every right to:
+          .cutin
+            %ul.disc
+              %li
+                %span Cut access to illegaly uploaded resources.
+              %li
+                %span Inform authorities on illegal activities.
+              %li
+                %span Ban my ass, my email and my IP, should I misbehave.
