@@ -10,7 +10,7 @@ module SafeParams
   def filter_params(hash)
     unsafe_keys = hash.keys - PARAM_NAMES
     unsafe_keys.map {|key| hash.delete(key)}
-    hash
+    hash.update(hash){|k,v| v.gsub('/', '_').camelize}
   end
 
   module_function :filter_params

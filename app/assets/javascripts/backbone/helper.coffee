@@ -6,7 +6,7 @@ class @Doomhub.Helper
 
     # pick the most important values from params hash
     @controller = @params.controller
-    @action = @params.action
+    @action = @params.action.toLowerCase()
 
     # is debug mode on?
     # (debug is outside request params)

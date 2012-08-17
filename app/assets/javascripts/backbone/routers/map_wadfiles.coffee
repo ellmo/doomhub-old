@@ -1,4 +1,4 @@
-class @Doomhub.Routers.Map_wadfiles extends Doomhub.Routers.BASE
+class @Doomhub.Routers.MapWadfiles extends Doomhub.Routers.BASE
 
   index: ()->
     H.log 'not implemented'

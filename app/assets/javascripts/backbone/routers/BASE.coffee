@@ -8,3 +8,5 @@ class @Doomhub.Routers.BASE extends Backbone.Router
       Backbone.history.start()
       H.history = Backbone.history
       H.log "BB history started"
+    else
+      H.log "BB History not started. No routes defined for router."
