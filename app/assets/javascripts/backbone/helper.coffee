@@ -5,8 +5,20 @@ class @Doomhub.Helper
     @params = $('body').data("params")
 
     # pick the most important values from params hash
-    @controller = @params.controller
-    @action = @params.action.toLowerCase()
+    @controller =
+      name: @params.controller.toCamel(),
+      route: @params.controller[0]
+    @parents = []
+    if @params.project_id
+      @parents.push
+        id: @params.project_id,
+        route: 'p'
+    if @params.map_id
+      @parents.push
+        id: @params.map_id,
+        route: 'm'
+    @action = @params.action
+    @id = @params.id
 
     # is debug mode on?
     # (debug is outside request params)
