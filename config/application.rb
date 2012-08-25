@@ -43,6 +43,10 @@ module Doomhub
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'   
+    config.assets.version = '1.0'
+
+    config.hamlcoffee.escapeHtml = false
+    config.hamlcoffee.escapeAttributes = false
+    config.hamlcoffee.uglify = true
   end
 end
