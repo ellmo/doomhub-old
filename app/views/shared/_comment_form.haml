@@ -1,13 +1,18 @@
 #comment-form.c222.black-border
-  %h5 New Comment
-  = simple_form_for([commentable, comment], :remote => true, :html => {'data-type' => :json}) do |f|
-    -if notice
-      .notice-div
-        = notice
-        = link_to "Back to projects list.", projects_path
-    = f.error_notification
-    .form-inputs
-      = f.input :content, :input_html => {:class => 'tinymce'}
-      = tinymce :width => 350
-      .centered-actions
-        = f.button :submit
+  - if can?(:create, Comment) and commentable.readable_by?(current_user)
+    %h5 New Comment
+    = simple_form_for([commentable, comment], :remote => true, :html => {'data-type' => :json}) do |f|
+      -if notice
+        .notice-div
+          = notice
+          = link_to "Back to projects list.", projects_path
+      = f.error_notification
+      .form-inputs
+        = f.input :content, :input_html => {:class => 'tinymce'}
+        = tinymce :width => 350
+        .centered-actions
+          = f.button :submit
+  - else
+    #not-logged
+      you need to be logged in to comment
+
