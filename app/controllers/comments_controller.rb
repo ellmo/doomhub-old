@@ -1,5 +1,11 @@
 class CommentsController < ApplicationController
 
+#===========
+#= RESPONSE
+#=========
+
+  respond_to :html, :json, :js
+
 #==========
 #= FILTERS
 #========
@@ -11,7 +17,7 @@ class CommentsController < ApplicationController
 #==========
 
   inherit_resources
-  belongs_to :project, :optional => true, :finder => :find_by_slug!, :polymorphic => true
+  belongs_to :project, :finder => :find_by_slug!, :polymorphic => true
   load_and_authorize_resource :project
   load_and_authorize_resource :comment, :through => :project
 
@@ -34,12 +40,12 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment.author = current_user
+    @comment.user = current_user
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to [@project, @comment], :notice => 'Map was successfully created.' }
-        format.json { render :json => @comment, :status => :created, :location => @comment }
+        format.html { redirect_to [parent, @comment], :notice => 'Map was successfully created.' }
+        format.json { @comments = parent.comments }
       else
         format.html { render :action => "new" }
         format.json { render :json => @comment.errors, :status => :unprocessable_entity }

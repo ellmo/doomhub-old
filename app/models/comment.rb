@@ -13,4 +13,10 @@ class Comment < ActiveRecord::Base
 
   attr_accessible :commentable_id, :commentable_type, :content, :user_id
 
+#=========
+#= SCOPES
+#=======
+
+  default_scope order('created_at DESC')
+
 end
