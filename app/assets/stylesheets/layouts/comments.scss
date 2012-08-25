@@ -1,0 +1,21 @@
+#comment-list{
+  padding: 12px;
+  margin: 0 8px 0 16px;
+  .comment-div {
+    .comment-top{
+      border-bottom: 1px dashed gray;
+      .comment-author, .comment-date {
+        font-size: 12px;
+        color: $secondaryColor;
+      }
+    }
+    .comment-bottom {
+
+    }
+  }
+}
+
+#comment-form{
+  padding: 12px;
+  margin: 0 16px 0 8px;
+}

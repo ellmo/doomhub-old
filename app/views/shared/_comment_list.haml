@@ -1,0 +1,10 @@
+- commentable.comments.each do |c|
+  .comment-div
+    .row.comment-top
+      .six.columns.comment-author
+        = c.user.login
+      .six.columns.comment-date
+        = time_ago_in_words(c.created_at) + " ago"
+    .row.comment-bottom
+      .twelve.columns.comment-content
+        = c.content.html_safe

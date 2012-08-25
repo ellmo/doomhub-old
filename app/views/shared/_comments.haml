@@ -1,0 +1,8 @@
+.row
+  .seven.columns
+    .row
+      #comment-list.c222.black-border
+        = render "shared/comment_list", :commentable => commentable
+  .five.columns
+    .row
+      = render "shared/comment_form", :commentable => commentable, :comment => comment

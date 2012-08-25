@@ -3,6 +3,7 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
   routes:
     '' : 'overview'
     'overview' : 'overview'
+    'comments' : 'comments'
     'maps' : 'maps'
     'images' : 'images'
     'resources' : 'resources'
@@ -43,6 +44,9 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
 
   overview: ->
     @ztb.switch_to_tab('overview')
+
+  comments: ->
+    @ztb.switch_to_tab('comments')
 
   maps: ->
     @ztb.switch_to_tab('maps')

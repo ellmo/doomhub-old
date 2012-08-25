@@ -1,0 +1,53 @@
+#eula { display: none; }
+
+#eula-notice {
+  margin-bottom: 12px;
+  text-align: center;
+  a {
+    border-bottom: 1px dotted $mainColor;
+  }
+}
+
+#legal-container {
+  width: 100%;
+  overflow-y: hidden;
+  height: 100%;
+  border-radius: 12px;
+  -webkit-box-shadow: 0 0 30px #333 inset;
+  -moz-box-shadow: 0 0 30px #333 inset;
+  box-shadow: 0 0 30px #333 inset;
+}
+
+.legal {
+  h1 {
+    font-family: 'Times';
+    text-align: center;
+    color: black;
+    text-shadow: 1px 1px 4px black;
+  }
+  padding: 16px;
+  background-color: #DC9;
+  color: black;
+  font-size: 16px;
+  .cutin { margin-left: 30px; }
+  .emphasize {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  ol {
+    margin-left: 17px;
+    font-family: Georgia, Times, serif;
+    font-style: italic;
+    color: #333;
+    li {
+      font-size: 22px;
+      text-indent: 40px;
+    }
+    span {
+      font-size: 16px;
+      font-family: $defaultFontFamily;
+      font-style: normal;
+      color: black;
+    }
+  }
+}

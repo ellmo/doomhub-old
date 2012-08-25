@@ -1,0 +1,11 @@
+- _.each @comments, (c) ->
+  - c = c.comment
+  .comment-div
+    .row.comment-top
+      .six.columns.comment-author
+        = c.user.login
+      .six.columns.comment-date
+        = $.timeago(c.created_at)
+    .row.comment-bottom
+      .twelve.columns.comment-content
+        = c.content

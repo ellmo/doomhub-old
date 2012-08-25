@@ -2,6 +2,7 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
 
   events:
     'click .image-div' : 'imageDivClicked'
+    'ajax:success form.new_comment' : 'formCreated'
 
   constructor: (options) ->
     super
@@ -20,3 +21,6 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
         $('.reveal-dummies').append JST['image_popup']( image_url: auth_url, image_id: target_id )
         $(".reveal-dummies .reveal-modal[rel='#{target_id}']").reveal()
 
+  formCreated: (event, data, status, xhr) ->
+    console.log(data);
+    $('#comment-list').html(JST['comments/list']({comments: data}))
