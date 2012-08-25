@@ -15,11 +15,13 @@ gem 'jquery-rails'
 gem 'mysql2'
 gem 'paperclip', '~> 2.7.0'
 gem 'pry-rails'
+gem 'rabl'
 gem 'rails-backbone'
 gem 'settingslogic'
 gem 'simple_form'
 gem 'squeel'
 gem 'tinymce-rails'
+gem 'yajl-ruby'
 
 # Gems used only for assets and not required
 # in production environments by default.

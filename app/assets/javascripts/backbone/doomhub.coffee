@@ -1,5 +1,4 @@
 #= require_self
-#= require_tree ./templates
 #= require_tree ./models
 #= require_tree ./views
 #= require_tree ./routers
@@ -18,6 +17,8 @@ window.Doomhub =
 
 $ ->
   init = new Doomhub.Initializer()
+
+
 
 #=========================================
 #= RESPONSIVE AND FOCUSABLE ZURB CHECKBOX
