@@ -2,11 +2,17 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
 
   events:
     'click .image-div' : 'imageDivClicked'
-    'ajax:success form.new_comment' : 'formCreated'
+    'ajax:success form.new_comment' : 'commentCreated'
 
   constructor: (options) ->
     super
+    @fetchComments()
     $('#project-orbit').orbit()
+
+
+  fetchComments: ->
+    $.getJSON "/p/#{H.id}/c.json", (data) ->
+      $('#comment-list').html(JST['comments/list']({comments: data}))
 
   imageDivClicked: (event) ->
     target = $(event.target)
@@ -21,6 +27,5 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
         $('.reveal-dummies').append JST['image_popup']( image_url: auth_url, image_id: target_id )
         $(".reveal-dummies .reveal-modal[rel='#{target_id}']").reveal()
 
-  formCreated: (event, data, status, xhr) ->
-    console.log(data);
+  commentCreated: (event, data, status, xhr) ->
     $('#comment-list').html(JST['comments/list']({comments: data}))
