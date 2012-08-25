@@ -6,6 +6,7 @@
 #/
 #/= require jquery
 #/= require jquery_ujs
+#/= require_tree ./libs
 #/= require tinymce
 #/= require foundation
 #/= require underscore
