@@ -3,8 +3,9 @@
   margin: 0 8px 0 16px;
   .comment-div {
     .comment-top{
-      border-bottom: 1px dashed gray;
-      .comment-author, .comment-date {
+      border-top: 1px dashed #444;
+      margin: 0 -12px;
+      .comment-author, .comment-date, .comment-options {
         font-size: 12px;
         color: $secondaryColor;
       }

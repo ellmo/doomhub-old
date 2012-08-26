@@ -13,6 +13,7 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
   fetchComments: ->
     $.getJSON "/p/#{H.id}/c.json", (data) ->
       $('#comment-list').html(JST['comments/list']({comments: data}))
+      $(window).trigger('resize')
 
   imageDivClicked: (event) ->
     target = $(event.target)
@@ -29,3 +30,4 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
 
   commentCreated: (event, data, status, xhr) ->
     $('#comment-list').html(JST['comments/list']({comments: data}))
+    $(window).trigger('resize')

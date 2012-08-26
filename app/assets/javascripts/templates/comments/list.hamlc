@@ -1,11 +1,14 @@
 - _.each @comments, (c) ->
   - c = c.comment
   .comment-div
-    .row.comment-top
+    .row.comment-top.c111
       .six.columns.comment-author
-        = c.user.login
-      .six.columns.comment-date
+        %a{ :href => "/u/#{c.user.login}" }= c.user.login
+      .five.columns.comment-date
         = $.timeago(c.created_at)
+      .one.column.comment-options
+        - if c.user.owner
+          %span &times
     .row.comment-bottom
       .twelve.columns.comment-content
         = c.content
