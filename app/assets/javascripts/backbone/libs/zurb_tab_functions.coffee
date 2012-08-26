@@ -11,6 +11,7 @@ class @Doomhub.Libs.ZurbTabFunctions
   show_tab: (element_id) ->
     $(".nice.contained.tabs dd a[href='##{element_id}']").addClass('active')
     $("ul.nice.contained.tabs-content li##{element_id}Tab").show().addClass('active')
+    $(window).trigger('resize');
 
   switch_to_tab: (element_id) ->
     @clear_tabs()
