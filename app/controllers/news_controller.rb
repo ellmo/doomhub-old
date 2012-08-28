@@ -11,6 +11,7 @@ class NewsController < ApplicationController
 #==========
 
   inherit_resources
+  load_and_authorize_resource :news
   defaults :resource_class => News, :collection_name => 'news', :instance_name => 'news_entry'
 
 #===============

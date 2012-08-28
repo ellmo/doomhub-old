@@ -5,8 +5,14 @@
       .news-entry-top {
         padding-top: 4px;
         border-bottom: 1px dashed #444;
-        .news-entry-author, .news-entry-date, .news-entry-options {
+        .news-entry-author, .news-entry-timeago, {
           font-size: 12px;
+          font-weight: bold;
+          color: $dimWhite;
+        }
+        .news-entry-date, .news-entry-options {
+          font-size: 12px;
+          font-weight: bold;
           color: $secondaryColor;
         }
         .news-entry-options, .news-entry-title {
@@ -24,6 +30,15 @@
       }
       .news-entry-bottom {
         padding: 12px 8px 0 8px;
+        .news-entry-content{
+          p {
+            margin-bottom: 10px;
+            text-indent: 30px;
+          }
+          > ul, > ol {
+            margin-left: 30px;
+          }
+        }
       }
     }
   }

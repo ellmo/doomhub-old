@@ -38,6 +38,8 @@ class Ability
       can [:read, :create], MapWadfile, :map => {:project_id => Project.mappable_by(user).map(&:id)}
       can [:destroy, :update], MapWadfile do |mw|; mw.author == user; end
       can :download, MapWadfile, :map => {:project_id => Project.mappable_by(user).map(&:id)}
+  # news
+      can :read, News
   # comments
       can [:read, :create], Comment
       can [:update, :destroy], Comment, :user => {:id => user.id}
@@ -55,6 +57,8 @@ class Ability
       can [:read, :auth_url], MapImage
   # map wadfiles
       can [:read, :download], MapWadfile
+  # news
+      can :read, News
   # comments
       can :read, Comment
   # users
