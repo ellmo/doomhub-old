@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120815154448) do
+ActiveRecord::Schema.define(:version => 20120826225156) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -98,6 +98,14 @@ ActiveRecord::Schema.define(:version => 20120815154448) do
     t.string   "slug"
     t.integer  "author_id"
     t.string   "author_type"
+  end
+
+  create_table "news", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "projects", :force => true do |t|

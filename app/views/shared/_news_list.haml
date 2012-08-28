@@ -1,0 +1,21 @@
+%h1 News
+.news
+  #news-list
+    - news.each do |n|
+      .news-entry.c333.black-border
+        .row.noinset.news-entry-top.c222
+          .twelve.columns
+            .row
+              .eight.columns.news-entry-autor
+                = n.user.try(:login)
+              .four.columns.news-entry-date
+                = time_ago_in_words(n.created_at) + " ago"
+            .row
+              .eleven.columns.news-entry-title
+                %h4= n.title
+              .one.column.news-entry-options
+                - if n.user == current_user
+                  %span &times
+        .row.news-entry-bottom
+          .twelve.columns.comment-content
+            = n.content.html_safe

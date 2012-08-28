@@ -22,6 +22,8 @@ Doomhub::Application.routes.draw do
     end
   end
 
+  resources :news, :path => '/n'
+
   resources :users, :path => '/u', :only => [:show, :index] do
     resources :projects, :path => '/p'
   end

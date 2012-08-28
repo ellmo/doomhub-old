@@ -1,0 +1,15 @@
+.form-600-border
+  %h2= form_title
+  = simple_form_for(@news_entry) do |f|
+    -if notice
+      .notice-div
+        = notice
+        = link_to "Back to news list.", projects_path
+    = f.error_notification
+
+    .form-inputs
+      = f.input :title
+      = f.input :content, :input_html => {:class => 'tinymce'}
+      = tinymce
+      .centered-actions
+        = f.button :submit

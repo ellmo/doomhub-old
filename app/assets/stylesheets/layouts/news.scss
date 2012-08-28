@@ -1,0 +1,30 @@
+.news {
+  #news-list {
+    .news-entry {
+      margin-top: 12px;
+      .news-entry-top {
+        padding-top: 4px;
+        border-bottom: 1px dashed #444;
+        .news-entry-author, .news-entry-date, .news-entry-options {
+          font-size: 12px;
+          color: $secondaryColor;
+        }
+        .news-entry-options, .news-entry-title {
+          border-top: 1px dashed #444;
+        }
+        .news-entry-title {
+          h4 {
+            margin-top: 4px;
+            margin-bottom: 6px  ;
+          }
+        }
+        .news-entry-date {
+          text-align: right;
+        }
+      }
+      .news-entry-bottom {
+        padding: 12px 8px 0 8px;
+      }
+    }
+  }
+}
