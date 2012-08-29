@@ -15,7 +15,7 @@
                   = '(' + time_ago_in_words(n.created_at) + " ago)"
             .row
               .eleven.columns.news-entry-title
-                %h4= n.title
+                %h4= link_to n.title, n
               .one.column.news-entry-options
                 - if n.user == current_user
                   %span &times

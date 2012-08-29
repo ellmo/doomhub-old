@@ -1,0 +1,22 @@
+.news
+  #news-entry
+    .news-entry.c333.black-border
+      .row.noinset.news-entry-top.c222
+        .twelve.columns
+          .row
+            .eight.columns.news-entry-author
+              = news.user.try(:login)
+            .four.columns.news-entry-date
+              %span
+                = news.created_at.strftime("%B #{news.created_at.day.ordinalize}, %Y")
+              %span.news-entry-timeago
+                = '(' + time_ago_in_words(news.created_at) + " ago)"
+          .row
+            .eleven.columns.news-entry-title
+              %h4= news.title
+            .one.column.news-entry-options
+              - if news.user == current_user
+                %span &times
+      .row.news-entry-bottom
+        .twelve.columns.news-entry-content
+          = news.content.html_safe

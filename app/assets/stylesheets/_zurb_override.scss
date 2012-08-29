@@ -11,6 +11,9 @@ ul.breadcrumbs {
       padding-left: 0px !important;
     }
   }
+  li.current {
+    font-size: 13px !important;
+  }
   li::before { content: "" !important; }
   -webkit-box-shadow: 0 4px 6px #000;
   -moz-box-shadow: 0 4px 6px #000;

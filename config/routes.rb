@@ -1,6 +1,6 @@
 Doomhub::Application.routes.draw do
 
-  root :to => 'home#index'
+  root :to => 'news#index'
 
   get "/p/:id/m" => redirect("/p/%{id}#maps")
   get "/p/:project_id/m/:id/w" => redirect("/p/%{project_id}/m/%{id}#wadfiles")
@@ -34,7 +34,5 @@ Doomhub::Application.routes.draw do
     :sign_up => "new",
     :registration => 'registration'
   }
-
-  get "home/index"
 
 end

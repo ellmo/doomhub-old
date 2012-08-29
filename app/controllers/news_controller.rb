@@ -25,6 +25,7 @@ class NewsController < ApplicationController
 
   def show
     build_breadcrumbs
+    add_breadcrumb @news_entry.title, news_path(@news_entry)
   end
 
   def new
@@ -62,7 +63,7 @@ class NewsController < ApplicationController
   protected
 
   def build_breadcrumbs
-    add_breadcrumb "News", :root_path
+    add_breadcrumb "news", :root_path
   end
 
 end

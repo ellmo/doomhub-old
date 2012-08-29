@@ -1,1 +1,27 @@
+.dh-title
+  %span Doom
+  %span.colored hub
+  %span .
+  %span.colored com
+%p ...is in early development stage.
+
+-if alert
+  .error-div
+    = alert
+-if notice
+  .notice-div
+    = notice
+
+.panel.c333.black-border
+  %div
+    See current projects:
+    = link_to "Projects", projects_path
+  %br
+  %div
+    Interested in what's going on? Follow development tickets:
+    = link_to "Trello board", "https://trello.com/board/doomhub/4f9bdf84ad3167802d2a8938"
+  %div
+    Problems viewing the page? Found a bug? Let me know immediately:
+    = mail_to "admin@doomhub.com"
+
 = render "shared/news_list", :news => @news
