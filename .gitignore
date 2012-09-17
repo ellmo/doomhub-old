@@ -3,6 +3,7 @@ db/*.sqlite3
 log/*.log
 tmp/
 .sass-cache/
+config/application.yml
 config/database.yml
 config/secret.yml
 public/assets/*
