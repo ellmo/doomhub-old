@@ -1,0 +1,23 @@
+defaults: &defaults
+   dummy: ""
+
+development:
+  <<: *defaults
+  paperclip:
+    project:
+      map:
+        image:
+          storage_path: "dev/uploads/projects/:project_id/maps/:map_id/images/:name-:style-:id.:extension"
+        wadfile:
+          storage_path: "dev/uploads/projects/:project_id/maps/:object_id/wadfiles/:name-:id.:extension"
+
+
+production:
+  <<: *defaults
+  paperclip:
+    project:
+      map:
+        image:
+          storage_path: "uploads/projects/:project_id/maps/:map_id/images/:name-:style-:id.:extension"
+        wadfile:
+          storage_path: "uploads/projects/:project_id/maps/:object_id/wadfiles/:name-:id.:extension"
