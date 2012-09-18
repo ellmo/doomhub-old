@@ -83,10 +83,17 @@ h1, h2, h3, h4, h5 {
   ul.support-links {
     list-style-type: none;
     text-align: right;
+    .img {
+      height: 100%;
+      padding-right: 4px;
+    }
     li {
       margin-bottom: 8px;
       > div { height: 50px; }
-      .support-link-text { padding-right: 64px;}
+      .support-link-text {
+        padding: 2px 60px 2px 2px;
+        font-size: 13px;
+      }
     }
   }
 }

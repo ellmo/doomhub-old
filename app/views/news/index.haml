@@ -10,17 +10,26 @@
   .six.columns
     %ul.support-links
       %li
-        .c222.black-border
-          %div.right-floater= link_to image_tag('lighthouse-icon.png'), 'http://doomhub.lighthouseapp.com/projects/96541-doomhub/tickets'
-          %div.support-link-text Lighthouse
+        .c333.black-border{ :style => 'height:66px' }
+          %div.img.right-floater{ :style => 'line-height: 7.5;'}= link_to image_tag('lighthouse-icon.png'), 'http://doomhub.lighthouseapp.com/projects/96541-doomhub/tickets'
+          %div.support-link-text
+            %span= link_to 'Lighthouse', 'http://doomhub.lighthouseapp.com/projects/96541-doomhub/tickets'
+            %span is a issue tracking service; you can see what is being worked on, what is planned for the future and what are the currently reported bugs. Use it to report issues and share suggestions.
       %li
-        .c222.black-border
-          %div.right-floater= link_to image_tag('github-icon.png'), 'https://github.com/ellmo/doomhub'
-          %div.support-link-text Github
+        .c333.black-border{ :style => 'height:50px' }
+          %div.img.right-floater= link_to image_tag('github-icon.png'), 'https://github.com/ellmo/doomhub'
+          %div.support-link-text
+            = link_to 'Github', 'https://github.com/ellmo/doomhub'
+            %span holds the entire public repository for the project's code. Look there if you're a developer looking for ideas, or are just curious.
       %li
-        .c222.black-border
-          %div.right-floater= mail_to "admin@doomhub.com", image_tag('mail-icon.png')
-          %div.support-link-text Mail
+        .c333.black-border{ :style => 'height:50px' }
+          %div.img.right-floater= mail_to "admin@doomhub.com", image_tag('mail-icon.png')
+          %div.support-link-text
+            %span If all else fails or you're not interested in the above (
+            %i or you just have a question
+            %span ), a simple
+            = mail_to 'admin@doomhub.com', 'e-mail'
+            %span might be enough.
 
 -if alert
   .error-div
