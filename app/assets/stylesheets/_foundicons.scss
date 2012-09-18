@@ -1,0 +1,102 @@
+// from foundicons: _settings.scss
+$fontFileName: "../fonts/general_enclosed_foundicons";
+$fontName: "GeneralEnclosedFoundicons";
+$classPrefix: "foundicon-";
+
+@mixin ico-class($name,$pua) {
+  .#{$classPrefix}#{$name}:before {
+    content: "\f#{$pua}";
+  }
+}
+
+@mixin ie-class($name,$pua) {
+  .#{$classPrefix}#{$name} {
+    *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = "&#xf#{$pua};");
+  }
+}
+
+// from foundicons: general_enclosed_foundicons.scss
+@import "settings";
+
+@mixin face {
+  @font-face {
+    font-family: $fontName;
+    src: url('#{$fontFileName}.eot');
+    src: url('#{$fontFileName}.eot?#iefix') format('embedded-opentype'),
+         url('#{$fontFileName}.woff') format('woff'),
+         url('#{$fontFileName}.ttf') format('truetype'),
+         url('#{$fontFileName}.svg##{$fontName}') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+/* font-face */
+@include face;
+
+/* global foundicon styles */
+[class*="#{$classPrefix}"] {
+  display: inline;
+  width: auto;
+  height: auto;
+  line-height: inherit;
+  vertical-align: baseline;
+  background-image: none;
+  background-position: 0 0;
+  background-repeat: repeat;
+}
+[class*="#{$classPrefix}"]:before {
+  font-family: $fontName;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+}
+
+/* icons */
+@include ico-class(settings,"000");
+@include ico-class(heart,"001");
+@include ico-class(star,"002");
+@include ico-class(plus,"003");
+@include ico-class(minus,"004");
+@include ico-class(checkmark,"005");
+@include ico-class(remove,"006");
+@include ico-class(mail,"007");
+@include ico-class(calendar,"008");
+@include ico-class(page,"009");
+@include ico-class(tools,"00a");
+@include ico-class(globe,"00b");
+@include ico-class(home,"00c");
+@include ico-class(quote,"00d");
+@include ico-class(people,"00e");
+@include ico-class(monitor,"00f");
+@include ico-class(laptop,"010");
+@include ico-class(phone,"011");
+@include ico-class(cloud,"012");
+@include ico-class(error,"013");
+@include ico-class(right-arrow,"014");
+@include ico-class(left-arrow,"015");
+@include ico-class(up-arrow,"016");
+@include ico-class(down-arrow,"017");
+@include ico-class(trash,"018");
+@include ico-class(add-doc,"019");
+@include ico-class(edit,"01a");
+@include ico-class(lock,"01b");
+@include ico-class(unlock,"01c");
+@include ico-class(refresh,"01d");
+@include ico-class(paper-clip,"01e");
+@include ico-class(video,"01f");
+@include ico-class(photo,"020");
+@include ico-class(graph,"021");
+@include ico-class(idea,"022");
+@include ico-class(mic,"023");
+@include ico-class(cart,"024");
+@include ico-class(address-book,"025");
+@include ico-class(compass,"026");
+@include ico-class(flag,"027");
+@include ico-class(location,"028");
+@include ico-class(clock,"029");
+@include ico-class(folder,"02a");
+@include ico-class(inbox,"02b");
+@include ico-class(website,"02c");
+@include ico-class(smiley,"02d");
+@include ico-class(search,"02e");
