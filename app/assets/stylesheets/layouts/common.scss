@@ -42,8 +42,20 @@ body {
   float: left;
 }
 
+.right-floater {
+  float: right;
+}
+
 .clear-floater {
   clear: both;
+}
+
+.inline-list {
+  li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 8px;
+  }
 }
 
 h1, h2, h3, h4, h5 {
@@ -51,20 +63,31 @@ h1, h2, h3, h4, h5 {
   text-shadow: 2px 2px 8px black;
 }
 
-// .emphasize { font-weight: bold; }
-
-.dh-title {
-  height: 60px;
-  line-height:60px;
-  font-family: impact;
-  font-size: 4.6em;
-  color: #555;
-  .colored {
-    color: $secondaryColor;
+.dh-title-div {
+  .dh-title {
+    height: 60px;
+    line-height:60px;
+    font-family: impact;
+    font-size: 4.6em;
+    color: #555;
+    .colored { color: $secondaryColor; }
+    span {
+      margin-left:-8px;
+      text-shadow: 2px 2px 14px black;
+    }
+    span:first-child { margin-left: 8px; }
   }
-  span {
-    margin-left:-8px;
-    text-shadow: 2px 2px 14px black;
+  p.under-title {
+    margin: 20px 0 8px 0;
+  }
+  ul.support-links {
+    list-style-type: none;
+    text-align: right;
+    li {
+      margin-bottom: 8px;
+      > div { height: 50px; }
+      .support-link-text { padding-right: 64px;}
+    }
   }
 }
 
