@@ -4,22 +4,23 @@
     .row.comment-top.c111
       .six.columns.comment-author
         %a{ :href => "/u/#{c.user.login}" }= c.user.login
-      .three.columns.comment-date
-        = $.timeago(c.created_at)
-      .three.columns.comment-options
-        - if H.session
-          - if c.user.owner
+      .six.columns.comment-tools
+        %span.comment-date
+          = $.timeago(c.created_at)
+        %span.comment-icons
+          - if H.session
+            - if c.user.owner
+              %a{ :href => '#' }
+                %ico.fi-edit.icon.has-tip{ :title => 'Edit comment' }
+            - else
+              %ico.fi-edit.inactive.icon.has-tip{ :title => 'Edit comment' }
+            - if c.user.owner
+              %a{ :href => '#' }
+                %ico.fi-remove.icon.has-tip{ :title => 'Delete comment' }
+            - else
+              %ico.fi-remove.inactive.icon.has-tip{ :title => 'Delete comment' }
             %a{ :href => '#' }
-              %ico.fi-edit.icon.has-tip{ :title => 'Edit comment' }
-          - else
-            %ico.fi-edit.inactive.icon.has-tip{ :title => 'Edit comment' }
-          - if c.user.owner
-            %a{ :href => '#' }
-              %ico.fi-remove.icon.has-tip{ :title => 'Delete comment' }
-          - else
-            %ico.fi-remove.inactive.icon.has-tip{ :title => 'Delete comment' }
-          %a{ :href => '#' }
-            %ico.fi-soc-chat.icon.has-tip{ :title =>  'Quote comment' }
+              %ico.fi-soc-chat.icon.has-tip{ :title =>  'Quote comment' }
     .row.comment-bottom
       .twelve.columns.comment-content
         = c.content

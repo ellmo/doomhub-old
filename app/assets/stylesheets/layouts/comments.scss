@@ -5,20 +5,19 @@
     .comment-top{
       border-top: 1px dashed #444;
       margin: 0 -12px;
-      .comment-author, .comment-date,  {
+      .comment-author, .comment-tools {
         font-size: 12px;
         color: $secondaryColor;
       }
-      .comment-options {
-        font-size:18px;
-        line-height:1;
-      }
-      .comment-date {
+      .comment-tools{
         text-align: right;
+        .comment-icons {
+          float: right;
+          margin: 3px 0 0 8px;
+          font-size: 18px;
+          line-height: 0.8;
+        }
       }
-    }
-    .comment-bottom {
-
     }
   }
 }
