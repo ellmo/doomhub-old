@@ -17,8 +17,7 @@ window.Doomhub =
 
 $ ->
   init = new Doomhub.Initializer()
-
-
+  $(document).tooltips();
 
 #=========================================
 #= RESPONSIVE AND FOCUSABLE ZURB CHECKBOX
@@ -64,4 +63,3 @@ $ ->
   $("body").css
     overflow: 'hidden'
   win.trigger "resize" unless $("#topmost").width() is win.width()
-

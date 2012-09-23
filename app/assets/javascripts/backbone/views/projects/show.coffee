@@ -9,7 +9,6 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
     @fetchComments()
     $('#project-orbit').orbit()
 
-
   fetchComments: ->
     $.getJSON "/p/#{H.id}/c.json", (data) ->
       $('#comment-list').html(JST['comments/list']({comments: data}))
@@ -31,3 +30,4 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
   commentCreated: (event, data, status, xhr) ->
     $('#comment-list').html(JST['comments/list']({comments: data}))
     $(window).trigger('resize')
+
