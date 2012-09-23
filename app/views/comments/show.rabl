@@ -1,2 +1,2 @@
-collection @comments
+object @comment
 extends 'comments/comments'
