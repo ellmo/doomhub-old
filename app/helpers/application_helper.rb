@@ -5,6 +5,7 @@ module ApplicationHelper
   def backbone_data_hash
     data_hash = { :params => SafeParams.filter_params(params).to_json }
     data_hash.merge!({:debug => 'true'}) if Rails.env.development?
+    data_hash.merge!({:session => 'true'}) if current_user
     data_hash
   end
 

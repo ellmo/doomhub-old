@@ -24,6 +24,10 @@ class @Doomhub.Helper
     # (debug is outside request params)
     @debug = $('body').data("debug")
 
+    # is user logged in?
+    # (session is outside request params)
+    @session = $('body').data("session")
+
   log: (obj)->
     console.log(obj) if @debug
 
