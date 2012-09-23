@@ -35,4 +35,12 @@ module ApplicationHelper
     raw str
   end
 
+  def lighthouse_link(name='Lighthouse')
+    link_to name, "http://doomhub.lighthouseapp.com/projects/96541-doomhub/milestones/current"
+  end
+
+  def github_link(name='Github')
+    link_to name, "https://github.com/ellmo/doomhub"
+  end
+
 end

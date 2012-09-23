@@ -1,6 +1,6 @@
 .row.dh-title-div
   .six.columns
-    .c222.black-border
+    %div
       .dh-title
         %span Doom
         %span.colored hub
@@ -11,15 +11,15 @@
     %ul.support-links
       %li
         .c333.black-border{ :style => 'height:66px' }
-          %div.img.right-floater{ :style => 'line-height: 7.5;'}= link_to image_tag('lighthouse-icon.png'), 'http://doomhub.lighthouseapp.com/projects/96541-doomhub/tickets'
+          %div.img.right-floater{ :style => 'line-height: 7.5;'}= lighthouse_link image_tag('lighthouse-icon.png')
           %div.support-link-text
-            %span= link_to 'Lighthouse', 'http://doomhub.lighthouseapp.com/projects/96541-doomhub/tickets'
+            %span= lighthouse_link
             %span is a issue tracking service; you can see what is being worked on, what is planned for the future and what are the currently reported bugs. Use it to report issues and share suggestions.
       %li
         .c333.black-border{ :style => 'height:50px' }
-          %div.img.right-floater= link_to image_tag('github-icon.png'), 'https://github.com/ellmo/doomhub'
+          %div.img.right-floater= github_link image_tag('github-icon.png')
           %div.support-link-text
-            = link_to 'Github', 'https://github.com/ellmo/doomhub'
+            = github_link
             %span holds the entire public repository for the project's code. Look there if you're a developer looking for ideas, or are just curious.
       %li
         .c333.black-border{ :style => 'height:50px' }
