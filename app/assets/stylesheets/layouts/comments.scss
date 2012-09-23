@@ -5,9 +5,13 @@
     .comment-top{
       border-top: 1px dashed #444;
       margin: 0 -12px;
-      .comment-author, .comment-date, .comment-options {
+      .comment-author, .comment-date,  {
         font-size: 12px;
         color: $secondaryColor;
+      }
+      .comment-options {
+        font-size:18px;
+        line-height:1;
       }
       .comment-date {
         text-align: right;

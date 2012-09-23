@@ -88,3 +88,10 @@ abbr, acronym {
 .div-orbit .div-orbit-slide { height: initial !important;}
 
 .row.noinset { margin: 0 0px;}
+
+.has-tip {
+  &.icon {
+    border-bottom: none;
+    cursor:default;
+  }
+}

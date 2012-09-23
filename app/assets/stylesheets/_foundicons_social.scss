@@ -1,0 +1,70 @@
+$socialFontFileName: "../fonts/social_foundicons";
+$socialFontName: "SocialFoundicons";
+$classPrefix: "fi-soc-";
+
+@mixin ico-class($name,$pua) {
+  .#{$classPrefix}#{$name}:before {
+    content: "\f#{$pua}";
+  }
+}
+
+@mixin ie-class($name,$pua) {
+  .#{$classPrefix}#{$name} {
+    *zoom: expression( this.runtimeStyle['zoom'] = "1", this.innerHTML = "&#xf#{$pua};");
+  }
+}
+
+@mixin face {
+  @font-face {
+    font-family: $socialFontName;
+    src: url('#{$socialFontFileName}.eot');
+    src: url('#{$socialFontFileName}.eot?#iefix') format('embedded-opentype'),
+         url('#{$socialFontFileName}.woff') format('woff'),
+         url('#{$socialFontFileName}.ttf') format('truetype'),
+         url('#{$socialFontFileName}.svg##{$socialFontName}') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+/* font-face */
+@include face;
+
+[class*="#{$classPrefix}"]:before {
+  font-family: $socialFontName;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+}
+
+/* icons */
+@include ico-class(thumb-up,"000");
+@include ico-class(thumb-down,"001");
+@include ico-class(rss,"002");
+@include ico-class(facebook,"003");
+@include ico-class(twitter,"004");
+@include ico-class(pinterest,"005");
+@include ico-class(github,"006");
+@include ico-class(path,"007");
+@include ico-class(linkedin,"008");
+@include ico-class(dribbble,"009");
+@include ico-class(stumble-upon,"00a");
+@include ico-class(behance,"00b");
+@include ico-class(reddit,"00c");
+@include ico-class(google-plus,"00d");
+@include ico-class(youtube,"00e");
+@include ico-class(vimeo,"00f");
+@include ico-class(flickr,"010");
+@include ico-class(slideshare,"011");
+@include ico-class(picassa,"012");
+@include ico-class(skype,"013");
+@include ico-class(steam,"014");
+@include ico-class(instagram,"015");
+@include ico-class(foursquare,"016");
+@include ico-class(delicious,"017");
+@include ico-class(chat,"018");
+@include ico-class(torso,"019");
+@include ico-class(tumblr,"01a");
+@include ico-class(video-chat,"01b");
+@include ico-class(digg,"01c");
+@include ico-class(wordpress,"01d");
