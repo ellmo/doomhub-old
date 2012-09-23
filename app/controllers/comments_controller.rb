@@ -25,10 +25,6 @@ class CommentsController < ApplicationController
 #= CRUD ACTIONS
 #=============
 
-  def show
-    build_breadcrumbs
-  end
-
   def new
     build_breadcrumbs
     add_breadcrumb "New", new_project_comment_path(@project)

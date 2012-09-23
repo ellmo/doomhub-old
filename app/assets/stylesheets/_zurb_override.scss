@@ -90,8 +90,14 @@ abbr, acronym {
 .row.noinset { margin: 0 0px;}
 
 .has-tip {
+  color: inherit;
   &.icon {
     border-bottom: none;
-    cursor:default;
+    cursor: inherit;
+    &.inactive {
+      cursor: default;
+      color: #333;
+      &:hover { color: #222;}
+    }
   }
 }

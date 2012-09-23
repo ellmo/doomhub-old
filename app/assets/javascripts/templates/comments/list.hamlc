@@ -4,11 +4,22 @@
     .row.comment-top.c111
       .six.columns.comment-author
         %a{ :href => "/u/#{c.user.login}" }= c.user.login
-      .five.columns.comment-date
+      .three.columns.comment-date
         = $.timeago(c.created_at)
-      .one.column.comment-options
-        - if c.user.owner
-          %span &times
+      .three.columns.comment-options
+        - if H.session
+          - if c.user.owner
+            %a{ :href => '#' }
+              %ico.fi-edit.icon.has-tip{ :title => 'Edit comment' }
+          - else
+            %ico.fi-edit.inactive.icon.has-tip{ :title => 'Edit comment' }
+          - if c.user.owner
+            %a{ :href => '#' }
+              %ico.fi-remove.icon.has-tip{ :title => 'Delete comment' }
+          - else
+            %ico.fi-remove.inactive.icon.has-tip{ :title => 'Delete comment' }
+          %a{ :href => '#' }
+            %ico.fi-soc-chat.icon.has-tip{ :title =>  'Quote comment' }
     .row.comment-bottom
       .twelve.columns.comment-content
         = c.content
