@@ -9,7 +9,7 @@
       = f.error_notification
       .form-inputs
         = f.input :content, :input_html => {:class => 'tinymce'}
-        = tinymce :width => 350
+        = tinymce :width => 350, :content_css => asset_path('application.css')
         .centered-actions
           = f.button :submit, :value => 'Add comment'
   - else

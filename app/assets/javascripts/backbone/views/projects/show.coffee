@@ -13,6 +13,12 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
     $.getJSON "/p/#{H.id}/c.json", (data) ->
       $('#comment-list').html(JST['comments/list']({comments: data}))
       $(window).trigger('resize')
+      $('a[data-action]="quote"').live 'click', (e) ->
+        e.preventDefault();
+        id = $(e.target).parent().data('id');
+        $.getJSON "/p/#{H.id}/c/#{id}", (data) ->
+          tinymce.activeEditor.setContent JST['comments/quote']({comment: data})
+
 
   imageDivClicked: (event) ->
     target = $(event.target)
@@ -29,5 +35,6 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
 
   commentCreated: (event, data, status, xhr) ->
     $('#comment-list').html(JST['comments/list']({comments: data}))
+    tinymce.activeEditor.setContent ''
     $(window).trigger('resize')
 
