@@ -13,11 +13,7 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
     $.getJSON "/p/#{H.id}/c.json", (data) ->
       $('#comment-list').html(JST['comments/list']({comments: data}))
       $(window).trigger('resize')
-      $('a[data-action]="quote"').live 'click', (e) ->
-        e.preventDefault();
-        id = $(e.target).parent().data('id');
-        $.getJSON "/p/#{H.id}/c/#{id}", (data) ->
-          tinymce.activeEditor.setContent JST['comments/quote']({comment: data})
+      $('a[data-action]="quote"').live 'click', Doomhub.Libs.CommentCallbacks.quote_callback
 
 
   imageDivClicked: (event) ->

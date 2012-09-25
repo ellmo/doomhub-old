@@ -1,5 +1,7 @@
 class Comment < ActiveRecord::Base
 
+  include Rails.application.routes.url_helpers
+
 #========
 #= ASSOC
 #======
@@ -18,5 +20,13 @@ class Comment < ActiveRecord::Base
 #=======
 
   default_scope order('created_at DESC')
+
+#==========
+#= METHODS
+#========
+
+  def path
+    polymorphic_path([commentable, self])
+  end
 
 end

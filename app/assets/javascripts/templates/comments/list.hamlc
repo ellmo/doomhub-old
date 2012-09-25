@@ -10,16 +10,16 @@
         %span.comment-icons
           - if H.session
             - if c.user.owner
-              %a
+              %a{ :href => c.path, :data => { :action => 'edit' }}
                 %ico.fi-edit.icon.has-tip{ :title => 'Edit comment' }
             - else
               %ico.fi-edit.inactive.icon.has-tip{ :title => 'Edit comment' }
             - if c.user.owner
-              %a{ :href => '#' }
+              %a{ :href => c.path, :data => { :action => 'delete' }}
                 %ico.fi-remove.icon.has-tip{ :title => 'Delete comment' }
             - else
               %ico.fi-remove.inactive.icon.has-tip{ :title => 'Delete comment' }
-            %a{ :href => '#', :data => { :action => 'quote', :id => c.id} }
+            %a{ :href => c.path, :data => { :action => 'quote' }}
               %ico.fi-soc-chat.icon.has-tip{ :title =>  'Quote comment' }
     .row.comment-bottom
       .twelve.columns.comment-content
