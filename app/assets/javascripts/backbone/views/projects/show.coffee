@@ -10,10 +10,13 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
     $('#project-orbit').orbit()
 
   fetchComments: ->
+    ccb = Doomhub.Libs.CommentCallbacks
     $.getJSON "/p/#{H.id}/c.json", (data) ->
       $('#comment-list').html(JST['comments/list']({comments: data}))
       $(window).trigger('resize')
-      $('a[data-action]="quote"').live 'click', Doomhub.Libs.CommentCallbacks.quote_callback
+      $('a[data-action]="quote"').live 'click', ccb['quote_callback']
+      $('a[data-action]="delete"').live 'click', ccb['delete_callback']
+      $('a[data-action]="edit"').live 'click', ccb['edit_callback']
 
 
   imageDivClicked: (event) ->
