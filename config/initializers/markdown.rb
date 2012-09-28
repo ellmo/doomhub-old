@@ -1,3 +1,6 @@
-MD = Redcarpet::Markdown.new Redcarpet::Render::HTML,
+renderer = Redcarpet::Render::HTML.new({:filter_html => true, :hard_wrap => true})
+
+MD = Redcarpet::Markdown.new renderer,
      :autolink => true,
-     :space_after_headers => true
+     :space_after_headers => true,
+     :strikethrough => true
