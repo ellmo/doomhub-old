@@ -8,8 +8,7 @@
           = link_to "Back to projects list.", projects_path
       = f.error_notification
       .form-inputs
-        = f.input :content, :input_html => {:class => 'tinymce'}
-        = tinymce :width => 350, :content_css => asset_path('application.css')
+        = f.input :content
         .centered-actions
           = f.button :submit, :value => 'Add comment'
   - else

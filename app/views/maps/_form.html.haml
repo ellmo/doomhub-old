@@ -1,5 +1,3 @@
-= tinymce_assets
-
 .form-600-border
   %h2= form_title
   = simple_form_for([@project, @map]) do |f|
@@ -12,7 +10,6 @@
     .form-inputs
       = f.input :name
       = f.input :lump, :placeholder => @project.game.default_lumpname
-      = f.input :desc, :input_html => {:class => 'tinymce'}
-      = tinymce
+      = f.input :desc
       .centered-actions
         = f.button :submit

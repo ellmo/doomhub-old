@@ -22,7 +22,6 @@ gem 'redcarpet'
 gem 'settingslogic'
 gem 'simple_form'
 gem 'squeel'
-gem 'tinymce-rails'
 gem 'yajl-ruby'
 
 # Gems used only for assets and not required

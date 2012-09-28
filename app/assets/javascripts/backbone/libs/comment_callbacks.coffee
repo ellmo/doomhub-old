@@ -8,16 +8,16 @@ class @Doomhub.Libs.CommentCallbacks
     event.preventDefault()
     target = $(event.target).closest('a')
     $.getJSON target.attr('href'), (data) ->
-      tinymce.activeEditor.setContent JST['comments/quote']({comment: data})
+      console.log (JST['comments/quote']({comment: data}))
 
   @delete_callback: (event) ->
     event.preventDefault()
     target = $(event.target).closest('a')
     $.getJSON target.attr('href'), (data) ->
-      tinymce.activeEditor.setContent JST['comments/quote']({comment: data})
+      console.log (JST['comments/quote']({comment: data}))
 
   @edit_callback: (event) ->
     event.preventDefault()
     target = $(event.target).closest('a')
     $.getJSON target.attr('href'), (data) ->
-      tinymce.activeEditor.setContent JST['comments/quote']({comment: data})
+      console.log (JST['comments/quote']({comment: data}))

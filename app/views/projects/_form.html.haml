@@ -14,8 +14,7 @@
         %legend Accessability
         = f.input :public_view, :as => :zurb_boolean, :label => "Is the project publicly visible?"
         = f.input :public_join, :as => :zurb_boolean, :label => "Can anyone join the project?"
-      = f.input :description, :input_html => {:class => 'tinymce'}
-      = tinymce
+      = f.input :description
       = f.association :game, :include_blank => false
       = f.association :source_port, :include_blank => false
       .centered-actions
