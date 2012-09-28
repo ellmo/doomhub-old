@@ -25,6 +25,10 @@ class CommentsController < ApplicationController
 #= CRUD ACTIONS
 #=============
 
+  def index
+    redirect_to project_path(@project, :anchor => 'comments') if request.format == :html
+  end
+
   def new
     build_breadcrumbs
     add_breadcrumb "New", new_project_comment_path(@project)
