@@ -44,4 +44,8 @@ module ApplicationHelper
     link_to name, "https://github.com/ellmo/doomhub"
   end
 
+  def mkd(text)
+    MD.render(text).html_safe
+  end
+
 end
