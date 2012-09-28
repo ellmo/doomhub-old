@@ -45,7 +45,9 @@ module ApplicationHelper
   end
 
   def mkd(text)
-    MD.render(text).html_safe
+    content_tag(:div, :class => 'markdown') do
+      MD.render(text).html_safe
+    end
   end
 
 end
