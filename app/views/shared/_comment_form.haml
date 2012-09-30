@@ -1,6 +1,5 @@
 #comment-form.c222.black-border
   - if can?(:create, Comment) and commentable.readable_by?(current_user)
-    %h5 New Comment
     = simple_form_for([commentable, comment], :remote => true, :html => {'data-type' => :json}) do |f|
       -if notice
         .notice-div
@@ -8,7 +7,7 @@
           = link_to "Back to projects list.", projects_path
       = f.error_notification
       .form-inputs
-        = f.input :content
+        = f.input :content, :label => false
         .centered-actions
           = f.button :submit, :value => 'Add comment'
   - else

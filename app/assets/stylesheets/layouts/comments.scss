@@ -1,15 +1,15 @@
-#comment-list{
+#comment-list {
   padding: 12px;
-  margin: 0 8px 0 16px;
+  margin: 0 16px;
   .comment-div {
-    .comment-top{
+    .comment-top {
       border-top: 1px dashed #444;
       margin: 0 -12px;
       .comment-author, .comment-tools {
         font-size: 12px;
         color: $secondaryColor;
       }
-      .comment-tools{
+      .comment-tools {
         text-align: right;
         .comment-icons {
           float: right;
@@ -22,13 +22,16 @@
   }
 }
 
-#comment-form{
+#comment-form {
   padding: 12px;
-  margin: 0 16px 0 8px;
-  #not-logged{
+  margin: 20px 16px;
+  #not-logged {
     height: 200px;
     line-height: 190px;
     text-align: center;
+  }
+  textarea {
+    height: 180px;
   }
 }
 

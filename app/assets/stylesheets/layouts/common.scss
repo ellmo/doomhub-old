@@ -113,9 +113,17 @@ h1, h2, h3, h4, h5 {
 }
 
 .markdown {
+  padding-top: 8px;
+  h1, h2, h3, h4, h5 { margin-top: 0px; }
+  h1 { font-size: 12px; }
+  h2 { font-size: 14px; }
+  h2 { font-size: 16px; }
   p {
     margin-bottom :10px;
-    text-indent: 30px;
+  }
+  code {
+    background: inherit;
+    color: #5A9;
   }
   ul {
     padding-left: 30px;

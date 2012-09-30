@@ -6,18 +6,9 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
 
   constructor: (options) ->
     super
-    @fetchComments()
+    @ccb = Doomhub.Libs.Comments
+    @ccb.fetchComments("/p/#{H.id}/c.json")
     $('#project-orbit').orbit()
-
-  fetchComments: ->
-    ccb = Doomhub.Libs.CommentCallbacks
-    $.getJSON "/p/#{H.id}/c.json", (data) ->
-      $('#comment-list').html(JST['comments/list']({comments: data}))
-      $(window).trigger('resize')
-      $('a[data-action]="quote"').live 'click', ccb['quote_callback']
-      $('a[data-action]="delete"').live 'click', ccb['delete_callback']
-      $('a[data-action]="edit"').live 'click', ccb['edit_callback']
-
 
   imageDivClicked: (event) ->
     target = $(event.target)
@@ -33,7 +24,5 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
         $(".reveal-dummies .reveal-modal[rel='#{target_id}']").reveal()
 
   commentCreated: (event, data, status, xhr) ->
-    $('#comment-list').html(JST['comments/list']({comments: data}))
-    tinymce.activeEditor.setContent ''
-    $(window).trigger('resize')
+    @ccb.create_callback(event, data, status, xhr)
 

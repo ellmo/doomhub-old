@@ -1,5 +1,0 @@
-- c = @comment.comment
-%blockquote
-  %strong= "#{c.user.login} (#{c.human_created_at}) said:"
-  %div{ :style => "font-style: italic;" }= c.content
-%p

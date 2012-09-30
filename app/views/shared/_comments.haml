@@ -1,7 +1,8 @@
 .row
-  .seven.columns
+  .twelve.columns
     .row
       #comment-list.c222.black-border
-  .five.columns
-    .row
-      = render "shared/comment_form", :commentable => commentable, :comment => comment
+    - if can?(:create, Comment)
+      .row
+        = content_tag(:a, nil, {:name => 'new_comment'})
+        = render "shared/comment_form", :commentable => commentable, :comment => comment
