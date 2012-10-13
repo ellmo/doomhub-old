@@ -7,9 +7,9 @@ class @Doomhub.Libs.Comments
   @fetchComments: (comments_json_path) ->
     $.getJSON comments_json_path, (data) ->
       $('#comment-list').html(JST['comments/list']({comments: data}))
-      $('a[data-action]="quote"').live 'click', Doomhub.Libs.Comments.quote_callback
-      #$('a[data-action]="delete"').live 'click', Doomhub.Libs.Comments.delete_callback
-      #$('a[data-action]="edit"').live 'click', Doomhub.Libs.Comments.edit_callback
+      $('a[data-action="quote"]').live 'click', Doomhub.Libs.Comments.quote_callback
+      $('a[data-action="delete"]').live 'click', Doomhub.Libs.Comments.delete_callback
+      $('a[data-action="edit"]').live 'click', Doomhub.Libs.Comments.edit_callback
       $(window).trigger('resize')
 
   @create_callback: (event, data, status, xhr) ->
