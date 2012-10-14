@@ -62,7 +62,6 @@ class MapImage < ActiveRecord::Base
   before_create :save_geometry
 
   def save_geometry
-    binding.pry
     geo = get_geometry
     if geo
       self.width = geo.width
