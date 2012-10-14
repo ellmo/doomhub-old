@@ -15,13 +15,15 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
     target_id = target.attr('id')
     window.target = target
     image_height = target.data('originalHeight');
-    if $(".reveal-dummies .reveal-modal[rel='#{target_id}']").length > 0
-      $(".reveal-dummies .reveal-modal[rel='#{target_id}']").reveal()
+    if $(".reveal-dummies .gallery-image[rel='#{target_id}']").length > 0
+      $(".reveal-dummies .gallery-image[rel='#{target_id}']").reveal()
     else
       $.getJSON target.attr('rel'), (data) ->
         auth_url = data['url']
-        $('.reveal-dummies').append JST['image_popup']( image_url: auth_url, image_id: target_id )
-        $(".reveal-dummies .reveal-modal[rel='#{target_id}']").reveal()
+        $('.reveal-dummies').append JST['popups/gallery_image']
+          image_url: auth_url,
+          image_id: target_id
+        $(".reveal-dummies .gallery-image[rel='#{target_id}']").reveal()
 
   commentCreated: (event, data, status, xhr) ->
     @ccb.create_callback(event, data, status, xhr)
