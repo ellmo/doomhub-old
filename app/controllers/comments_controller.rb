@@ -41,7 +41,6 @@ class CommentsController < ApplicationController
 
   def create
     @comment.user = current_user
-
     respond_to do |format|
       if @comment.save
         format.html { redirect_to [parent, @comment], :notice => 'Map was successfully created.' }
@@ -50,6 +49,12 @@ class CommentsController < ApplicationController
         format.html { render :action => "new" }
         format.json { render :json => @comment.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    unless @comment.destroy
+      render :json => { :success => false }, :status => 422
     end
   end
 

@@ -13,10 +13,8 @@ class @Doomhub.Libs.Comments
       $(window).trigger('resize')
 
   @create_callback: (event, data, status, xhr) ->
-    $('#comment-list').html(JST['comments/list'](
-        comments: data
-      )
-    )
+    $('#comment-list').html JST['comments/list']
+      comments: data
     $('#new_comment #comment_content').val ''
     $(window).trigger('resize')
 
@@ -34,15 +32,7 @@ class @Doomhub.Libs.Comments
 
   @delete_callback: (event) ->
     event.preventDefault()
-    target = $(event.target).closest 'a'
-    $('.reveal-dummies').append JST['popups/delete']
-      delete_path: target.attr('href')
-    $('.reveal-dummies .delete-confirm').reveal
-      closed: Doomhub.Libs.Comments.removeDeleteModal;
-
-  @removeDeleteModal: (event)->
-    target = event.target;
-    $(target).remove()
+    Doomhub.Libs.DeleteModal.open(event)
 
   @edit_callback: (event) ->
     event.preventDefault()
