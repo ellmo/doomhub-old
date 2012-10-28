@@ -1,6 +1,8 @@
-.reveal-modal.delete-confirm{ :'data-path' => @delete_path, :'data-reload' => @reload_path  }
-  %div
-    are you sure you want do delete?
-  %div
-    %input{:type => 'button', :id => 'reveal-yes', :value => 'yes'}
-    %input{:type => 'button', :id => 'reveal-no', :value => 'no'}
+.reveal-modal.delete-confirm.black-border{ :'data-path' => @delete_path, :'data-reload' => @reload_path  }
+  .message
+    Are you sure you want to delete?
+  .buttons
+    %span#reveal-no.small.white.nice.button.radius
+      Cancel
+    %span#reveal-yes.small.white.nice.button.radius.alert
+      DELETE

@@ -1,0 +1,22 @@
+.reveal-modal {
+  &.gallery-image {
+    bottom: 0px;
+    width: 80%;
+    margin-left: -40%;
+    background-color: #444;
+  }
+  &.delete-confirm {
+    background-color: #444;
+    .message {
+      font-size: 20px;
+      text-align: center;
+    }
+    .buttons {
+      margin-top: 12px;
+      text-align: center;
+      #reveal-yes {
+        margin-left: 40px;
+      }
+    }
+  }
+}
