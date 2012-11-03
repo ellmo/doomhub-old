@@ -1,0 +1,9 @@
+%form.nice.custom.edit_comment{:action => @url, :'accept-charset' => 'UTF-8', :'data-remote' => true, :'data-type' => 'json', :method => 'post'}
+  %div{:style => 'margin:0;padding:0;display:inline' }
+    %input{:name => '_method', :type => 'hidden', :value => 'put'}
+  .form-inputs
+    .form-field.text.optional
+    %textarea.text.optional{:cols => 40, :name => 'comment[content]', :rows => '20'}
+      = @content
+    .centered-actions
+      %input.button{:name => 'commit', :type => 'submit', :value => 'Save changes'}

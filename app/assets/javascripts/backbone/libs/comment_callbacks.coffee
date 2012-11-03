@@ -36,4 +36,13 @@ class @Doomhub.Libs.Comments
 
   @edit_callback: (event) ->
     event.preventDefault()
-    console.log event
+    target = $(event.target).closest 'a'
+    div = $(event.target).closest '.comment-div'
+    $.getJSON target.attr('href'), (data) ->
+      c = data.comment
+      div.append JST['comments/form']
+        url: c.path,
+        content: c.raw_content
+      H.log $('form.edit_comment', div)
+      $('form.edit_comment').live 'ajax:success', (event, data) ->
+        Doomhub.Libs.Comments.fetchComments(window.location.pathname + '/c.json')
