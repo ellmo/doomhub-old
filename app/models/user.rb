@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    registered? and self.user_role_id == 2
+    registered? and superadmin? or self.user_role_id == 2
   end
 
   def regular?
