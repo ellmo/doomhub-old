@@ -23,7 +23,7 @@ class Ability
   # projects
       can :create, Project
       can :read, Project, Project.readable_by(user) do |p|
-        p.users.include? user or p.public_view
+        p.users.include? user or p.creator == user or p.public_view
       end
       can [:destroy, :update], Project, :creator => {:id => user.id}
   # maps
