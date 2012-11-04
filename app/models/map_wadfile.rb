@@ -1,5 +1,7 @@
 class MapWadfile < ActiveRecord::Base
 
+  acts_as_paranoid
+
 #========
 #= ASSOC
 #======

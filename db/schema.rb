@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103233009) do
+ActiveRecord::Schema.define(:version => 20121104170955) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20121103233009) do
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.boolean  "bumped",           :default => false, :null => false
+    t.datetime "deleted_at"
   end
 
   create_table "friendly_id_slugs", :force => true do |t|
@@ -82,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20121103233009) do
     t.datetime "updated_at",         :null => false
     t.integer  "width"
     t.integer  "height"
+    t.datetime "deleted_at"
   end
 
   create_table "map_wadfiles", :force => true do |t|
@@ -95,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20121103233009) do
     t.string   "wadfile_content_type"
     t.integer  "wadfile_file_size"
     t.datetime "wadfile_updated_at"
+    t.datetime "deleted_at"
   end
 
   create_table "maps", :force => true do |t|
@@ -107,6 +110,7 @@ ActiveRecord::Schema.define(:version => 20121103233009) do
     t.string   "slug"
     t.integer  "author_id"
     t.string   "author_type"
+    t.datetime "deleted_at"
   end
 
   create_table "news", :force => true do |t|
@@ -115,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20121103233009) do
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.datetime "deleted_at"
   end
 
   create_table "projects", :force => true do |t|
@@ -129,6 +134,7 @@ ActiveRecord::Schema.define(:version => 20121103233009) do
     t.integer  "user_id"
     t.boolean  "public_view",    :default => true,  :null => false
     t.boolean  "public_join",    :default => false, :null => false
+    t.datetime "deleted_at"
   end
 
   add_index "projects", ["slug"], :name => "index_projects_on_slug", :unique => true
@@ -160,6 +166,7 @@ ActiveRecord::Schema.define(:version => 20121103233009) do
     t.datetime "updated_at",                                            :null => false
     t.string   "login"
     t.integer  "user_role_id",                          :default => 3
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

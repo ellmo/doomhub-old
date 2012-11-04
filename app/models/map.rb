@@ -1,5 +1,8 @@
 class Map < ActiveRecord::Base
+
   extend FriendlyId
+
+  acts_as_paranoid
 
 #========
 #= ASSOC
