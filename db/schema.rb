@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120826225156) do
+ActiveRecord::Schema.define(:version => 20121103233009) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -20,13 +20,22 @@ ActiveRecord::Schema.define(:version => 20120826225156) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "comment_editions", :force => true do |t|
+    t.integer  "comment_id"
+    t.integer  "user_id"
+    t.text     "content_was"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.integer  "user_id"
     t.text     "content"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.boolean  "bumped",           :default => false, :null => false
   end
 
   create_table "friendly_id_slugs", :force => true do |t|

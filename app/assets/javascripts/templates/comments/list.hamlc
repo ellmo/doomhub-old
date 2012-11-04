@@ -25,3 +25,9 @@
       .twelve.columns.comment-content
         .markdown
           = c.content
+        -if c.edited or c.bumped
+          .bump-edit-notice
+            -if c.edited
+              = "last edited by #{c.edited_by.login} on #{c.human_updated_at}"
+            -if c.bumped
+              = "bumped on #{c.human_updated_at}"
