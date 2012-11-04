@@ -38,11 +38,12 @@ class @Doomhub.Libs.Comments
     event.preventDefault()
     target = $(event.target).closest 'a'
     div = $(event.target).closest '.comment-div'
-    $.getJSON target.attr('href'), (data) ->
-      c = data.comment
-      div.append JST['comments/form']
-        url: c.path,
-        content: c.raw_content
-      H.log $('form.edit_comment', div)
-      $('form.edit_comment').live 'ajax:success', (event, data) ->
-        Doomhub.Libs.Comments.fetchComments(window.location.pathname + '/c.json')
+    if $('form.edit_comment', div).length is 0
+      $.getJSON target.attr('href'), (data) ->
+        c = data.comment
+        div.append JST['comments/form']
+          url: c.path,
+          content: c.raw_content
+        $(window).trigger('resize')
+        $('form.edit_comment').live 'ajax:success', (event, data) ->
+          Doomhub.Libs.Comments.fetchComments(window.location.pathname + '/c.json')
