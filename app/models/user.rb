@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 #=====
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :login, :user_role_id
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :login, :user_role_id, :banned
 
 #=========
 #= DEVISE
@@ -69,6 +69,10 @@ class User < ActiveRecord::Base
 
   def guest?
     self.id.nil?
+  end
+
+  def ban!
+    update_attribute :banned, true
   end
 
 end

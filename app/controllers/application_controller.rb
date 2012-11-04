@@ -2,6 +2,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :root_breadcrumb
+  before_filter :log_out_if_banned
+
+  def log_out_if_banned
+    if current_user.present? && current_user.banned?
+      sign_out current_user
+      flash[:error] = "This account has been suspended...."
+      root_path
+    end
+  end
 
   rescue_from CanCan::AccessDenied do |exception|
     render :file => "#{Rails.root.to_s}/public/403.haml", :status => 403, :layout => false
