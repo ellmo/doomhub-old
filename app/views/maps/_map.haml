@@ -1,7 +1,7 @@
 .row
   .six.columns
     %h4= map.name
-    = map.desc.html_safe
+    = mkd map.desc
   .six.columns.resource-actions
     - if @project.mappable_by?(current_user)
       = link_to 'New Wadfile', new_project_map_map_wadfile_path(@project, map), :class => 'small white nice button radius'
