@@ -1,4 +1,4 @@
-.panel.c333.black-border.reveal-modal.doomhub-popup#eula
+.c333.black-border.reveal-modal.large.doomhub-popup#eula
   %a.close-reveal-modal &#215
   #legal-container
     .legal
