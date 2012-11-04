@@ -35,31 +35,3 @@ $ ->
 
       _zurb_chekbox.live "click", (e) ->
         _zurb_chkbox_input.val( if $(e.target).is('.checked') then "0" else "1");
-
-#===================
-#= FULL jScrollPane
-#=================
-
-  win = $(window)
-  isResizing = false
-  win.bind("resize", ->
-    unless isResizing
-      isResizing = true
-      container = $("#topmost")
-      container.css
-        width: 1
-        height: 1
-
-      container.css
-        width: win.width()
-        height: win.height()
-
-      isResizing = false
-      container.jScrollPane()
-      $('#topmost > .jspContainer > .jspPane').css
-        width: '100%'
-  ).trigger "resize"
-
-  $("body").css
-    overflow: 'hidden'
-  win.trigger "resize" unless $("#topmost").width() is win.width()
