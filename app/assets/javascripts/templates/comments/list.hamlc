@@ -9,12 +9,12 @@
           = $.timeago(c.created_at)
         %span.comment-icons
           - if H.session
-            - if c.user.owner
+            - if c.owner
               %a{ :href => c.path, :data => { :action => 'edit' }}
                 %ico.fi-edit.icon.has-tip{ :title => 'Edit comment' }
             - else
               %ico.fi-edit.inactive.icon.has-tip{ :title => 'Edit comment' }
-            - if c.user.owner
+            - if c.owner
               %a{ :href => c.path, :data => { :action => 'delete' }}
                 %ico.fi-remove.icon.has-tip{ :title => 'Delete comment' }
             - else

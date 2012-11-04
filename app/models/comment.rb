@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
 #======
 
   belongs_to :commentable, :polymorphic => true
-  belongs_to :user
+  belongs_to :user, :with_deleted => true
   has_many :editions, :class_name => CommentEdition
 
 #=======

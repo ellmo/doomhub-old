@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 #========
 
   before_filter :authenticate_user!
+  before_filter :build_breadcrumbs, :if => 'request.format == :html'
 
 #============
 #= RESOURCES
@@ -13,18 +14,6 @@ class UsersController < ApplicationController
   inherit_resources
   load_and_authorize_resource :user
 
-#===============
-#= CRUD ACTIONS
-#=============
-
-  def index
-    build_breadcrumbs
-  end
-
-  def show
-    build_breadcrumbs
-  end
-
 #==========
 #= METHODS
 #========
@@ -32,8 +21,8 @@ class UsersController < ApplicationController
 protected
 
   def build_breadcrumbs
-    add_breadcrumb "Users", :users_path, :allowed => @user.superadmin?
-    add_breadcrumb @user.login, user_path(@user)
+    add_breadcrumb "Users", :users_path, :allowed => current_user.superadmin?
+    add_breadcrumb resource.login, user_path(resource) if action_name != 'index'
   end
 
 end
