@@ -1,15 +1,18 @@
-class @Doomhub.Libs.Comments
+class Doomhub.Libs.Comments
 
 #============
 #= FUNCTIONS
 #==========
 
-  @fetchComments: (comments_json_path) ->
+  @fetch: (comments_json_path, params) ->
+    url_params = if params['page'] then params['page'] else ''
+    comments_json_path = comments_json_path + '?page=' + url_params
     $.getJSON comments_json_path, (data) ->
-      $('#comment-list').html(JST['comments/list']({comments: data}))
+      $('#comment-list').html(JST['comments/list']({comments: data.comments}))
       $('a[data-action="quote"]').live 'click', Doomhub.Libs.Comments.quote_callback
       $('a[data-action="delete"]').live 'click', Doomhub.Libs.Comments.delete_callback
       $('a[data-action="edit"]').live 'click', Doomhub.Libs.Comments.edit_callback
+      window.helper = new Doomhub.Libs.PaginationHelper(data.pagination)
       $(window).trigger('resize')
 
   @create_callback: (event, data, status, xhr) ->

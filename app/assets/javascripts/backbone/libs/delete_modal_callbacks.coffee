@@ -1,4 +1,4 @@
-class @Doomhub.Libs.DeleteModal
+class Doomhub.Libs.DeleteModal
 
 #============
 #= FUNCTIONS

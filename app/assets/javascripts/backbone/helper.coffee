@@ -1,4 +1,4 @@
-class @Doomhub.Helper
+class Doomhub.Helper
   constructor: ->
     # get the params hash returned by Rails' server
     # and filtered by SafeParams lib

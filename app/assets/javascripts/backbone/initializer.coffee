@@ -1,4 +1,4 @@
-class @Doomhub.Initializer
+class Doomhub.Initializer
 
   constructor: ->
     window.H = new Doomhub.Helper
