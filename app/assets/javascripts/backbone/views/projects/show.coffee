@@ -7,6 +7,7 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
   constructor: (options) ->
     super
     $('#project-orbit').orbit()
+    @ccb = Doomhub.Libs.Comments
 
   imageDivClicked: (event) ->
     target = $(event.target)
