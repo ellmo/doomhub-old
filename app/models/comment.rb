@@ -31,6 +31,13 @@ class Comment < ActiveRecord::Base
   scope :bumped, where(:created_at != :updated_at, :bumped => true)
   scope :edited, where(:created_at != :updated_at, :bumped => false)
 
+#=============
+#= PAGINATION
+#===========
+
+  paginates_per 10
+  max_paginates_per 10
+
 #==========
 #= METHODS
 #========

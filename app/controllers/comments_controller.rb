@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
 
+  before_filter :load_by_pagination, :only => :index
+
 #===========
 #= RESPONSE
 #=========
@@ -26,7 +28,7 @@ class CommentsController < ApplicationController
 #=============
 
   def index
-    redirect_to project_path(@project, :anchor => 'comments') if request.format == :html
+    redirect_to project_path(@project, :anchor => 'comments/p2', :page => params[:page]) if request.format == :html
   end
 
   def new
@@ -77,6 +79,14 @@ class CommentsController < ApplicationController
     add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb "Comments", project_path(@project, :anchor => 'maps')
     add_breadcrumb @comment.id.to_s, project_comment_path(@project, @comment) if @comment and !@comment.new_record?
+  end
+
+  def collection
+    @comments ||= end_of_association_chain.page params[:page]
+  end
+
+  def load_by_pagination
+    @comments = end_of_association_chain.order("created_at").page params[:page]
   end
 
 end

@@ -6,8 +6,6 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
 
   constructor: (options) ->
     super
-    @ccb = Doomhub.Libs.Comments
-    @ccb.fetchComments("/p/#{H.id}/c.json")
     $('#project-orbit').orbit()
 
   imageDivClicked: (event) ->

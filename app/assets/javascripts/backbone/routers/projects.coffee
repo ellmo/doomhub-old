@@ -4,12 +4,16 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
     '' : 'overview'
     'overview' : 'overview'
     'comments' : 'comments'
+    'comments/p:page' : 'comments'
+    'comments/:id' : 'comment'
     'maps' : 'maps'
     'images' : 'images'
     'resources' : 'resources'
 
   constructor: ->
     @ztb = new Doomhub.Libs.ZurbTabFunctions()
+    @ccb = Doomhub.Libs.Comments
+    @params = {}
     super
 
 #================
@@ -17,7 +21,6 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
 #==============
 
   index: ->
-    H.log 'hello'
     @view ?= new Doomhub.Views.Projects.Index({ el: $('#topmost'), col: @collection })
 
   show: ->
@@ -45,8 +48,12 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
   overview: ->
     @ztb.switch_to_tab('overview')
 
-  comments: ->
-    @ztb.switch_to_tab('comments')
+  comments: (page)->
+    @ccb.fetch "/p/#{H.id}/c.json", {page: page}
+    @ztb.switch_to_tab 'comments'
+
+  comment: (id)->
+    @ztb.switch_to_tab('comments', {id: id})
 
   maps: ->
     @ztb.switch_to_tab('maps')

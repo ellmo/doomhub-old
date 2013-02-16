@@ -1,7 +1,9 @@
 .row
   .twelve.columns
+    .row.pagination-div
     .row
       #comment-list.c222.black-border
+    .row.pagination-div
     - if can?(:create, Comment)
       .row
         = content_tag(:a, nil, {:name => 'new_comment'})

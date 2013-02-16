@@ -25,6 +25,7 @@ class ProjectsController < ApplicationController
 
   def show
     build_breadcrumbs
+    @comments = @project.comments.page nil
     @comment = Comment.new
   end
 
