@@ -49,7 +49,7 @@ class @Doomhub.Routers.Projects extends Doomhub.Routers.BASE
     @ztb.switch_to_tab('overview')
 
   comments: (page)->
-    @ccb.fetch "/p/#{H.id}/c.json", {page: page}
+    comment_data = @ccb.fetch "/p/#{H.id}/c.json", {page: page}, $('.pagination-div')
     @ztb.switch_to_tab 'comments'
 
   comment: (id)->
