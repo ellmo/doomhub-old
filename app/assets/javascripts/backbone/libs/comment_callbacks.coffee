@@ -15,12 +15,6 @@ class Doomhub.Libs.Comments
       window.helper = new Doomhub.Libs.PaginationHelper(data.pagination)
       $(window).trigger('resize')
 
-  @create_callback: (event, data, status, xhr) ->
-    $('#comment-list').html JST['comments/list']
-      comments: data
-    $('#new_comment #comment_content').val ''
-    $(window).trigger('resize')
-
   @quote_callback: (event) ->
     event.preventDefault()
     target = $(event.target).closest 'a'

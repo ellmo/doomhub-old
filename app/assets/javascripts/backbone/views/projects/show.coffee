@@ -25,5 +25,7 @@ class @Doomhub.Views.Projects.Show extends Doomhub.Views.BASE
         $(".reveal-dummies .gallery-image[rel='#{target_id}']").reveal()
 
   commentCreated: (event, data, status, xhr) ->
-    @ccb.create_callback(event, data, status, xhr)
+    anchor = location.hash.match(/(#\w*)(\/[\w\d]*)/)[1]
+    location.hash = anchor + '/p' + data.pagination.total_pages
+    $('#new_comment #comment_content').val ''
 

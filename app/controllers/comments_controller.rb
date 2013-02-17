@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 
-  before_filter :load_by_pagination, :only => :index
+  before_filter :load_by_pagination, only: [:index]
 
 #===========
 #= RESPONSE
@@ -43,15 +43,16 @@ class CommentsController < ApplicationController
 
   def create
     @comment.user = current_user
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to [parent, @comment], :notice => 'Map was successfully created.' }
-        format.json { @comments = parent.comments }
-      else
-        format.html { render :action => "new" }
-        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
-      end
-    end
+    # respond_to do |format|
+    #   if @comment.save
+    #     format.html { redirect_to [parent, @comment], :notice => 'Map was successfully created.' }
+    #     format.json { @comments = parent.comments }
+    #   else
+    #     format.html { render :action => "new" }
+    #     format.json { render :json => @comment.errors, :status => :unprocessable_entity }
+    #   end
+    # end
+    load_by_pagination
   end
 
   def update
