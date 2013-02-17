@@ -52,7 +52,7 @@ class CommentsController < ApplicationController
     #     format.json { render :json => @comment.errors, :status => :unprocessable_entity }
     #   end
     # end
-    load_by_pagination
+    @comment.save ? load_by_pagination : render(json: {success: false})
   end
 
   def update
