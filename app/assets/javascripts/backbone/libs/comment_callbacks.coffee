@@ -4,17 +4,14 @@ class Doomhub.Libs.Comments
 #= FUNCTIONS
 #==========
 
-  @fetch: (comments_json_path, params, pagination_element) ->
-    url_params = if params['page'] then params['page'] else ''
-    comments_json_path = comments_json_path + '?page=' + url_params
-    $.getJSON comments_json_path, (data) ->
-      $('#comment-list').html(JST['comments/list']({comments: data.comments}))
-      $('a[data-action="quote"]').live 'click', Doomhub.Libs.Comments.quote_callback
-      $('a[data-action="delete"]').live 'click', Doomhub.Libs.Comments.delete_callback
-      $('a[data-action="edit"]').live 'click', Doomhub.Libs.Comments.edit_callback
-      _pag_helper = new Doomhub.Libs.PaginationHelper(data.pagination)
-      _pag_helper.paginate(pagination_element)
-      $(window).trigger('resize')
+  @render: (json_data, pagination_element) ->
+    $('#comment-list').html(JST['comments/list']({comments: json_data.comments}))
+    $('a[data-action="quote"]').live 'click', Doomhub.Libs.Comments.quote_callback
+    $('a[data-action="delete"]').live 'click', Doomhub.Libs.Comments.delete_callback
+    $('a[data-action="edit"]').live 'click', Doomhub.Libs.Comments.edit_callback
+    _pag_helper = new Doomhub.Libs.PaginationHelper(json_data.pagination)
+    _pag_helper.paginate(pagination_element)
+    $(window).trigger('resize')
 
   @quote_callback: (event) ->
     event.preventDefault()

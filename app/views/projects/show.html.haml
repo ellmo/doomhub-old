@@ -1,11 +1,17 @@
 %p#notice= notice
 
-%dl.nice.contained.tabs
-  %dd= link_to 'Overview', '#overview', :class => 'active'
-  %dd= link_to 'Comments', '#comments'
-  %dd= link_to 'Maps', '#maps'
-  %dd= link_to 'Images', '#images'
-  %dd= link_to 'Resources', '#resources'
+%dl.nice.contained.tabs#navbar
+  %dd#overview
+    = link_to 'Overview', '#overview', :class => 'active'
+  %dd.paginated#comments
+    = link_to 'Comments', '#comments'
+    %span.page
+  %dd#maps
+    = link_to 'Maps', '#maps'
+  %dd#images
+    = link_to 'Images', '#images'
+  %dd#resources
+    = link_to 'Resources', '#resources'
 %ul.nice.contained.tabs-content#project-show
   %li.c333.black-border.project-overview.active#overviewTab
     = render @project

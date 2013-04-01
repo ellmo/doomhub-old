@@ -6,7 +6,7 @@ class Doomhub.Libs.PaginationHelper
 
   constructor: (pagination_data)->
     H.pagination_helper = @
-    @anchor = location.hash.match(/(#\w*)(\/[\w\d]*)/)[1]
+    @anchor = location.hash.match(/(#\w*)(\/*[\w\d]*)/)[1]
     @current_url = location.pathname
     @data = pagination_data
 
@@ -42,7 +42,7 @@ class Doomhub.Libs.PaginationHelper
       "<li>#{text}</li>"
 
   relevant_pages: () ->
-    if @data.total_pages > 9
+    if parseInt(@data.total_pages) < 9
       pages = []
     else
       pages = _.map [1..@data.total_pages], (page) ->
