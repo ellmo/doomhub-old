@@ -1,0 +1,17 @@
+defaults: &defaults
+  adapter: postgresql
+  encoding: utf8
+  username: «psql_username»
+  password: «psql_password»
+
+development:
+  <<: *defaults
+  database: doomhub_dev
+
+test:
+  <<: *defaults
+  database: doomhub_test
+
+production:
+  <<: *defaults
+  database: doomhub_prod

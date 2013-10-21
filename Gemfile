@@ -1,6 +1,8 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.2.13'
+gem 'pg'
+gem 'mysql2'
 
 gem 'airbrake'
 gem 'aws-sdk'
@@ -15,7 +17,6 @@ gem 'haml_coffee_assets'
 gem 'inherited_resources'
 gem 'jquery-rails'
 gem 'kaminari'
-gem 'mysql2'
 gem 'newrelic_rpm'
 gem 'paperclip', '~> 2.7.0'
 gem 'pry-rails'
