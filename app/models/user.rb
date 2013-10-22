@@ -29,8 +29,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def self.find_for_database_authentication(conditions={})
-    self.find_by_login conditions[:login] or
-    self.find_by_email conditions[:login]
+    self.where{login =~ conditions[:login]}.first or
+    self.where{email =~ conditions[:login]}.first
   end
 
 #==============
@@ -44,8 +44,8 @@ class User < ActiveRecord::Base
 #= VALIDATION
 #===========
 
-  validates :login, :uniqueness => true
-  validates :email, :uniqueness => true
+  validates :login, :uniqueness => {:case_sensitive => false}
+  validates :email, :uniqueness => {:case_sensitive => false}
 
 #==========
 #= METHODS
