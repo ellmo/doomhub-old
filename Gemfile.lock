@@ -28,6 +28,8 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
+    acts_as_paranoid (0.4.2)
+      activerecord (~> 3.2)
     addressable (2.2.8)
     airbrake (3.1.4)
       builder
@@ -71,7 +73,6 @@ GEM
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
     connection_pool (0.9.2)
-    database_cleaner (0.8.0)
     devise (1.5.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -125,10 +126,8 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8)
     mime-types (1.23)
-    minitest (2.10.1)
     multi_json (1.7.8)
     multi_xml (0.5.1)
-    mysql2 (0.3.11)
     newrelic_rpm (3.6.1.88)
     nokogiri (1.5.5)
     orm_adapter (0.0.7)
@@ -169,8 +168,6 @@ GEM
       coffee-script (~> 2.2.0)
       ejs (~> 1.0.0)
       railties (>= 3.1.0)
-    rails3_acts_as_paranoid (0.2.5)
-      activerecord (~> 3.2)
     railties (3.2.13)
       actionpack (= 3.2.13)
       activesupport (= 3.2.13)
@@ -249,6 +246,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_paranoid
   airbrake
   aws-sdk
   breadcrumbs_on_rails
@@ -257,7 +255,6 @@ DEPENDENCIES
   checker
   coffee-rails (~> 3.2.1)
   compass-rails
-  database_cleaner
   devise (= 1.5.3)
   execjs
   factory_girl_rails (= 1.4.0)
@@ -267,8 +264,6 @@ DEPENDENCIES
   inherited_resources
   jquery-rails
   kaminari
-  minitest (~> 2.10.0)
-  mysql2
   newrelic_rpm
   paperclip (~> 2.7.0)
   pg
@@ -276,7 +271,6 @@ DEPENDENCIES
   rabl
   rails (= 3.2.13)
   rails-backbone
-  rails3_acts_as_paranoid
   redcarpet
   rspec-rails (= 2.7.0)
   sass-rails (~> 3.2.3)

@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'pg'
-gem 'mysql2'
 
 gem 'airbrake'
 gem 'aws-sdk'
@@ -22,7 +21,7 @@ gem 'paperclip', '~> 2.7.0'
 gem 'pry-rails'
 gem 'rabl'
 gem 'rails-backbone'
-gem 'rails3_acts_as_paranoid'
+gem 'acts_as_paranoid'
 gem 'redcarpet'
 gem 'settingslogic'
 gem 'simple_form'
@@ -41,9 +40,7 @@ end
 
 group :development, :test do
   gem 'capybara', '~> 1.1.2'
-  gem 'database_cleaner'
   gem 'factory_girl_rails', '1.4.0'
-  gem 'minitest', '~> 2.10.0'
   gem 'rspec-rails', '2.7.0'
   gem 'sextant'
 end
