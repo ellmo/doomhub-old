@@ -125,8 +125,11 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    metaclass (0.0.1)
     method_source (0.8)
     mime-types (1.23)
+    mocha (0.14.0)
+      metaclass (~> 0.0.1)
     multi_json (1.8.2)
     multi_xml (0.5.1)
     newrelic_rpm (3.6.1.88)
@@ -263,6 +266,7 @@ DEPENDENCIES
   inherited_resources
   jquery-rails
   kaminari
+  mocha
   newrelic_rpm
   paperclip (~> 2.7.0)
   pg
