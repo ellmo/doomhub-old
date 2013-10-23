@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :project do
+    creator
     name { generate :project_name }
     url_name {|p| p.name }
     game { Game.first }

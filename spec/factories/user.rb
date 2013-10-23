@@ -1,7 +1,7 @@
 # Read about factories at http://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :user do
+  factory :user, aliases: [:creator] do
     login
     email {|u| "#{u.login}@doomhub.com"}
     password 'asdasd'
