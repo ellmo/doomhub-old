@@ -5,7 +5,7 @@ describe User do
   context 'registering new' do
     context 'neither login nor email are in use' do
       before do
-        Factory.create :user
+        FactoryGirl.create :user
       end
 
       it 'should create the user' do
@@ -13,14 +13,14 @@ describe User do
       end
 
       it 'should create another user' do
-        Factory.create :user
+        FactoryGirl.create :user
         User.count.should eq 2
       end
     end
 
     context 'login is in use but email isn`t' do
       before do
-        Factory.create :user
+        FactoryGirl.create :user
       end
 
       let(:existing_user) { User.first }
@@ -28,7 +28,7 @@ describe User do
       context 'login is in the same case' do
         it 'should raise invalid record error' do
           expect do
-            Factory.create :user, login: existing_user.login
+            FactoryGirl.create :user, login: existing_user.login
           end.to raise_error(ActiveRecord::RecordInvalid)
           User.count.should eq 1
         end
@@ -37,10 +37,10 @@ describe User do
       context 'login tries to use different case' do
         it 'should raise invalid record error' do
           expect do
-            Factory.create :user, login: existing_user.login.upcase
+            FactoryGirl.create :user, login: existing_user.login.upcase
           end.to raise_error(ActiveRecord::RecordInvalid)
           expect do
-            Factory.create :user, login: existing_user.login.capitalize
+            FactoryGirl.create :user, login: existing_user.login.capitalize
           end.to raise_error(ActiveRecord::RecordInvalid)
           User.count.should eq 1
         end
@@ -49,7 +49,7 @@ describe User do
 
     context 'email is in use but login isn`t' do
       before do
-        Factory.create :user
+        FactoryGirl.create :user
       end
 
       let(:existing_user) { User.first }
@@ -57,7 +57,7 @@ describe User do
       context 'email is in the same case' do
         it 'should raise invalid record error' do
           expect do
-            Factory.create :user, email: existing_user.email
+            FactoryGirl.create :user, email: existing_user.email
           end.to raise_error(ActiveRecord::RecordInvalid)
           User.count.should eq 1
         end
@@ -66,10 +66,10 @@ describe User do
       context 'email tries to use different case' do
         it 'should raise invalid record error' do
           expect do
-            Factory.create :user, email: existing_user.email.upcase
+            FactoryGirl.create :user, email: existing_user.email.upcase
           end.to raise_error(ActiveRecord::RecordInvalid)
           expect do
-            Factory.create :user, email: existing_user.email.capitalize
+            FactoryGirl.create :user, email: existing_user.email.capitalize
           end.to raise_error(ActiveRecord::RecordInvalid)
           User.count.should eq 1
         end
@@ -78,7 +78,7 @@ describe User do
 
     context 'both email AND login are in use' do
       before do
-        Factory.create :user
+        FactoryGirl.create :user
       end
 
       let(:existing_user) { User.first }
@@ -86,7 +86,7 @@ describe User do
       context 'email and login are both in the same case' do
         it 'should raise invalid record error' do
           expect do
-            Factory.create :user, login: existing_user.login, email: existing_user.email
+            FactoryGirl.create :user, login: existing_user.login, email: existing_user.email
           end.to raise_error(ActiveRecord::RecordInvalid)
           User.count.should eq 1
         end
@@ -95,10 +95,10 @@ describe User do
       context 'either login or email try to use different case' do
         it 'should raise invalid record error' do
           expect do
-            Factory.create :user, login: existing_user.login, email: existing_user.email.capitalize
+            FactoryGirl.create :user, login: existing_user.login, email: existing_user.email.capitalize
           end.to raise_error(ActiveRecord::RecordInvalid)
           expect do
-            Factory.create :user, login: existing_user.login.capitalize, email:  existing_user.email
+            FactoryGirl.create :user, login: existing_user.login.capitalize, email:  existing_user.email
           end.to raise_error(ActiveRecord::RecordInvalid)
           User.count.should eq 1
         end
@@ -109,7 +109,7 @@ describe User do
   context 'using find_for_database_authentication method (devise)' do
     context 'user exists' do
       before do
-        Factory.create :user
+        FactoryGirl.create :user
       end
 
       let(:user) { User.first }
@@ -147,7 +147,7 @@ describe User do
   context 'deleting account' do
     context 'after being deleted' do
       before do
-        Factory.create :user
+        FactoryGirl.create :user
         User.first.destroy
       end
 
@@ -173,14 +173,14 @@ describe User do
       context 'when creating new account with the same data' do
         it 'should raise invalid record error when using same login' do
           expect do
-            Factory.create :user, login: delted_user.login
+            FactoryGirl.create :user, login: delted_user.login
           end.to raise_error(ActiveRecord::RecordInvalid)
           User.unscoped.count.should eq 1
         end
 
         it 'should raise invalid record error when using same email' do
           expect do
-            Factory.create :user, email: delted_user.email
+            FactoryGirl.create :user, email: delted_user.email
           end.to raise_error(ActiveRecord::RecordInvalid)
           User.unscoped.count.should eq 1
         end
