@@ -1,9 +1,10 @@
+# Read about factories at http://github.com/thoughtbot/factory_girl
+
 FactoryGirl.define do
   factory :user do
     login
     email {|u| "#{u.login}@doomhub.com"}
     password 'asdasd'
-
   end
 
   factory :admin, parent: :user do
