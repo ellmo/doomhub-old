@@ -40,6 +40,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'database_cleaner'
   gem 'capybara', '~> 1.1.2'
   gem 'factory_girl_rails', "~> 4.0"
   gem 'mocha', require: false
