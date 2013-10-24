@@ -29,7 +29,20 @@ class Project < ActiveRecord::Base
 #============
 
   validates :name, :presence => true, :uniqueness => {:case_sensitive => false}
-  validates :url_name, :presence => true, :uniqueness => {:case_sensitive => false}
+  validates :url_name, :uniqueness => {:case_sensitive => false}
+
+#============
+#= CALLBACKS
+#==========
+
+  before_save :generate_default_url_name
+
+  def generate_default_url_name
+    unless self.url_name.present?
+      self.url_name = name
+      self.send :set_slug
+    end
+  end
 
 #=========
 #= SCOPES

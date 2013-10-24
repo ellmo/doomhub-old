@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Project do
-  context 'creating new' do
+  context 'validations while creating new' do
     context 'neither name nor slug are in use' do
       before do
         FactoryGirl.create :project
@@ -100,6 +100,50 @@ describe Project do
             FactoryGirl.create :project, url_name: existing_project.url_name, name: existing_project.name.capitalize
           end.to raise_error(ActiveRecord::RecordInvalid)
           Project.count.should eq 1
+        end
+      end
+    end
+  end
+
+  context 'generating slug' do
+    context 'no explicit url_name given' do
+      before do
+        FactoryGirl.create :project, name: 'cold ass * Hell % & 12'
+      end
+
+      let(:existing_project) { Project.first }
+
+      it 'properly generate a slug from name' do
+        existing_project.url_name.should eq existing_project.name
+        existing_project.slug.should eq existing_project.name.parameterize
+      end
+
+      context 'when trying to create project with the same name' do
+        it 'should raise invalid record error' do
+          expect do
+            FactoryGirl.create :project, name: existing_project.name
+          end.to raise_error(ActiveRecord::RecordInvalid)
+        end
+      end
+    end
+
+    context 'url_name given' do
+      before do
+        FactoryGirl.create :project, name: 'cold ass * Hell % & 12', url_name: '# asdf ... , @#$ 234'
+      end
+
+      let(:existing_project) { Project.first }
+
+      it 'properly generate a slug from url_name' do
+        existing_project.url_name.should_not eq existing_project.name
+        existing_project.slug.should eq existing_project.url_name.parameterize
+      end
+
+      context 'when trying to create project with the same url_name' do
+        it 'should raise invalid record error' do
+          expect do
+            FactoryGirl.create :project, url_name: existing_project.url_name
+          end.to raise_error(ActiveRecord::RecordInvalid)
         end
       end
     end
