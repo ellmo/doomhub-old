@@ -115,4 +115,54 @@ describe Map do
       end
     end
   end
+
+  context 'adding WADFILES' do
+    before do
+      FactoryGirl.create :map
+    end
+
+    let(:map) { Map.last }
+
+    context 'adding no more than five' do
+      before do
+        5.times { FactoryGirl.create :map_wadfile, map: map }
+      end
+
+      it 'should be valid' do
+        map.valid?.should be_true
+        map.errors[:base].should be_empty
+        map.map_wadfiles.count.should eq 5
+      end
+    end
+
+    context 'adding more than five' do
+      before do
+        6.times { FactoryGirl.create :map_wadfile, map: map }
+      end
+
+      it "should not be valid" do
+        map.valid?.should be_false
+        map.errors[:base].should_not be_empty
+      end
+    end
+
+    context 'adding new after deleting old' do
+      before do
+        5.times { FactoryGirl.create :map_wadfile, map: map }
+        map.map_wadfiles.last.destroy
+      end
+
+      it 'should respect paranoid entries' do
+        map.map_wadfiles.count.should eq 4
+        map.map_wadfiles.unscoped.count.should eq 5
+      end
+
+      it 'should be valid when new wadfile is added' do
+        FactoryGirl.create :map_wadfile, map: map
+        map.map_wadfiles.count.should eq 5
+        map.map_wadfiles.unscoped.count.should eq 6
+        map.valid?.should be_true
+      end
+    end
+  end
 end
