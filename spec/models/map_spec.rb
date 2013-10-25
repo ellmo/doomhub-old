@@ -119,15 +119,12 @@ describe Map do
   context 'adding WADFILES' do
     before do
       FactoryGirl.create :map
+      5.times { FactoryGirl.create :map_wadfile, map: map }
     end
 
     let(:map) { Map.last }
 
     context 'adding no more than five' do
-      before do
-        5.times { FactoryGirl.create :map_wadfile, map: map }
-      end
-
       it 'should be valid' do
         map.valid?.should be_true
         map.errors[:base].should be_empty
@@ -136,19 +133,17 @@ describe Map do
     end
 
     context 'adding more than five' do
-      before do
-        6.times { FactoryGirl.create :map_wadfile, map: map }
-      end
-
-      it "should not be valid" do
-        map.valid?.should be_false
-        map.errors[:base].should_not be_empty
+      it "should raise RecordInvalid" do
+        expect do
+          FactoryGirl.create :map_wadfile, map: map
+        end.to raise_error(ActiveRecord::RecordInvalid)
+        map.valid?.should be_true
+        map.map_wadfiles.count.should eq 5
       end
     end
 
     context 'adding new after deleting old' do
       before do
-        5.times { FactoryGirl.create :map_wadfile, map: map }
         map.map_wadfiles.last.destroy
       end
 
@@ -161,6 +156,46 @@ describe Map do
         FactoryGirl.create :map_wadfile, map: map
         map.map_wadfiles.count.should eq 5
         map.map_wadfiles.unscoped.count.should eq 6
+        map.valid?.should be_true
+      end
+    end
+  end
+
+  context "recovering WADFILES" do
+    before do
+      FactoryGirl.create :map
+      5.times { FactoryGirl.create :map_wadfile, map: map }
+    end
+
+    let(:map) { Map.last }
+
+    context 'restoring destroyed file ' do
+      before do
+        map.map_wadfiles.last.destroy
+      end
+
+      it 'should be possible' do
+        map.reload.map_wadfiles.count.should eq 4
+        map.map_wadfiles.only_deleted.last.recover.should be_true
+        map.reload.map_wadfiles.unscoped.count.should eq 5
+        map.map_wadfiles.only_deleted.count.should eq 0
+        map.map_wadfiles.count.should eq 5
+        map.valid?.should be_true
+      end
+    end
+
+    context 'restoring destroyed file when there are 5 wadfiles already' do
+      before do
+        map.map_wadfiles.last.destroy
+        FactoryGirl.create :map_wadfile, map: map
+      end
+
+      it 'should not be possible' do
+        map.reload.map_wadfiles.count.should eq 5
+        map.map_wadfiles.only_deleted.last.recover.should be_false
+        map.reload.map_wadfiles.unscoped.count.should eq 6
+        map.map_wadfiles.only_deleted.count.should eq 1
+        map.map_wadfiles.count.should eq 5
         map.valid?.should be_true
       end
     end

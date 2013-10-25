@@ -46,6 +46,7 @@ class MapWadfile < ActiveRecord::Base
 
   validate :name, :presence => true
   validate :check_attachment
+  validate :check_if_can_add_to_map
 
   def check_attachment
     if (MIME::Types.type_for(wadfile_file_name).map(&:to_s) & ALLOWED_MIMES).empty?
@@ -54,6 +55,11 @@ class MapWadfile < ActiveRecord::Base
     if wadfile.size > 1.megabyte
       errors[:wadfile] << "File must not be over 1 MB"
     end
+  end
+
+  def check_if_can_add_to_map
+    errors[:map] << 'Cannot add more than 5 wadfiles per map' \
+      if map.map_wadfiles.count >= 5
   end
 
 #==========
