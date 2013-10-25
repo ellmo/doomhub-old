@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121104173743) do
+ActiveRecord::Schema.define(:version => 20131025095805) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20121104173743) do
     t.datetime "deleted_at"
   end
 
+  add_index "projects", ["name"], :name => "index_projects_on_name"
   add_index "projects", ["slug"], :name => "index_projects_on_slug", :unique => true
 
   create_table "source_ports", :force => true do |t|
