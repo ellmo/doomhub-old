@@ -28,6 +28,7 @@ gem 'settingslogic'
 gem 'simple_form'
 gem 'squeel'
 gem 'yajl-ruby'
+gem 'yell-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -40,6 +41,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'better_errors'
   gem 'database_cleaner'
   gem 'capybara', '~> 1.1.2'
   gem 'factory_girl_rails', "~> 4.0"
