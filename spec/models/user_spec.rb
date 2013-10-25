@@ -137,7 +137,7 @@ describe User do
     end
   end
 
-  context 'using find_for_database_authentication method (devise)' do
+  context '#find_for_database_authentication' do
     context 'when user exists' do
       let!(:user) { FactoryGirl.create :user }
 
