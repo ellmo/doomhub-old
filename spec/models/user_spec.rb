@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe User do
 
-  context 'creation' do
-    context 'when neither login nor email are in use' do
+  context '.create' do
+    context 'login and email are unique' do
       before do
         FactoryGirl.create :user
       end
@@ -18,89 +18,120 @@ describe User do
       end
     end
 
-    context 'when login is in use but email isn`t' do
-      before do
-        FactoryGirl.create :user
-      end
+    context 'credentials are not unique' do
+      let!(:existing_user) { FactoryGirl.create :user }
 
-      let(:existing_user) { User.first }
+      context 'login is in use' do
+        context 'login uses the same case' do
+          it 'should raise RecordInvalid' do
+            expect do
+              FactoryGirl.create :user, login: existing_user.login
+            end.to raise_error(ActiveRecord::RecordInvalid)
+            User.count.should eq 1
+          end
+          it 'should not add user' do
+            User.count.should eq 1
+          end
+        end
 
-      context 'login is in the same case' do
-        it 'should raise invalid record error' do
-          expect do
-            FactoryGirl.create :user, login: existing_user.login
-          end.to raise_error(ActiveRecord::RecordInvalid)
-          User.count.should eq 1
+        context 'login is upcased' do
+          it 'should raise RecordInvalid' do
+            expect do
+              FactoryGirl.create :user, login: existing_user.login.upcase
+            end.to raise_error(ActiveRecord::RecordInvalid)
+          end
+          it 'should not add user' do
+            User.count.should eq 1
+          end
+        end
+
+        context 'login is capitalized' do
+          it "should raise RecordInvalid" do
+            expect do
+              FactoryGirl.create :user, login: existing_user.login.capitalize
+            end.to raise_error(ActiveRecord::RecordInvalid)
+          end
+          it 'should not add user' do
+            User.count.should eq 1
+          end
         end
       end
 
-      context 'login tries to use different case' do
-        it 'should raise invalid record error' do
+      context 'login is in use by destroyed account' do
+        let!(:deleted_user) { existing_user.destroy }
+
+        it 'should raise RecordInvalid' do
           expect do
-            FactoryGirl.create :user, login: existing_user.login.upcase
+            FactoryGirl.create :user, login: deleted_user.login
           end.to raise_error(ActiveRecord::RecordInvalid)
-          expect do
-            FactoryGirl.create :user, login: existing_user.login.capitalize
-          end.to raise_error(ActiveRecord::RecordInvalid)
-          User.count.should eq 1
         end
-      end
-    end
-
-    context 'when email is in use but login isn`t' do
-      before do
-        FactoryGirl.create :user
-      end
-
-      let(:existing_user) { User.first }
-
-      context 'email is in the same case' do
-        it 'should raise invalid record error' do
-          expect do
-            FactoryGirl.create :user, email: existing_user.email
-          end.to raise_error(ActiveRecord::RecordInvalid)
-          User.count.should eq 1
+        it 'should not add user' do
+          User.count.should eq 0
+          User.unscoped.count.should eq 1
         end
       end
 
-      context 'email tries to use different case' do
-        it 'should raise invalid record error' do
-          expect do
-            FactoryGirl.create :user, email: existing_user.email.upcase
-          end.to raise_error(ActiveRecord::RecordInvalid)
-          expect do
-            FactoryGirl.create :user, email: existing_user.email.capitalize
-          end.to raise_error(ActiveRecord::RecordInvalid)
-          User.count.should eq 1
+      context 'email is in use' do
+        context 'email uses the same case' do
+          it 'should raise RecordInvalid' do
+            expect do
+              FactoryGirl.create :user, email: existing_user.email
+            end.to raise_error(ActiveRecord::RecordInvalid)
+          end
+          it 'should not add user' do
+            User.count.should eq 1
+          end
+        end
+
+        context 'email is upcased' do
+          it 'should raise RecordInvalid' do
+            expect do
+              FactoryGirl.create :user, email: existing_user.email.upcase
+            end.to raise_error(ActiveRecord::RecordInvalid)
+          end
+          it 'should not add user' do
+            User.count.should eq 1
+          end
+        end
+
+        context 'email is capitalized' do
+          it 'should raise RecordInvalid' do
+            expect do
+              FactoryGirl.create :user, email: existing_user.email.capitalize
+            end.to raise_error(ActiveRecord::RecordInvalid)
+          end
+          it 'should not add user' do
+            User.count.should eq 1
+          end
         end
       end
-    end
 
-    context 'when both email AND login are in use' do
-      before do
-        FactoryGirl.create :user
-      end
+      context 'email is in use by destroyed account' do
+        let!(:deleted_user) { existing_user.destroy }
 
-      let(:existing_user) { User.first }
-
-      context 'email and login are both in the same case' do
-        it 'should raise invalid record error' do
+        it 'should raise RecordInvalid' do
           expect do
-            FactoryGirl.create :user, login: existing_user.login, email: existing_user.email
-          end.to raise_error(ActiveRecord::RecordInvalid)
-          User.count.should eq 1
+              FactoryGirl.create :user, email: deleted_user.email
+            end.to raise_error(ActiveRecord::RecordInvalid)
+            User.unscoped.count.should eq 1
+        end
+
+        it 'should not add user' do
+          User.count.should eq 0
+          User.unscoped.count.should eq 1
         end
       end
 
-      context 'either login or email try to use different case' do
-        it 'should raise invalid record error' do
-          expect do
-            FactoryGirl.create :user, login: existing_user.login, email: existing_user.email.capitalize
-          end.to raise_error(ActiveRecord::RecordInvalid)
-          expect do
-            FactoryGirl.create :user, login: existing_user.login.capitalize, email:  existing_user.email
-          end.to raise_error(ActiveRecord::RecordInvalid)
-          User.count.should eq 1
+      context 'both email and login are in use' do
+        context 'they use the same case' do
+          it 'should raise RecordInvalid' do
+            expect do
+              FactoryGirl.create :user, login: existing_user.login, email: existing_user.email
+            end.to raise_error(ActiveRecord::RecordInvalid)
+          end
+          it 'should not add user' do
+            User.count.should eq 1
+          end
         end
       end
     end
@@ -108,11 +139,7 @@ describe User do
 
   context 'using find_for_database_authentication method (devise)' do
     context 'when user exists' do
-      before do
-        FactoryGirl.create :user
-      end
-
-      let(:user) { User.first }
+      let!(:user) { FactoryGirl.create :user }
 
       context 'using login (same case) to log' do
         it 'should find the user' do
@@ -144,47 +171,26 @@ describe User do
     end
   end
 
-  context 'deletion' do
-    context 'after being deleted' do
+  context 'after .destroy' do
+    context 'should respect paranoia' do
       before do
         FactoryGirl.create :user
         User.first.destroy
       end
 
-      let(:unscoped_user) { User.unscoped.first }
-      let(:delted_user) { User.with_deleted.first }
-
-      it 'should not count the user in normal scopes' do
+      it 'not present in default scope' do
         User.count.should eq 0
       end
 
-      it 'should still be in the database' do
+      it 'present in unscoped' do
         User.unscoped.count.should eq 1
       end
 
-      it 'should be in `with_deleted` scope' do
+      it 'present in .with_deleted' do
         User.with_deleted.count.should eq 1
       end
 
-      it 'should be the same user' do
-        unscoped_user.should eq delted_user
-      end
 
-      context 'when creating new account with the same data' do
-        it 'should raise invalid record error when using same login' do
-          expect do
-            FactoryGirl.create :user, login: delted_user.login
-          end.to raise_error(ActiveRecord::RecordInvalid)
-          User.unscoped.count.should eq 1
-        end
-
-        it 'should raise invalid record error when using same email' do
-          expect do
-            FactoryGirl.create :user, email: delted_user.email
-          end.to raise_error(ActiveRecord::RecordInvalid)
-          User.unscoped.count.should eq 1
-        end
-      end
     end
   end
 
