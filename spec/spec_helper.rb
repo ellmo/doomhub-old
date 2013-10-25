@@ -36,6 +36,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with :truncation
+    remove_test_uploads
     load Rails.root.join("db", "seeds.rb")
   end
   config.before(:each) { DatabaseCleaner.strategy = :transaction }
