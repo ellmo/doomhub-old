@@ -9,7 +9,7 @@ development:
         image:
           storage_path: "dev/uploads/projects/:project_id/maps/:map_id/images/:name-:style-:id.:extension"
         wadfile:
-          storage_path: "dev/uploads/projects/:project_id/maps/:object_id/wadfiles/:name-:id.:extension"
+          storage_path: "dev/uploads/projects/:project_id/maps/:map_id/wadfiles/:name-:id.:extension"
 
 
 production:
@@ -20,7 +20,7 @@ production:
         image:
           storage_path: "uploads/projects/:project_id/maps/:map_id/images/:name-:style-:id.:extension"
         wadfile:
-          storage_path: "uploads/projects/:project_id/maps/:object_id/wadfiles/:name-:id.:extension"
+          storage_path: "uploads/projects/:project_id/maps/:map_id/wadfiles/:name-:id.:extension"
 
 test:
   <<: *defaults
@@ -30,5 +30,5 @@ test:
         image:
           storage_path: "uploads/test/projects/:project_id/maps/:map_id/images/:name-:style-:id.:extension"
         wadfile:
-          storage_path: "uploads/test/projects/:project_id/maps/:object_id/wadfiles/:name-:id.:extension"
+          storage_path: "uploads/test/projects/:project_id/maps/:map_id/wadfiles/:name-:id.:extension"
 

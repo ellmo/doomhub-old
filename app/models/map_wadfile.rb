@@ -44,6 +44,7 @@ class MapWadfile < ActiveRecord::Base
 #= VALIDATIONS
 #============
 
+  validate :name, :presence => true
   validate :check_attachment
 
   def check_attachment

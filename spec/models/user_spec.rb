@@ -2,23 +2,23 @@ require 'spec_helper'
 
 describe User do
 
-  context 'registering new' do
-    context 'neither login nor email are in use' do
+  context 'creation' do
+    context 'when neither login nor email are in use' do
       before do
         FactoryGirl.create :user
       end
 
-      it 'should create the user' do
+      it 'should succeed' do
         User.count.should eq 1
       end
 
-      it 'should create another user' do
+      it 'should succeed for two different users' do
         FactoryGirl.create :user
         User.count.should eq 2
       end
     end
 
-    context 'login is in use but email isn`t' do
+    context 'when login is in use but email isn`t' do
       before do
         FactoryGirl.create :user
       end
@@ -47,7 +47,7 @@ describe User do
       end
     end
 
-    context 'email is in use but login isn`t' do
+    context 'when email is in use but login isn`t' do
       before do
         FactoryGirl.create :user
       end
@@ -76,7 +76,7 @@ describe User do
       end
     end
 
-    context 'both email AND login are in use' do
+    context 'when both email AND login are in use' do
       before do
         FactoryGirl.create :user
       end
@@ -107,7 +107,7 @@ describe User do
   end
 
   context 'using find_for_database_authentication method (devise)' do
-    context 'user exists' do
+    context 'when user exists' do
       before do
         FactoryGirl.create :user
       end
@@ -144,7 +144,7 @@ describe User do
     end
   end
 
-  context 'deleting account' do
+  context 'deletion' do
     context 'after being deleted' do
       before do
         FactoryGirl.create :user

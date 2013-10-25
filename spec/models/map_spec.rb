@@ -1,23 +1,23 @@
 require 'spec_helper'
 
 describe Map do
-  context 'when creating new' do
-    context 'attrs are valid' do
+  context 'creation' do
+    context 'with valid attributes' do
       before do
         FactoryGirl.create :map
       end
 
-      it 'should create the map' do
+      it 'should succeed' do
         Map.count.should eq 1
       end
 
-      it 'should create another map' do
+      it 'should succeed twice' do
         FactoryGirl.create :map
         Map.count.should eq 2
         User.count.should eq 2
       end
 
-      it 'should create another map for the same user' do
+      it 'should succeed when creating 2 maps for the same user' do
         user = User.first
         FactoryGirl.create :map, author: user
         User.count.should eq 1
@@ -25,7 +25,7 @@ describe Map do
         Map.count.should eq 2
       end
 
-      it 'should create another map for the same user' do
+      it 'should succeed when creating 2 maps within the same project' do
         user = User.first
         project = Project.last
         FactoryGirl.create :map, author: user, project: project
@@ -34,77 +34,75 @@ describe Map do
         Map.count.should eq 2
       end
     end
-  end
 
-  context 'when using default lumpname' do
-    context 'creating a doom1 map' do
-      before do
-        FactoryGirl.create :project, game: Game.find_by_name('Doom')
-        FactoryGirl.create :map, project: Project.last, author: User.last
+    context 'when using default lumpname' do
+      context 'within a doom1 project' do
+        before do
+          FactoryGirl.create :project, game: Game.find_by_name('Doom')
+          FactoryGirl.create :map, project: Project.last, author: User.last
+        end
+
+        let(:map) { Map.last }
+
+        it 'lumpname should default to E1M1' do
+          map.lump.should eq 'E1M1'
+        end
       end
 
-      let(:map) { Map.last }
+      context 'within a doom2 project' do
+        before do
+          FactoryGirl.create :project, game: Game.find_by_name('Doom 2')
+          FactoryGirl.create :map, project: Project.last, author: User.last
+        end
 
-      it 'doom lumpname should default to E1M1' do
-        map.lump.should eq 'E1M1'
+        let(:map) { Map.last }
+
+        it 'lumpname should default to MAP01' do
+          map.lump.should eq 'MAP01'
+        end
+      end
+
+      context 'within a heretic project' do
+        before do
+          FactoryGirl.create :project, game: Game.find_by_name('Heretic')
+          FactoryGirl.create :map, project: Project.last, author: User.last
+        end
+
+        let(:map) { Map.last }
+
+        it 'lumpname should default to E1M1' do
+          map.lump.should eq 'E1M1'
+        end
+      end
+
+      context 'within a hexen project' do
+        before do
+          FactoryGirl.create :project, game: Game.find_by_name('Hexen')
+          FactoryGirl.create :map, project: Project.last, author: User.last
+        end
+
+        let(:map) { Map.last }
+
+        it 'lumpname should default to MAP01' do
+          map.lump.should eq 'MAP01'
+        end
+      end
+
+      context 'within a strife project' do
+        before do
+          FactoryGirl.create :project, game: Game.find_by_name('Strife')
+          FactoryGirl.create :map, project: Project.last, author: User.last
+        end
+
+        let(:map) { Map.last }
+
+        it 'lumpname should default to MAP01' do
+          map.lump.should eq 'MAP01'
+        end
       end
     end
 
-    context 'creating a doom2 map' do
-      before do
-        FactoryGirl.create :project, game: Game.find_by_name('Doom 2')
-        FactoryGirl.create :map, project: Project.last, author: User.last
-      end
-
-      let(:map) { Map.last }
-
-      it 'doom lumpname should default to MAP01' do
-        map.lump.should eq 'MAP01'
-      end
-    end
-
-    context 'creating a heretic map' do
-      before do
-        FactoryGirl.create :project, game: Game.find_by_name('Heretic')
-        FactoryGirl.create :map, project: Project.last, author: User.last
-      end
-
-      let(:map) { Map.last }
-
-      it 'doom lumpname should default to E1M1' do
-        map.lump.should eq 'E1M1'
-      end
-    end
-
-    context 'creating a hexen map' do
-      before do
-        FactoryGirl.create :project, game: Game.find_by_name('Hexen')
-        FactoryGirl.create :map, project: Project.last, author: User.last
-      end
-
-      let(:map) { Map.last }
-
-      it 'doom lumpname should default to MAP01' do
-        map.lump.should eq 'MAP01'
-      end
-    end
-
-    context 'creating a strife map' do
-      before do
-        FactoryGirl.create :project, game: Game.find_by_name('Strife')
-        FactoryGirl.create :map, project: Project.last, author: User.last
-      end
-
-      let(:map) { Map.last }
-
-      it 'doom lumpname should default to MAP01' do
-        map.lump.should eq 'MAP01'
-      end
-    end
-  end
-
-  context 'when using custom lumpname' do
-    context 'creating a doom map' do
+    context 'when using custom lumpname' do
       before do
         FactoryGirl.create :project, game: Game.find_by_name('Doom')
         FactoryGirl.create :map, project: Project.last, author: User.last, lump: 'E1M7'
@@ -112,7 +110,7 @@ describe Map do
 
       let(:map) { Map.last }
 
-      it 'doom lumpname should to E1M7' do
+      it 'lumpname should be whtaver was passed' do
         map.lump.should eq 'E1M7'
       end
     end
