@@ -9,6 +9,7 @@ config/secret.yml
 public/assets/*
 public/system/*
 public/uploads/*
+uploads/*
 *.sublime*
 app/assets/images/source_ports_logos/*
 app/assets/images/demo1.jpg
