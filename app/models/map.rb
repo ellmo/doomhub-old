@@ -28,6 +28,16 @@ class Map < ActiveRecord::Base
   validates :name, :presence => true
   validate :has_5_wadfiles_max
 
+#============
+#= CALLBACKS
+#==========
+
+  before_save :get_random_lumpname, if: ->(m) {m.lump.nil?}
+
+  def get_random_lumpname
+    self.lump = project.game.default_lumpname
+  end
+
 #==========
 #= METHODS
 #========
