@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'pg'
 
+gem 'acts_as_paranoid'
 gem 'airbrake'
 gem 'aws-sdk'
 gem 'breadcrumbs_on_rails'
@@ -21,7 +22,6 @@ gem 'paperclip', '~> 2.7.0'
 gem 'pry-rails'
 gem 'rabl'
 gem 'rails-backbone'
-gem 'acts_as_paranoid'
 gem 'redcarpet'
 gem 'sass'
 gem 'settingslogic'
@@ -42,8 +42,8 @@ end
 
 group :development, :test do
   gem 'better_errors'
-  gem 'database_cleaner'
   gem 'capybara', '~> 1.1.2'
+  gem 'database_cleaner'
   gem 'factory_girl_rails', "~> 4.0"
   gem 'mocha', require: false
   gem 'rspec-rails'
