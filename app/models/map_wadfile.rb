@@ -21,7 +21,7 @@ class MapWadfile < ActiveRecord::Base
 #============
 #= PAPERCLIP
 #==========
-  ALLOWED_MIMES = ["application/zip", "application/x-7z-compressed"]
+  ALLOWED_MIMES = ["application/zip", "application/x-7z-compressed", "application/x-rar-compressed"]
 
   has_attached_file :wadfile,
                     :keep_old_files => true,
@@ -50,7 +50,7 @@ class MapWadfile < ActiveRecord::Base
 
   def check_attachment
     if (MIME::Types.type_for(wadfile_file_name).map(&:to_s) & ALLOWED_MIMES).empty?
-      errors[:wadfile] << "File must be a valid zip / 7z achive"
+      errors[:wadfile] << "File must be a valid zip / rar / 7z achive"
     end
     if wadfile.size > 1.megabyte
       errors[:wadfile] << "File must not be over 1 MB"
