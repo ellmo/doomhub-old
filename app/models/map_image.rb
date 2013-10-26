@@ -51,10 +51,10 @@ class MapImage < ActiveRecord::Base
 
   def check_attachment
     if (MIME::Types.type_for(image_file_name).map(&:to_s) & ALLOWED_MIMES).empty?
-      errors[:wadfile] << "File must be a valid JPG / PNG / TIFF image"
+      errors[:image] << "File must be a valid JPG / PNG / TIFF image"
     end
     if image.size > 1.megabyte
-      errors[:wadfile] << "File must not be over 1 MB"
+      errors[:image] << "File must not be over 1 MB"
     end
   end
 
