@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
 
-  context '.create' do
+  context '::create' do
     context 'login and email are unique' do
       before do
         FactoryGirl.create :user
@@ -54,9 +54,7 @@ describe User do
         let!(:deleted_user) { existing_user.destroy }
 
         it 'should raise RecordInvalid' do
-          expect do
-            FactoryGirl.create :user, login: deleted_user.login
-          end.to raise_error(ActiveRecord::RecordInvalid)
+          expect { FactoryGirl.create :user, login: deleted_user.login }.to raise_error(ActiveRecord::RecordInvalid)
         end
         it 'should not add user' do
           expect(User.count).to eq 0
@@ -85,9 +83,7 @@ describe User do
 
         context 'email is capitalized' do
           it 'should raise RecordInvalid' do
-            expect do
-              FactoryGirl.create :user, email: existing_user.email.capitalize
-            end.to raise_error(ActiveRecord::RecordInvalid)
+            expect { FactoryGirl.create :user, email: existing_user.email.capitalize }.to raise_error(ActiveRecord::RecordInvalid)
           end
           it 'should not add user' do
             expect(User.count).to eq 1
@@ -99,10 +95,7 @@ describe User do
         let!(:deleted_user) { existing_user.destroy }
 
         it 'should raise RecordInvalid' do
-          expect do
-              FactoryGirl.create :user, email: deleted_user.email
-            end.to raise_error(ActiveRecord::RecordInvalid)
-            expect(User.unscoped.count).to eq 1
+          expect { FactoryGirl.create :user, email: deleted_user.email }.to raise_error(ActiveRecord::RecordInvalid)
         end
 
         it 'should not add user' do
@@ -158,7 +151,7 @@ describe User do
     end
   end
 
-  context 'after .destroy' do
+  context 'after #destroy' do
     context 'should respect paranoia' do
       before do
         FactoryGirl.create :user
