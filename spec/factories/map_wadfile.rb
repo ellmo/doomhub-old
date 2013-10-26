@@ -15,6 +15,10 @@ FactoryGirl.define do
       wadfile { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'wadfile.rar')) }
     end
 
+    trait :rar do
+      wadfile { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'wadfile.rar'), 'application/x-rar-compressed') }
+    end
+
     trait :'7z' do
       wadfile { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'wadfile.zip')) }
     end
