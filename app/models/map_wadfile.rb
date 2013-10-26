@@ -21,7 +21,7 @@ class MapWadfile < ActiveRecord::Base
 #============
 #= PAPERCLIP
 #==========
-  ALLOWED_MIMES = ["application/zip", "application/x-7z-compressed"]
+  ALLOWED_MIMES = ["application/zip", "application/x-7z-compressed", "application/x-rar-compressed"]
 
   has_attached_file :wadfile,
                     :keep_old_files => true,
