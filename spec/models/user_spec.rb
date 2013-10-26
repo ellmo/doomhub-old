@@ -9,12 +9,12 @@ describe User do
       end
 
       it 'should succeed' do
-        User.count.should eq 1
+        expect(User.count).to eq 1
       end
 
       it 'should succeed for two different users' do
         FactoryGirl.create :user
-        User.count.should eq 2
+        expect(User.count).to eq 2
       end
     end
 
@@ -24,35 +24,28 @@ describe User do
       context 'login is in use' do
         context 'login uses the same case' do
           it 'should raise RecordInvalid' do
-            expect do
-              FactoryGirl.create :user, login: existing_user.login
-            end.to raise_error(ActiveRecord::RecordInvalid)
-            User.count.should eq 1
+            expect { FactoryGirl.create :user, login: existing_user.login }.to raise_error ActiveRecord::RecordInvalid
           end
           it 'should not add user' do
-            User.count.should eq 1
+            expect(User.count).to eq 1
           end
         end
 
         context 'login is upcased' do
           it 'should raise RecordInvalid' do
-            expect do
-              FactoryGirl.create :user, login: existing_user.login.upcase
-            end.to raise_error(ActiveRecord::RecordInvalid)
+            expect { FactoryGirl.create :user, login: existing_user.login.upcase }.to raise_error ActiveRecord::RecordInvalid
           end
           it 'should not add user' do
-            User.count.should eq 1
+            expect(User.count).to eq 1
           end
         end
 
         context 'login is capitalized' do
           it "should raise RecordInvalid" do
-            expect do
-              FactoryGirl.create :user, login: existing_user.login.capitalize
-            end.to raise_error(ActiveRecord::RecordInvalid)
+            expect { FactoryGirl.create :user, login: existing_user.login.capitalize }.to raise_error ActiveRecord::RecordInvalid
           end
           it 'should not add user' do
-            User.count.should eq 1
+            expect(User.count).to eq 1
           end
         end
       end
@@ -66,31 +59,27 @@ describe User do
           end.to raise_error(ActiveRecord::RecordInvalid)
         end
         it 'should not add user' do
-          User.count.should eq 0
-          User.unscoped.count.should eq 1
+          expect(User.count).to eq 0
+          expect(User.unscoped.count).to eq 1
         end
       end
 
       context 'email is in use' do
         context 'email uses the same case' do
           it 'should raise RecordInvalid' do
-            expect do
-              FactoryGirl.create :user, email: existing_user.email
-            end.to raise_error(ActiveRecord::RecordInvalid)
+            expect { FactoryGirl.create :user, email: existing_user.email }.to raise_error ActiveRecord::RecordInvalid
           end
           it 'should not add user' do
-            User.count.should eq 1
+            expect(User.count).to eq 1
           end
         end
 
         context 'email is upcased' do
           it 'should raise RecordInvalid' do
-            expect do
-              FactoryGirl.create :user, email: existing_user.email.upcase
-            end.to raise_error(ActiveRecord::RecordInvalid)
+            expect { FactoryGirl.create :user, email: existing_user.email.upcase }.to raise_error ActiveRecord::RecordInvalid
           end
           it 'should not add user' do
-            User.count.should eq 1
+            expect(User.count).to eq 1
           end
         end
 
@@ -101,7 +90,7 @@ describe User do
             end.to raise_error(ActiveRecord::RecordInvalid)
           end
           it 'should not add user' do
-            User.count.should eq 1
+            expect(User.count).to eq 1
           end
         end
       end
@@ -113,24 +102,22 @@ describe User do
           expect do
               FactoryGirl.create :user, email: deleted_user.email
             end.to raise_error(ActiveRecord::RecordInvalid)
-            User.unscoped.count.should eq 1
+            expect(User.unscoped.count).to eq 1
         end
 
         it 'should not add user' do
-          User.count.should eq 0
-          User.unscoped.count.should eq 1
+          expect(User.count).to eq 0
+          expect(User.unscoped.count).to eq 1
         end
       end
 
       context 'both email and login are in use' do
         context 'they use the same case' do
           it 'should raise RecordInvalid' do
-            expect do
-              FactoryGirl.create :user, login: existing_user.login, email: existing_user.email
-            end.to raise_error(ActiveRecord::RecordInvalid)
+            expect { FactoryGirl.create :user, login: existing_user.login, email: existing_user.email }.to raise_error ActiveRecord::RecordInvalid
           end
           it 'should not add user' do
-            User.count.should eq 1
+            expect(User.count).to eq 1
           end
         end
       end
@@ -144,28 +131,28 @@ describe User do
       context 'using login (same case) to log' do
         it 'should find the user' do
           user_to_be_found = User.find_for_database_authentication login: user.login
-          user.should eq user_to_be_found
+          expect(user).to eq user_to_be_found
         end
       end
 
       context 'using email (same case) to log' do
         it 'should find the user' do
           user_to_be_found = User.find_for_database_authentication login: user.email
-          user.should eq user_to_be_found
+          expect(user).to eq user_to_be_found
         end
       end
 
       context 'using login (different case) to log' do
         it 'should find the user' do
           user_to_be_found = User.find_for_database_authentication login: user.login.upcase
-          user.should eq user_to_be_found
+          expect(user).to eq user_to_be_found
         end
       end
 
       context 'using email (different case) to log' do
         it 'should find the user' do
           user_to_be_found = User.find_for_database_authentication login: user.email.capitalize
-          user.should eq user_to_be_found
+          expect(user).to eq user_to_be_found
         end
       end
     end
@@ -179,19 +166,16 @@ describe User do
       end
 
       it 'not present in default scope' do
-        User.count.should eq 0
+        expect(User.count).to eq 0
       end
 
       it 'present in unscoped' do
-        User.unscoped.count.should eq 1
+        expect(User.unscoped.count).to eq 1
       end
 
       it 'present in .with_deleted' do
-        User.with_deleted.count.should eq 1
+        expect(User.with_deleted.count).to eq 1
       end
-
-
     end
   end
-
 end
