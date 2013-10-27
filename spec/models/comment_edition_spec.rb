@@ -18,10 +18,6 @@ describe CommentEdition do
       expect(last_edition.user).to eq other_user
     end
 
-    it 'assigns new content' do
-      expect(comment.content).to eq new_content
-    end
-
     it 'stores old content in edition' do
       expect(last_edition.content_was).to eq old_content
     end

@@ -47,6 +47,10 @@ describe Comment do
           expect(comment.editions).to_not be_empty
         end
 
+        it 'assigns new content' do
+          expect(comment.content).to eq new_content
+        end
+
         it 'is in `edited` scope' do
           expect(Comment.edited).to include comment
         end
