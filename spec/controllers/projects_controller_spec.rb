@@ -15,6 +15,10 @@ describe ProjectsController do
         get :index
       end
 
+      it 'is successful' do
+        expect(response).to be_success
+      end
+
       it "@projects are public projects" do
         projects = Project.readable_by User.new
         expect(projects.count).to eq 5
@@ -33,6 +37,10 @@ describe ProjectsController do
         before do
           sign_in user
           get :index
+        end
+
+        it 'is successful' do
+          expect(response).to be_success
         end
 
         it "@projects are public projects" do
@@ -55,6 +63,10 @@ describe ProjectsController do
           get :index
         end
 
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
         it "@projects are public AND user`s projects" do
           projects = Project.readable_by user
           expect(projects.count).to eq 7
@@ -71,6 +83,10 @@ describe ProjectsController do
         before do
           sign_in admin
           get :index
+        end
+
+        it 'is successful' do
+          expect(response).to be_success
         end
 
         it "@projects admin readable projects" do
@@ -97,6 +113,10 @@ describe ProjectsController do
           get :index
         end
 
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
         it "@projects are public AND user`s projects" do
           projects = Project.readable_by admin
           expect(projects.count).to eq 9
@@ -118,6 +138,10 @@ describe ProjectsController do
         before do
           sign_in superadmin
           get :index
+        end
+
+        it 'is successful' do
+          expect(response).to be_success
         end
 
         it "@projects superadmin readable projects" do
@@ -154,6 +178,157 @@ describe ProjectsController do
 
         it "superadmin sees ALL projects" do
           expect(assigns :projects).to eq Project.all
+        end
+      end
+    end
+  end
+
+  describe "GET show" do
+    let!(:public_project) { FactoryGirl.create :project_public }
+    let!(:private_project) { FactoryGirl.create :project_private }
+
+    context 'when not logged in' do
+      before { sign_in_nobody }
+
+      context 'viewing public project' do
+        before { get :show, id: public_project.slug }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it '@project assigns public project' do
+          expect(assigns :project).to eq public_project
+        end
+      end
+
+      context 'viewing private project' do
+        before { get :show, id: private_project.slug }
+
+        it 'denies access' do
+          expect(response.status).to eq 403
+        end
+      end
+    end
+
+    context 'when logged as user' do
+      let!(:user) { FactoryGirl.create :user }
+      let!(:users_private_project) { FactoryGirl.create :project, creator: user }
+      before { sign_in user }
+
+      context 'viewing public project' do
+        before { get :show, id: public_project.slug }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it '@project assigns public project' do
+          expect(assigns :project).to eq public_project
+        end
+      end
+
+      context 'viewing private project' do
+        before { get :show, id: private_project.slug }
+
+        it 'denies access' do
+          expect(response.status).to eq 403
+        end
+      end
+
+      context 'viewing private project' do
+        before { get :show, id: users_private_project.slug }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it '@project assigns public project' do
+          expect(assigns :project).to eq users_private_project
+        end
+      end
+    end
+
+    context 'when logged as admin' do
+      let!(:admin) { FactoryGirl.create :admin }
+      let!(:admins_private_project) { FactoryGirl.create :project, creator: admin }
+      before { sign_in admin }
+
+      context 'viewing public project' do
+        before { get :show, id: public_project.slug }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it '@project assigns public project' do
+          expect(assigns :project).to eq public_project
+        end
+      end
+
+      context 'viewing private project' do
+        before { get :show, id: private_project.slug }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it '@project assigns public project' do
+          expect(assigns :project).to eq private_project
+        end
+      end
+
+      context 'viewing private project' do
+        before { get :show, id: admins_private_project.slug }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it '@project assigns public project' do
+          expect(assigns :project).to eq admins_private_project
+        end
+      end
+    end
+
+    context 'when logged as superadmin' do
+      let!(:superadmin) { FactoryGirl.create :superadmin }
+      let!(:superadmins_private_project) { FactoryGirl.create :project, creator: superadmin }
+      before { sign_in superadmin }
+
+      context 'viewing public project' do
+        before { get :show, id: public_project.slug }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it '@project assigns public project' do
+          expect(assigns :project).to eq public_project
+        end
+      end
+
+      context 'viewing private project' do
+        before { get :show, id: private_project.slug }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it '@project assigns public project' do
+          expect(assigns :project).to eq private_project
+        end
+      end
+
+      context 'viewing private project' do
+        before { get :show, id: superadmins_private_project.slug }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it '@project assigns public project' do
+          expect(assigns :project).to eq superadmins_private_project
         end
       end
     end
