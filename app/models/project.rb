@@ -48,20 +48,33 @@ class Project < ActiveRecord::Base
 #= SCOPES
 #=======
 
+  scope :public_view, where{public_view == true}
+  scope :private_view, where{public_view == false}
+  scope :public_join, where{public_join == true}
+  scope :private_join, where{public_join == false}
+
   scope :readable_by, lambda { |user|
-    includes(:item_invites).where {
-      (user_id == user.id) |
-      (public_view == true) |
-      (item_invites.user_id == user.id)
-    }
+    if user.new_record?
+      public_view
+    else
+      includes(:item_invites).where{
+        (user_id == user.id) |
+        (public_view == true) |
+        (item_invites.user_id == user.id)
+      }
+    end
   }
 
   scope :mappable_by, lambda { |user|
-    includes(:item_invites).where{
-      (user_id == user.id) |
-      (public_join == true) |
-      (item_invites.user_id == user.id)
-    }
+    if user.new_record?
+      public_join
+    else
+      includes(:item_invites).where{
+        (user_id == user.id) |
+        (public_join == true) |
+        (item_invites.user_id == user.id)
+      }
+    end
   }
 
 #==========
