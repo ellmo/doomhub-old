@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    render :file => "#{Rails.root.to_s}/public/403.haml", :status => 403, :layout => false
+    render :file => "#{Rails.root.to_s}/public/403", :status => 403, :layout => false, :handlers => [:haml]
   end
 
   def superadmin?
