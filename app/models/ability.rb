@@ -15,7 +15,7 @@ class Ability
     elsif user.admin?
       can :manage, :all
       cannot :manage, User
-      can :update, User, :user_id => user.id
+      can :manage, User, :user_id => user.id
 #=========
 #= LOGGED
 #=======

@@ -26,7 +26,7 @@ describe ProjectsController do
       end
     end
 
-    context 'when logged in' do
+    context 'when logged in as user' do
       let!(:user) { FactoryGirl.create :user }
 
       context 'user has no projects' do
@@ -60,6 +60,100 @@ describe ProjectsController do
           expect(projects.count).to eq 7
           expect(assigns :projects).to eq projects
           expect(projects).to include users_private_poject
+        end
+      end
+    end
+
+    context 'when logged in as admin' do
+      let!(:admin) { FactoryGirl.create :admin }
+
+      context 'admin has no projects' do
+        before do
+          sign_in admin
+          get :index
+        end
+
+        it "@projects admin readable projects" do
+          projects = Project.readable_by admin
+          expect(projects.count).to eq 7
+          expect(assigns :projects).to eq projects
+        end
+
+        it "admin sees private projects" do
+          expect(assigns :projects).to include *Project.private_view
+        end
+
+        it "admin sees ALL projects" do
+          expect(assigns :projects).to eq Project.all
+        end
+      end
+
+      context 'admin has their own projects' do
+        let!(:users_private_poject) { FactoryGirl.create :project_private, creator: admin }
+
+        before do
+          FactoryGirl.create :project, creator: admin
+          sign_in admin
+          get :index
+        end
+
+        it "@projects are public AND user`s projects" do
+          projects = Project.readable_by admin
+          expect(projects.count).to eq 9
+          expect(assigns :projects).to eq projects
+          expect(projects).to include users_private_poject
+          expect(projects).to include *Project.private_view
+        end
+
+        it "admin sees ALL projects" do
+          expect(assigns :projects).to eq Project.all
+        end
+      end
+    end
+
+    context 'when logged in as superadmin' do
+      let!(:superadmin) { FactoryGirl.create :superadmin }
+
+      context 'superadmin has no projects' do
+        before do
+          sign_in superadmin
+          get :index
+        end
+
+        it "@projects superadmin readable projects" do
+          projects = Project.readable_by superadmin
+          expect(projects.count).to eq 7
+          expect(assigns :projects).to eq projects
+        end
+
+        it "superadmin sees private projects" do
+          expect(assigns :projects).to include *Project.private_view
+        end
+
+        it "superadmin sees ALL projects" do
+          expect(assigns :projects).to eq Project.all
+        end
+      end
+
+      context 'superadmin has their own projects' do
+        let!(:users_private_poject) { FactoryGirl.create :project_private, creator: superadmin }
+
+        before do
+          FactoryGirl.create :project, creator: superadmin
+          sign_in superadmin
+          get :index
+        end
+
+        it "@projects are public AND user`s projects" do
+          projects = Project.readable_by superadmin
+          expect(projects.count).to eq 9
+          expect(assigns :projects).to eq projects
+          expect(projects).to include users_private_poject
+          expect(projects).to include *Project.private_view
+        end
+
+        it "superadmin sees ALL projects" do
+          expect(assigns :projects).to eq Project.all
         end
       end
     end

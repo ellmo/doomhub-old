@@ -54,6 +54,7 @@ class Project < ActiveRecord::Base
   scope :private_join, where{public_join == false}
 
   scope :readable_by, lambda { |user|
+    return all if user.admin?
     if user.new_record?
       public_view
     else
@@ -66,6 +67,7 @@ class Project < ActiveRecord::Base
   }
 
   scope :mappable_by, lambda { |user|
+    return all if user.admin?
     if user.new_record?
       public_join
     else
