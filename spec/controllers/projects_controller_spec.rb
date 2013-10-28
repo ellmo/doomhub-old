@@ -333,24 +333,60 @@ describe ProjectsController do
       end
     end
   end
+
+  describe "GET new" do
+    context 'when not logged in' do
+      before { sign_in_nobody }
+
+      context 'creating project' do
+        it 'denies access' do
+          expect{ get :new }.to raise_exception("uncaught throw :warden")
+        end
+      end
+    end
+
+    context 'when logged as user' do
+      let!(:user) { FactoryGirl.create :user }
+      before { sign_in user }
+
+      context 'trying to create' do
+        before { get :new }
+
+        it 'is success' do
+          expect(response).to be_success
+        end
+      end
+    end
+
+    context 'when logged as admin' do
+      let!(:admin) { FactoryGirl.create :admin }
+      before { sign_in admin }
+
+      context 'trying to create' do
+        before { get :new }
+
+        it 'is success' do
+          expect(response).to be_success
+        end
+      end
+    end
+
+    context 'when logged as superadmin' do
+      let!(:superadmin) { FactoryGirl.create :superadmin }
+      before { sign_in superadmin }
+
+      context 'trying to create' do
+        before { get :new }
+
+        it 'is success' do
+          expect(response).to be_success
+        end
+      end
+    end
+  end
 end
 
 =begin
-  describe "GET show" do
-    it "assigns the requested project as @project" do
-      project = Project.create! valid_attributes
-      get :show, :id => project.id
-      assigns(:project).should eq(project)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new project as @project" do
-      get :new
-      assigns(:project).should be_a_new(Project)
-    end
-  end
-
   describe "GET edit" do
     it "assigns the requested project as @project" do
       project = Project.create! valid_attributes
