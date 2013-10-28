@@ -44,6 +44,8 @@ GEM
     better_errors (1.0.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     breadcrumbs_on_rails (2.2.0)
     builder (3.0.4)
     cancan (1.6.8)
@@ -77,6 +79,7 @@ GEM
       compass (>= 0.12.2, < 0.14)
     connection_pool (0.9.2)
     database_cleaner (1.2.0)
+    debug_inspector (0.0.2)
     devise (3.0.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -262,6 +265,7 @@ DEPENDENCIES
   aws-sdk
   bcrypt-ruby (= 3.0.1)
   better_errors
+  binding_of_caller
   breadcrumbs_on_rails
   cancan
   capybara (~> 1.1.2)
