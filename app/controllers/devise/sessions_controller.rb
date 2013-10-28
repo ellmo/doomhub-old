@@ -4,7 +4,6 @@ class Devise::SessionsController < ApplicationController
 
   prepend_before_filter :require_no_authentication, :only => [ :new, :create ]
   prepend_before_filter :allow_params_authentication!, :only => :create
-  include Devise::Controllers::InternalHelpers
 
   # GET /resource/sign_in
   def new
