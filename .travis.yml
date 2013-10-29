@@ -1,0 +1,12 @@
+language: ruby
+rbenv:
+  - 2.0.0-p195
+
+env:
+  - DB=postgresql
+
+script:
+  - bundle exec rspec
+
+# before_script:
+#   -
