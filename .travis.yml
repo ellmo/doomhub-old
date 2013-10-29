@@ -8,5 +8,5 @@ env:
 script:
   - bundle exec rspec
 
-# before_script:
-#   -
+before_script:
+  - cp config/database.travis.yml config/database.yml
