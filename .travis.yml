@@ -10,5 +10,6 @@ script:
   - bundle exec rspec
 
 before_script:
-  - cp config/database.travis.yml config/database.yml
+  - cp config/database.ci.yml config/database.yml
+  - cp config/initializers/secret_token.ci.rb config/initializers/secret_token.rb
   - bundle exec rake db:create RAILS_ENV=test
