@@ -1,7 +1,7 @@
 defaults: &defaults
   adapter: postgresql
   encoding: utf8
-  username: postrges
+  username: postgres
 
 test:
   <<: *defaults
