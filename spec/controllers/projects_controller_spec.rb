@@ -339,9 +339,7 @@ describe ProjectsController do
       before { sign_in_nobody }
 
       context 'creating project' do
-        it 'denies access' do
-          expect{ get :new }.to raise_exception("uncaught throw :warden")
-        end
+        it_behaves_like 'authentication redirector', 'get', :new
       end
     end
 
@@ -383,6 +381,52 @@ describe ProjectsController do
         end
       end
     end
+  end
+
+  describe "POST create" do
+    let(:valid_attributes) { FactoryGirl.build(:project).attributes }
+    let(:invalid_attributes) { {name: '', game_id: '5'} }
+
+    context "with valid attributes" do
+      context 'when not logged in' do
+        before { sign_in_nobody }
+
+        context 'creating project' do
+          it 'denies access' do
+            expect{ post :create }.to raise_exception("uncaught throw :warden")
+          end
+        end
+      end
+
+      ['user', 'admin', 'superadmin'].each do |user_type|
+        context 'when logged as user' do
+          before { send "sign_in_#{user_type}" }
+
+          include_context 'project creation'
+        end
+      end
+    end
+
+    context "with invalid attributes" do
+      context 'when not logged in' do
+        before { sign_in_nobody }
+
+        context 'creating project' do
+          it 'denies access' do
+            expect{ post :create }.to raise_exception("uncaught throw :warden")
+          end
+        end
+      end
+
+      ['user', 'admin', 'superadmin'].each do |user_type|
+        context 'when logged as user' do
+          before { send "sign_in_#{user_type}" }
+
+          include_context 'failed project creation'
+        end
+      end
+    end
+
   end
 end
 

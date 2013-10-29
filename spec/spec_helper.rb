@@ -44,7 +44,7 @@ RSpec.configure do |config|
     load Rails.root.join("db", "seeds.rb")
   end
   config.before(:each) { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, :js => true) { DatabaseCleaner.strategy = :truncation }
+  # config.before(:each, :js => true) { DatabaseCleaner.strategy = :truncation }
   config.before(:each) { DatabaseCleaner.start }
   config.after(:each) { DatabaseCleaner.clean }
 end
