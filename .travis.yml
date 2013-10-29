@@ -1,12 +1,14 @@
 language: ruby
-rbenv:
+rvm:
   - 2.0.0-p195
 
 env:
   - DB=postgresql
 
 script:
+  - RAILS_ENV=test bundle exec db:reset
   - bundle exec rspec
 
 before_script:
   - cp config/database.travis.yml config/database.yml
+  - RAILS_ENV=test bundle exec db:create
