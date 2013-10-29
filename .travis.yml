@@ -6,9 +6,9 @@ env:
   - DB=postgresql
 
 script:
-  - RAILS_ENV=test bundle exec db:reset
+  - bundle exec rake db:reset RAILS_ENV=test
   - bundle exec rspec
 
 before_script:
   - cp config/database.travis.yml config/database.yml
-  - RAILS_ENV=test bundle exec db:create
+  - bundle exec rake db:create RAILS_ENV=test
