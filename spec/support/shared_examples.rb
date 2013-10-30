@@ -1,4 +1,4 @@
-shared_examples 'denies access' do
+shared_examples 'access denial' do
   it 'throws 403' do
     expect(response.status).to eq 403
   end

@@ -12,13 +12,11 @@ describe ProjectsController do
       it 'is successful' do
         expect(response).to be_success
       end
-
       it "@projects are assigned properly" do
         projects = Project.readable_by user
         expect(projects.count).to eq project_count
         expect(assigns :projects).to eq projects
       end
-
       if user_type > 0 and private_projects
         it "@projects include users private project" do
           expect(assigns :projects).to include *user.projects.private_view
@@ -42,42 +40,35 @@ describe ProjectsController do
 
     context 'when not logged in' do
       let(:user) { User.new }
-
       it_behaves_like 'projects index', 5, 0, false
     end
 
     context 'when logged in as user' do
-      let!(:user) { FactoryGirl.create :user }
-
+      let(:user) { FactoryGirl.create :user }
       it_behaves_like 'projects index', 5, 1, false
 
       context 'user has their own projects' do
         before { FactoryGirl.create :project_private, creator: user }
-
         it_behaves_like 'projects index', 6, 1, true
       end
     end
 
     context 'when logged in as admin' do
-      let!(:user) { FactoryGirl.create :admin }
-
+      let(:user) { FactoryGirl.create :admin }
       it_behaves_like 'projects index', 7, 2, false
 
       context 'admin has their own projects' do
         before { FactoryGirl.create :project_private, creator: user }
-
         it_behaves_like 'projects index', 8, 2, true
       end
     end
 
     context 'when logged in as superadmin' do
-      let!(:user) { FactoryGirl.create :superadmin }
-
+      let(:user) { FactoryGirl.create :superadmin }
       it_behaves_like 'projects index', 7, 3, false
 
       context 'superadmin has their own projects' do
         before { FactoryGirl.create :project_private, creator: user }
-
         it_behaves_like 'projects index', 8, 3, true
       end
     end
@@ -106,7 +97,7 @@ describe ProjectsController do
       context 'viewing private project' do
         let(:project) { FactoryGirl.create :project_private }
         before { get :show, id: project.slug }
-        it_behaves_like 'denies access'
+        it_behaves_like 'access denial'
       end
     end
 
@@ -122,7 +113,7 @@ describe ProjectsController do
       context 'viewing private project' do
         let(:project) { FactoryGirl.create :project_private }
         before { get :show, id: project.slug }
-        it_behaves_like 'denies access'
+        it_behaves_like 'access denial'
       end
 
       context 'viewing owned private project' do
@@ -173,51 +164,35 @@ describe ProjectsController do
   end
 
   describe "GET new" do
+
+    shared_context 'project #new' do
+      before do
+        sign_in user
+        get :new
+      end
+      it 'is success' do
+        expect(response).to be_success
+      end
+    end
+
     context 'when not logged in' do
       before { sign_in_nobody }
-
-      context 'creating project' do
-        it_behaves_like 'authentication redirector', 'get', :new
-      end
+      it_behaves_like 'authentication redirector', 'get', :new
     end
 
     context 'when logged as user' do
-      let!(:user) { FactoryGirl.create :user }
-      before { sign_in user }
-
-      context 'trying to create' do
-        before { get :new }
-
-        it 'is success' do
-          expect(response).to be_success
-        end
-      end
+      let(:user) { FactoryGirl.create :user }
+      it_behaves_like 'project #new'
     end
 
     context 'when logged as admin' do
-      let!(:admin) { FactoryGirl.create :admin }
-      before { sign_in admin }
-
-      context 'trying to create' do
-        before { get :new }
-
-        it 'is success' do
-          expect(response).to be_success
-        end
-      end
+      let(:user) { FactoryGirl.create :admin }
+      it_behaves_like 'project #new'
     end
 
     context 'when logged as superadmin' do
-      let!(:superadmin) { FactoryGirl.create :superadmin }
-      before { sign_in superadmin }
-
-      context 'trying to create' do
-        before { get :new }
-
-        it 'is success' do
-          expect(response).to be_success
-        end
-      end
+      let(:user) { FactoryGirl.create :superadmin }
+      it_behaves_like 'project #new'
     end
   end
 
@@ -230,7 +205,7 @@ describe ProjectsController do
         before { sign_in_nobody }
 
         context 'creating project' do
-          it 'denies access' do
+          it 'access denial' do
             expect{ post :create }.to raise_exception("uncaught throw :warden")
           end
         end
@@ -250,7 +225,7 @@ describe ProjectsController do
         before { sign_in_nobody }
 
         context 'creating project' do
-          it 'denies access' do
+          it 'access denial' do
             expect{ post :create }.to raise_exception("uncaught throw :warden")
           end
         end
@@ -267,12 +242,21 @@ describe ProjectsController do
   end
 
   describe "GET edit" do
+    shared_context 'project #edit' do
+      before { get :edit, id: project.id }
+      it 'is successful' do
+        expect(response).to be_success
+      end
+      it 'renders :edit' do
+        expect(response).to render_template :edit
+      end
+    end
+
     context 'when not logged in' do
       before { sign_in_nobody }
 
       context 'trying to edit public project' do
         let(:public_project) { FactoryGirl.create :project }
-
         it 'throws a hissy fit' do
           expect{ get :edit, id: public_project.id }.to raise_exception("uncaught throw :warden")
         end
@@ -280,7 +264,6 @@ describe ProjectsController do
 
       context 'trying to edit private project' do
         let(:private_project) { FactoryGirl.create :project_private }
-
         it 'throws a hissy fit' do
           expect{ get :edit, id: private_project.id }.to raise_exception("uncaught throw :warden")
         end
@@ -288,177 +271,79 @@ describe ProjectsController do
     end
 
     context 'when logged as user' do
-      let!(:user) { FactoryGirl.create :user }
+      let(:user) { FactoryGirl.create :user }
       before { sign_in user }
 
       context 'trying to edit public project' do
         let(:public_project) { FactoryGirl.create :project }
-
         before { get :edit, id: public_project.id }
-
-        it 'throws 403' do
-          expect(response.status).to eq 403
-        end
+        it_behaves_like 'access denial'
       end
 
       context 'trying to edit private project' do
         let(:private_project) { FactoryGirl.create :project_private }
-
         before { get :edit, id: private_project.id }
-
-        it 'throws 403' do
-          expect(response.status).to eq 403
-        end
+        it_behaves_like 'access denial'
       end
 
       context 'trying to edit user`s public project' do
-        let(:users_project) { FactoryGirl.create :project, creator: user }
-
-        before { get :edit, id: users_project.id }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it 'renders :edit' do
-          expect(response).to render_template :edit
-        end
+        let(:project) { FactoryGirl.create :project, creator: user }
+        it_behaves_like 'project #edit'
       end
 
       context 'trying to edit user`s public project' do
-        let(:users_project) { FactoryGirl.create :project_private, creator: user }
-
-        before { get :edit, id: users_project.id }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it 'renders :edit' do
-          expect(response).to render_template :edit
-        end
+        let(:project) { FactoryGirl.create :project_private, creator: user }
+        it_behaves_like 'project #edit'
       end
     end
 
     context 'when logged as admin' do
-      let!(:admin) { FactoryGirl.create :admin }
-      before { sign_in admin }
+      let(:user) { FactoryGirl.create :admin }
+      before { sign_in user }
 
       context 'trying to edit public project' do
-        let(:public_project) { FactoryGirl.create :project }
-
-        before { get :edit, id: public_project.id }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it 'renders :edit' do
-          expect(response).to render_template :edit
-        end
+        let(:project) { FactoryGirl.create :project }
+        it_behaves_like 'project #edit'
       end
 
       context 'trying to edit private project' do
-        let(:private_project) { FactoryGirl.create :project_private }
-
-        before { get :edit, id: private_project.id }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it 'renders :edit' do
-          expect(response).to render_template :edit
-        end
+        let(:project) { FactoryGirl.create :project_private }
+        it_behaves_like 'project #edit'
       end
 
       context 'trying to edit admin`s public project' do
-        let(:users_project) { FactoryGirl.create :project, creator: admin }
-
-        before { get :edit, id: users_project.id }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it 'renders :edit' do
-          expect(response).to render_template :edit
-        end
+        let(:project) { FactoryGirl.create :project, creator: user }
+        it_behaves_like 'project #edit'
       end
 
       context 'trying to edit admin`s public project' do
-        let(:users_project) { FactoryGirl.create :project_private, creator: admin }
-
-        before { get :edit, id: users_project.id }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it 'renders :edit' do
-          expect(response).to render_template :edit
-        end
+        let(:project) { FactoryGirl.create :project_private, creator: user }
+        it_behaves_like 'project #edit'
       end
     end
 
     context 'when logged as superadmin' do
-      let!(:superadmin) { FactoryGirl.create :superadmin }
-      before { sign_in superadmin }
+      let(:user) { FactoryGirl.create :superadmin }
+      before { sign_in user }
 
       context 'trying to edit public project' do
-        let(:public_project) { FactoryGirl.create :project }
-
-        before { get :edit, id: public_project.id }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it 'renders :edit' do
-          expect(response).to render_template :edit
-        end
+        let(:project) { FactoryGirl.create :project }
+        it_behaves_like 'project #edit'
       end
 
       context 'trying to edit private project' do
-        let(:private_project) { FactoryGirl.create :project_private }
-
-        before { get :edit, id: private_project.id }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it 'renders :edit' do
-          expect(response).to render_template :edit
-        end
+        let(:project) { FactoryGirl.create :project_private }
+        it_behaves_like 'project #edit'
       end
 
       context 'trying to edit superadmin`s public project' do
-        let(:users_project) { FactoryGirl.create :project, creator: superadmin }
-
-        before { get :edit, id: users_project.id }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it 'renders :edit' do
-          expect(response).to render_template :edit
-        end
+        let(:project) { FactoryGirl.create :project, creator: user }
+        it_behaves_like 'project #edit'
       end
 
       context 'trying to edit superadmin`s public project' do
-        let(:users_project) { FactoryGirl.create :project_private, creator: superadmin }
-
-        before { get :edit, id: users_project.id }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it 'renders :edit' do
-          expect(response).to render_template :edit
-        end
+        let(:project) { FactoryGirl.create :project_private, creator: user }
+        it_behaves_like 'project #edit'
       end
     end
   end
@@ -481,113 +366,96 @@ describe ProjectsController do
 
       context 'when not logged in' do
         shared_examples 'authentication redirector' do
+          before { sign_in_nobody }
           it 'throws uncaught :warden' do
             expect{ post :update, id: project.id, project: valid_attributes }.to raise_exception("uncaught throw :warden")
           end
         end
 
-        before { sign_in_nobody }
-
         context 'trying to update public project' do
           let(:project) { FactoryGirl.create :project }
-
           it_behaves_like 'authentication redirector'
         end
 
         context 'trying to edit private project' do
           let(:project) { FactoryGirl.create :project_private }
-
           it_behaves_like 'authentication redirector'
         end
       end
 
       context 'when logged as user' do
-        let!(:user) { FactoryGirl.create :user }
+        let(:user) { FactoryGirl.create :user }
         before { sign_in user }
 
         context 'trying to update public project' do
           let(:public_project) { FactoryGirl.create :project }
-
           before { post :update, id: public_project.id, project: valid_attributes }
-
-          it_behaves_like 'denies access'
+          it_behaves_like 'access denial'
         end
 
         context 'trying to edit private project' do
           let(:private_project) { FactoryGirl.create :project_private }
-
           before { post :update, id: private_project.id, project: valid_attributes }
-
-          it_behaves_like 'denies access'
+          it_behaves_like 'access denial'
         end
 
         context 'trying to edit user`s public project' do
           let(:project) { FactoryGirl.create :project, creator: user }
-
           it_behaves_like 'project update'
         end
 
         context 'trying to edit user`s public project' do
           let(:project) { FactoryGirl.create :project_private, creator: user }
-
           it_behaves_like 'project update'
         end
       end
 
       context 'when logged as admin' do
-        let!(:admin) { FactoryGirl.create :admin }
+        let(:admin) { FactoryGirl.create :admin }
         before { sign_in admin }
 
         context 'trying to update public project' do
           let(:project) { FactoryGirl.create :project }
-
           it_behaves_like 'project update'
         end
 
         context 'trying to edit private project' do
           let(:project) { FactoryGirl.create :project_private }
-
           it_behaves_like 'project update'
         end
 
         context 'trying to edit admin`s public project' do
           let(:project) { FactoryGirl.create :project, creator: admin }
-
           it_behaves_like 'project update'
         end
 
         context 'trying to edit admin`s public project' do
           let(:project) { FactoryGirl.create :project_private, creator: admin }
-
           it_behaves_like 'project update'
         end
       end
 
       context 'when logged as superadmin' do
-        let!(:superadmin) { FactoryGirl.create :superadmin }
+        let(:superadmin) { FactoryGirl.create :superadmin }
         before { sign_in superadmin }
 
         context 'trying to update public project' do
           let(:project) { FactoryGirl.create :project }
-
           it_behaves_like 'project update'
         end
 
         context 'trying to edit private project' do
           let(:project) { FactoryGirl.create :project_private }
-
           it_behaves_like 'project update'
         end
 
         context 'trying to edit superadmin`s public project' do
           let(:project) { FactoryGirl.create :project, creator: superadmin }
-
           it_behaves_like 'project update'
         end
 
         context 'trying to edit superadmin`s public project' do
           let(:project) { FactoryGirl.create :project_private, creator: superadmin }
-
           it_behaves_like 'project update'
         end
       end
@@ -611,7 +479,6 @@ describe ProjectsController do
 
         context 'trying to update public project' do
           let(:public_project) { FactoryGirl.create :project }
-
           it 'throws a hissy fit' do
             expect{ post :update, id: public_project.id, project: invalid_attributes }.to raise_exception("uncaught throw :warden")
           end
@@ -619,7 +486,6 @@ describe ProjectsController do
 
         context 'trying to edit private project' do
           let(:private_project) { FactoryGirl.create :project_private }
-
           it 'throws a hissy fit' do
             expect{ post :update, id: private_project.id, project: invalid_attributes }.to raise_exception("uncaught throw :warden")
           end
@@ -627,96 +493,78 @@ describe ProjectsController do
       end
 
       context 'when logged as user' do
-        let!(:user) { FactoryGirl.create :user }
+        let(:user) { FactoryGirl.create :user }
         before { sign_in user }
 
         context 'trying to update public project' do
           let(:project) { FactoryGirl.create :project }
-
           before { post :update, id: project.id, project: invalid_attributes }
-
-          it 'throws 403' do
-            expect(response.status).to eq 403
-          end
+          it_behaves_like 'access denial'
         end
 
         context 'trying to edit private project' do
           let(:private_project) { FactoryGirl.create :project_private }
-
           before { post :update, id: private_project.id, project: invalid_attributes }
-
-          it 'throws 403' do
-            expect(response.status).to eq 403
-          end
+          it_behaves_like 'access denial'
         end
 
         context 'trying to edit user`s public project' do
           let(:project) { FactoryGirl.create :project, creator: user }
-
           it_behaves_like 'failed project update'
         end
 
         context 'trying to edit user`s public project' do
           let(:project) { FactoryGirl.create :project_private, creator: user }
-
           it_behaves_like 'failed project update'
         end
       end
 
       context 'when logged as admin' do
-        let!(:admin) { FactoryGirl.create :admin }
+        let(:admin) { FactoryGirl.create :admin }
         before { sign_in admin }
 
         context 'trying to update public project' do
           let(:project) { FactoryGirl.create :project }
-
           it_behaves_like 'failed project update'
         end
 
         context 'trying to edit private project' do
           let(:project) { FactoryGirl.create :project_private }
-
           it_behaves_like 'failed project update'
         end
 
         context 'trying to edit admin`s public project' do
           let(:project) { FactoryGirl.create :project, creator: admin }
-
           it_behaves_like 'failed project update'
         end
 
         context 'trying to edit admin`s public project' do
           let(:project) { FactoryGirl.create :project_private, creator: admin }
-
           it_behaves_like 'failed project update'
         end
       end
 
       context 'when logged as admin' do
-        let!(:superadmin) { FactoryGirl.create :superadmin }
+        let(:superadmin) { FactoryGirl.create :superadmin }
         before { sign_in superadmin }
 
         context 'trying to update public project' do
           let(:project) { FactoryGirl.create :project }
-
           it_behaves_like 'failed project update'
         end
 
         context 'trying to edit private project' do
           let(:project) { FactoryGirl.create :project_private }
-
           it_behaves_like 'failed project update'
         end
 
         context 'trying to edit superadmin`s public project' do
           let(:project) { FactoryGirl.create :project, creator: superadmin }
-
           it_behaves_like 'failed project update'
         end
 
         context 'trying to edit superadmin`s public project' do
           let(:project) { FactoryGirl.create :project_private, creator: superadmin }
-
           it_behaves_like 'failed project update'
         end
       end
@@ -748,104 +596,88 @@ describe ProjectsController do
 
       context 'trying to destroy public project' do
         let(:project) { FactoryGirl.create :project }
-
         it_behaves_like 'authentication redirector (destroy)'
       end
 
       context 'trying to destroy private project' do
         let(:project) { FactoryGirl.create :project_private }
-
         it_behaves_like 'authentication redirector (destroy)'
       end
     end
 
     context 'when logged as user' do
-      let!(:user) { FactoryGirl.create :user }
+      let(:user) { FactoryGirl.create :user }
       before { sign_in user }
 
       context 'trying to destroy public project' do
         let(:public_project) { FactoryGirl.create :project }
-
         before { post :destroy, id: public_project.id }
-
-        it_behaves_like 'denies access'
+        it_behaves_like 'access denial'
       end
 
       context 'trying to destroy private project' do
         let(:private_project) { FactoryGirl.create :project_private }
-
         before { post :destroy, id: private_project.id }
-
-        it_behaves_like 'denies access'
+        it_behaves_like 'access denial'
       end
 
       context 'trying to edit user`s public project' do
         let(:project) { FactoryGirl.create :project, creator: user }
-
         it_behaves_like 'project destruction'
       end
 
       context 'trying to edit user`s public project' do
         let(:project) { FactoryGirl.create :project_private, creator: user }
-
         it_behaves_like 'project destruction'
       end
     end
 
     context 'when logged as admin' do
-      let!(:admin) { FactoryGirl.create :admin }
+      let(:admin) { FactoryGirl.create :admin }
       before { sign_in admin }
 
       context 'trying to destroy public project' do
         let(:project) { FactoryGirl.create :project }
-
         it_behaves_like 'project destruction'
       end
 
       context 'trying to edit private project' do
         let(:project) { FactoryGirl.create :project_private }
-
         it_behaves_like 'project destruction'
       end
 
       context 'trying to edit admin`s public project' do
         let(:project) { FactoryGirl.create :project, creator: admin }
-
         it_behaves_like 'project destruction'
       end
 
       context 'trying to edit admin`s public project' do
         let(:project) { FactoryGirl.create :project_private, creator: admin }
-
         it_behaves_like 'project destruction'
       end
     end
 
     context 'when logged as superadmin' do
-      let!(:superadmin) { FactoryGirl.create :superadmin }
+      let(:superadmin) { FactoryGirl.create :superadmin }
       before { sign_in superadmin }
 
       context 'trying to destroy public project' do
         let(:project) { FactoryGirl.create :project }
-
         it_behaves_like 'project destruction'
       end
 
       context 'trying to edit private project' do
         let(:project) { FactoryGirl.create :project_private }
-
         it_behaves_like 'project destruction'
       end
 
       context 'trying to edit superadmin`s public project' do
         let(:project) { FactoryGirl.create :project, creator: superadmin }
-
         it_behaves_like 'project destruction'
       end
 
       context 'trying to edit superadmin`s public project' do
         let(:project) { FactoryGirl.create :project_private, creator: superadmin }
-
         it_behaves_like 'project destruction'
       end
     end
