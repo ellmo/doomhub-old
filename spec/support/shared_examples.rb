@@ -38,11 +38,26 @@ shared_context 'failed project creation' do
   end
 end
 
-# shared_examples "successful assignment" do |assignment, expected|
-#   it 'is successful' do
-#     expect(response).to be_success
-#   end
-#   it '@project assigns public project' do
-#     expect(assigns assignment).to eq expected
-#   end
-# end
+shared_context 'project update' do
+  before { post :update, id: project.id, project: valid_attributes }
+
+  it 'returns project errors' do
+    expect(response).to redirect_to project_path(project)
+  end
+
+  it 'updates project' do
+    expect(assigns(:project).name).to eq valid_attributes['name']
+  end
+end
+
+shared_context 'failed project update' do
+  before { post :update, id: project.id, project: invalid_attributes }
+
+  it 'returns project errors' do
+    expect(assigns(:project).errors).not_to be_empty
+  end
+
+  it 'rerenders `edit` view' do
+    expect(response).to render_template :edit
+  end
+end

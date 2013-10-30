@@ -429,7 +429,6 @@ describe ProjectsController do
   end
 
   describe "GET edit" do
-
     context 'when not logged in' do
       before { sign_in_nobody }
 
@@ -625,61 +624,252 @@ describe ProjectsController do
       end
     end
   end
+
+  describe "POST update" do
+    context 'with valid attributes' do
+      let(:valid_attributes) do
+        FactoryGirl.build(:project).attributes.reject {|k,v| v.nil?}
+      end
+
+      context 'when not logged in' do
+        before { sign_in_nobody }
+
+        context 'trying to update public project' do
+          let(:public_project) { FactoryGirl.create :project }
+
+          it 'throws a hissy fit' do
+            expect{ post :update, id: public_project.id, project: valid_attributes }.to raise_exception("uncaught throw :warden")
+          end
+        end
+
+        context 'trying to edit private project' do
+          let(:private_project) { FactoryGirl.create :project_private }
+
+          it 'throws a hissy fit' do
+            expect{ post :update, id: private_project.id, project: valid_attributes }.to raise_exception("uncaught throw :warden")
+          end
+        end
+      end
+
+      context 'when logged as user' do
+        let!(:user) { FactoryGirl.create :user }
+        before { sign_in user }
+
+        context 'trying to update public project' do
+          let(:public_project) { FactoryGirl.create :project }
+
+          before { post :update, id: public_project.id, project: valid_attributes }
+
+          it 'throws 403' do
+            expect(response.status).to eq 403
+          end
+        end
+
+        context 'trying to edit private project' do
+          let(:private_project) { FactoryGirl.create :project_private }
+
+          before { post :update, id: private_project.id, project: valid_attributes }
+
+          it 'throws 403' do
+            expect(response.status).to eq 403
+          end
+        end
+
+        context 'trying to edit user`s public project' do
+          let(:project) { FactoryGirl.create :project, creator: user }
+
+          it_behaves_like 'project update'
+        end
+
+        context 'trying to edit user`s public project' do
+          let(:project) { FactoryGirl.create :project_private, creator: user }
+
+          it_behaves_like 'project update'
+        end
+      end
+
+      context 'when logged as admin' do
+        let!(:admin) { FactoryGirl.create :admin }
+        before { sign_in admin }
+
+        context 'trying to update public project' do
+          let(:project) { FactoryGirl.create :project }
+
+          it_behaves_like 'project update'
+        end
+
+        context 'trying to edit private project' do
+          let(:project) { FactoryGirl.create :project_private }
+
+          it_behaves_like 'project update'
+        end
+
+        context 'trying to edit admin`s public project' do
+          let(:project) { FactoryGirl.create :project, creator: admin }
+
+          it_behaves_like 'project update'
+        end
+
+        context 'trying to edit admin`s public project' do
+          let(:project) { FactoryGirl.create :project_private, creator: admin }
+
+          it_behaves_like 'project update'
+        end
+      end
+
+      context 'when logged as superadmin' do
+        let!(:superadmin) { FactoryGirl.create :superadmin }
+        before { sign_in superadmin }
+
+        context 'trying to update public project' do
+          let(:project) { FactoryGirl.create :project }
+
+          it_behaves_like 'project update'
+        end
+
+        context 'trying to edit private project' do
+          let(:project) { FactoryGirl.create :project_private }
+
+          it_behaves_like 'project update'
+        end
+
+        context 'trying to edit superadmin`s public project' do
+          let(:project) { FactoryGirl.create :project, creator: superadmin }
+
+          it_behaves_like 'project update'
+        end
+
+        context 'trying to edit superadmin`s public project' do
+          let(:project) { FactoryGirl.create :project_private, creator: superadmin }
+
+          it_behaves_like 'project update'
+        end
+      end
+    end
+
+    context 'with invalid attributes' do
+      let(:invalid_attributes) { {name: '', game_id: '5'} }
+
+      context 'when not logged in' do
+        before { sign_in_nobody }
+
+        context 'trying to update public project' do
+          let(:public_project) { FactoryGirl.create :project }
+
+          it 'throws a hissy fit' do
+            expect{ post :update, id: public_project.id, project: invalid_attributes }.to raise_exception("uncaught throw :warden")
+          end
+        end
+
+        context 'trying to edit private project' do
+          let(:private_project) { FactoryGirl.create :project_private }
+
+          it 'throws a hissy fit' do
+            expect{ post :update, id: private_project.id, project: invalid_attributes }.to raise_exception("uncaught throw :warden")
+          end
+        end
+      end
+
+      context 'when logged as user' do
+        let!(:user) { FactoryGirl.create :user }
+        before { sign_in user }
+
+        context 'trying to update public project' do
+          let(:project) { FactoryGirl.create :project }
+
+          before { post :update, id: project.id, project: invalid_attributes }
+
+          it 'throws 403' do
+            expect(response.status).to eq 403
+          end
+        end
+
+        context 'trying to edit private project' do
+          let(:private_project) { FactoryGirl.create :project_private }
+
+          before { post :update, id: private_project.id, project: invalid_attributes }
+
+          it 'throws 403' do
+            expect(response.status).to eq 403
+          end
+        end
+
+        context 'trying to edit user`s public project' do
+          let(:project) { FactoryGirl.create :project, creator: user }
+
+          it_behaves_like 'failed project update'
+        end
+
+        context 'trying to edit user`s public project' do
+          let(:project) { FactoryGirl.create :project_private, creator: user }
+
+          it_behaves_like 'failed project update'
+        end
+      end
+
+      context 'when logged as admin' do
+        let!(:admin) { FactoryGirl.create :admin }
+        before { sign_in admin }
+
+        context 'trying to update public project' do
+          let(:project) { FactoryGirl.create :project }
+
+          it_behaves_like 'failed project update'
+        end
+
+        context 'trying to edit private project' do
+          let(:project) { FactoryGirl.create :project_private }
+
+          it_behaves_like 'failed project update'
+        end
+
+        context 'trying to edit admin`s public project' do
+          let(:project) { FactoryGirl.create :project, creator: admin }
+
+          it_behaves_like 'failed project update'
+        end
+
+        context 'trying to edit admin`s public project' do
+          let(:project) { FactoryGirl.create :project_private, creator: admin }
+
+          it_behaves_like 'failed project update'
+        end
+      end
+
+      context 'when logged as admin' do
+        let!(:superadmin) { FactoryGirl.create :superadmin }
+        before { sign_in superadmin }
+
+        context 'trying to update public project' do
+          let(:project) { FactoryGirl.create :project }
+
+          it_behaves_like 'failed project update'
+        end
+
+        context 'trying to edit private project' do
+          let(:project) { FactoryGirl.create :project_private }
+
+          it_behaves_like 'failed project update'
+        end
+
+        context 'trying to edit superadmin`s public project' do
+          let(:project) { FactoryGirl.create :project, creator: superadmin }
+
+          it_behaves_like 'failed project update'
+        end
+
+        context 'trying to edit superadmin`s public project' do
+          let(:project) { FactoryGirl.create :project_private, creator: superadmin }
+
+          it_behaves_like 'failed project update'
+        end
+      end
+    end
+  end
+
 end
 
 =begin
-  describe "GET edit" do
-    it "assigns the requested project as @project" do
-      project = Project.create! valid_attributes
-      get :edit, :id => project.id
-      assigns(:project).should eq(project)
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested project" do
-        project = Project.create! valid_attributes
-        # Assuming there are no other projects in the database, this
-        # specifies that the Project created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Project.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => project.id, :project => {'these' => 'params'}
-      end
-
-      it "assigns the requested project as @project" do
-        project = Project.create! valid_attributes
-        put :update, :id => project.id, :project => valid_attributes
-        assigns(:project).should eq(project)
-      end
-
-      it "redirects to the project" do
-        project = Project.create! valid_attributes
-        put :update, :id => project.id, :project => valid_attributes
-        response.should redirect_to(project)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the project as @project" do
-        project = Project.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Project.any_instance.stub(:save).and_return(false)
-        put :update, :id => project.id, :project => {}
-        assigns(:project).should eq(project)
-      end
-
-      it "re-renders the 'edit' template" do
-        project = Project.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Project.any_instance.stub(:save).and_return(false)
-        put :update, :id => project.id, :project => {}
-        response.should render_template("edit")
-      end
-    end
-  end
-
   describe "DELETE destroy" do
     it "destroys the requested project" do
       project = Project.create! valid_attributes
@@ -694,6 +884,4 @@ end
       response.should redirect_to(projects_url)
     end
   end
-
-end
 =end
