@@ -3,15 +3,9 @@ require 'spec_helper'
 describe ProjectsController do
 
   describe "GET index" do
-    before do
-      3.times { FactoryGirl.create :project }
-      2.times { FactoryGirl.create :project_private }
-      2.times { FactoryGirl.create :project_public }
-    end
-
-    context 'when not logged in' do
+    shared_context 'projects index' do |project_count, user_type, private_projects|
       before do
-        sign_in_nobody
+        sign_in user
         get :index
       end
 
@@ -19,166 +13,72 @@ describe ProjectsController do
         expect(response).to be_success
       end
 
-      it "@projects are public projects" do
-        projects = Project.readable_by User.new
-        expect(projects.count).to eq 5
+      it "@projects are assigned properly" do
+        projects = Project.readable_by user
+        expect(projects.count).to eq project_count
         expect(assigns :projects).to eq projects
       end
 
-      it "@projects does not include private" do
-        expect(assigns :projects).not_to include Project.private_view
+      if user_type > 0 and private_projects
+        it "@projects include users private project" do
+          expect(assigns :projects).to include *user.projects.private_view
+        end
       end
+      if user_type > 1
+        it "@projects include private" do
+          expect(assigns :projects).to include *Project.private_view
+        end
+        it "admin sees ALL projects" do
+          expect(assigns :projects).to eq Project.all
+        end
+      end
+    end
+
+    before do
+      3.times { FactoryGirl.create :project }
+      2.times { FactoryGirl.create :project_private }
+      2.times { FactoryGirl.create :project_public }
+    end
+
+    context 'when not logged in' do
+      let(:user) { User.new }
+
+      it_behaves_like 'projects index', 5, 0, false
     end
 
     context 'when logged in as user' do
       let!(:user) { FactoryGirl.create :user }
 
-      context 'user has no projects' do
-        before do
-          sign_in user
-          get :index
-        end
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it "@projects are public projects" do
-          projects = Project.readable_by user
-          expect(projects.count).to eq 5
-          expect(assigns :projects).to eq projects
-        end
-
-        it "@projects does not include private" do
-          expect(assigns :projects).not_to include Project.private_view
-        end
-      end
+      it_behaves_like 'projects index', 5, 1, false
 
       context 'user has their own projects' do
-        let!(:users_private_poject) { FactoryGirl.create :project_private, creator: user }
+        before { FactoryGirl.create :project_private, creator: user }
 
-        before do
-          FactoryGirl.create :project, creator: user
-          sign_in user
-          get :index
-        end
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it "@projects are public AND user`s projects" do
-          projects = Project.readable_by user
-          expect(projects.count).to eq 7
-          expect(assigns :projects).to eq projects
-          expect(projects).to include users_private_poject
-        end
+        it_behaves_like 'projects index', 6, 1, true
       end
     end
 
     context 'when logged in as admin' do
-      let!(:admin) { FactoryGirl.create :admin }
+      let!(:user) { FactoryGirl.create :admin }
 
-      context 'admin has no projects' do
-        before do
-          sign_in admin
-          get :index
-        end
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it "@projects admin readable projects" do
-          projects = Project.readable_by admin
-          expect(projects.count).to eq 7
-          expect(assigns :projects).to eq projects
-        end
-
-        it "admin sees private projects" do
-          expect(assigns :projects).to include *Project.private_view
-        end
-
-        it "admin sees ALL projects" do
-          expect(assigns :projects).to eq Project.all
-        end
-      end
+      it_behaves_like 'projects index', 7, 2, false
 
       context 'admin has their own projects' do
-        let!(:users_private_poject) { FactoryGirl.create :project_private, creator: admin }
+        before { FactoryGirl.create :project_private, creator: user }
 
-        before do
-          FactoryGirl.create :project, creator: admin
-          sign_in admin
-          get :index
-        end
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it "@projects are public AND user`s projects" do
-          projects = Project.readable_by admin
-          expect(projects.count).to eq 9
-          expect(assigns :projects).to eq projects
-          expect(projects).to include users_private_poject
-          expect(projects).to include *Project.private_view
-        end
-
-        it "admin sees ALL projects" do
-          expect(assigns :projects).to eq Project.all
-        end
+        it_behaves_like 'projects index', 8, 2, true
       end
     end
 
     context 'when logged in as superadmin' do
-      let!(:superadmin) { FactoryGirl.create :superadmin }
+      let!(:user) { FactoryGirl.create :superadmin }
 
-      context 'superadmin has no projects' do
-        before do
-          sign_in superadmin
-          get :index
-        end
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it "@projects superadmin readable projects" do
-          projects = Project.readable_by superadmin
-          expect(projects.count).to eq 7
-          expect(assigns :projects).to eq projects
-        end
-
-        it "superadmin sees private projects" do
-          expect(assigns :projects).to include *Project.private_view
-        end
-
-        it "superadmin sees ALL projects" do
-          expect(assigns :projects).to eq Project.all
-        end
-      end
+      it_behaves_like 'projects index', 7, 3, false
 
       context 'superadmin has their own projects' do
-        let!(:users_private_poject) { FactoryGirl.create :project_private, creator: superadmin }
+        before { FactoryGirl.create :project_private, creator: user }
 
-        before do
-          FactoryGirl.create :project, creator: superadmin
-          sign_in superadmin
-          get :index
-        end
-
-        it "@projects are public AND user`s projects" do
-          projects = Project.readable_by superadmin
-          expect(projects.count).to eq 9
-          expect(assigns :projects).to eq projects
-          expect(projects).to include users_private_poject
-          expect(projects).to include *Project.private_view
-        end
-
-        it "superadmin sees ALL projects" do
-          expect(assigns :projects).to eq Project.all
-        end
+        it_behaves_like 'projects index', 8, 3, true
       end
     end
   end
