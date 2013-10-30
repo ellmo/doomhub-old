@@ -84,152 +84,90 @@ describe ProjectsController do
   end
 
   describe "GET show" do
-    let!(:public_project) { FactoryGirl.create :project_public }
-    let!(:private_project) { FactoryGirl.create :project_private }
+
+    shared_context 'project show' do
+      before { get :show, id: project.slug }
+      it 'is successful' do
+        expect(response).to be_success
+      end
+      it '@project assigns public project' do
+        expect(assigns :project).to eq project
+      end
+    end
 
     context 'when not logged in' do
       before { sign_in_nobody }
 
       context 'viewing public project' do
-        before { get :show, id: public_project.slug }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it '@project assigns public project' do
-          expect(assigns :project).to eq public_project
-        end
+        let(:project) { FactoryGirl.create :project_public }
+        it_behaves_like 'project show'
       end
 
       context 'viewing private project' do
-        before { get :show, id: private_project.slug }
-
-        it 'denies access' do
-          expect(response.status).to eq 403
-        end
+        let(:project) { FactoryGirl.create :project_private }
+        before { get :show, id: project.slug }
+        it_behaves_like 'denies access'
       end
     end
 
     context 'when logged as user' do
-      let!(:user) { FactoryGirl.create :user }
-      let!(:users_private_project) { FactoryGirl.create :project, creator: user }
+      let(:user) { FactoryGirl.create :user }
       before { sign_in user }
 
       context 'viewing public project' do
-        before { get :show, id: public_project.slug }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it '@project assigns public project' do
-          expect(assigns :project).to eq public_project
-        end
+        let(:project) { FactoryGirl.create :project_public }
+        it_behaves_like 'project show'
       end
 
       context 'viewing private project' do
-        before { get :show, id: private_project.slug }
-
-        it 'denies access' do
-          expect(response.status).to eq 403
-        end
+        let(:project) { FactoryGirl.create :project_private }
+        before { get :show, id: project.slug }
+        it_behaves_like 'denies access'
       end
 
-      context 'viewing private project' do
-        before { get :show, id: users_private_project.slug }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it '@project assigns public project' do
-          expect(assigns :project).to eq users_private_project
-        end
+      context 'viewing owned private project' do
+        let(:project) { FactoryGirl.create :project_private, creator: user }
+        it_behaves_like 'project show'
       end
     end
 
     context 'when logged as admin' do
-      let!(:admin) { FactoryGirl.create :admin }
-      let!(:admins_private_project) { FactoryGirl.create :project, creator: admin }
-      before { sign_in admin }
+      let(:user) { FactoryGirl.create :admin }
+      before { sign_in user }
 
       context 'viewing public project' do
-        before { get :show, id: public_project.slug }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it '@project assigns public project' do
-          expect(assigns :project).to eq public_project
-        end
+        let(:project) { FactoryGirl.create :project_public }
+        it_behaves_like 'project show'
       end
 
       context 'viewing private project' do
-        before { get :show, id: private_project.slug }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it '@project assigns public project' do
-          expect(assigns :project).to eq private_project
-        end
+        let(:project) { FactoryGirl.create :project_private }
+        it_behaves_like 'project show'
       end
 
-      context 'viewing private project' do
-        before { get :show, id: admins_private_project.slug }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it '@project assigns public project' do
-          expect(assigns :project).to eq admins_private_project
-        end
+      context 'viewing owned private project' do
+        let(:project) { FactoryGirl.create :project_private, creator: user }
+        it_behaves_like 'project show'
       end
     end
 
     context 'when logged as superadmin' do
-      let!(:superadmin) { FactoryGirl.create :superadmin }
-      let!(:superadmins_private_project) { FactoryGirl.create :project, creator: superadmin }
-      before { sign_in superadmin }
+      let(:user) { FactoryGirl.create :superadmin }
+      before { sign_in user }
 
       context 'viewing public project' do
-        before { get :show, id: public_project.slug }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it '@project assigns public project' do
-          expect(assigns :project).to eq public_project
-        end
+        let(:project) { FactoryGirl.create :project_public }
+        it_behaves_like 'project show'
       end
 
       context 'viewing private project' do
-        before { get :show, id: private_project.slug }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it '@project assigns public project' do
-          expect(assigns :project).to eq private_project
-        end
+        let(:project) { FactoryGirl.create :project_private }
+        it_behaves_like 'project show'
       end
 
-      context 'viewing private project' do
-        before { get :show, id: superadmins_private_project.slug }
-
-        it 'is successful' do
-          expect(response).to be_success
-        end
-
-        it '@project assigns public project' do
-          expect(assigns :project).to eq superadmins_private_project
-        end
+      context 'viewing owned private project' do
+        let(:project) { FactoryGirl.create :project_private, creator: user }
+        it_behaves_like 'project show'
       end
     end
   end
@@ -572,7 +510,7 @@ describe ProjectsController do
 
           before { post :update, id: public_project.id, project: valid_attributes }
 
-          it_behaves_like 'unauthorized'
+          it_behaves_like 'denies access'
         end
 
         context 'trying to edit private project' do
@@ -580,7 +518,7 @@ describe ProjectsController do
 
           before { post :update, id: private_project.id, project: valid_attributes }
 
-          it_behaves_like 'unauthorized'
+          it_behaves_like 'denies access'
         end
 
         context 'trying to edit user`s public project' do
@@ -830,7 +768,7 @@ describe ProjectsController do
 
         before { post :destroy, id: public_project.id }
 
-        it_behaves_like 'unauthorized'
+        it_behaves_like 'denies access'
       end
 
       context 'trying to destroy private project' do
@@ -838,7 +776,7 @@ describe ProjectsController do
 
         before { post :destroy, id: private_project.id }
 
-        it_behaves_like 'unauthorized'
+        it_behaves_like 'denies access'
       end
 
       context 'trying to edit user`s public project' do
