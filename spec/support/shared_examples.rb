@@ -1,5 +1,11 @@
-shared_examples "authentication redirector" do |method, action, **args|
-  it 'should throw uncaught :warden' do
+shared_examples 'unauthorized' do
+  it 'throws 403' do
+    expect(response.status).to eq 403
+  end
+end
+
+shared_examples 'authentication redirector' do |method, action, **args|
+  it 'throws uncaught :warden' do
     if args.empty?
       expect{ send(method, action) }.to raise_exception("uncaught throw :warden")
     else
@@ -35,29 +41,5 @@ shared_context 'failed project creation' do
 
   it 'rerenders `new` view' do
     expect(response).to render_template :new
-  end
-end
-
-shared_context 'project update' do
-  before { post :update, id: project.id, project: valid_attributes }
-
-  it 'returns project errors' do
-    expect(response).to redirect_to project_path(project)
-  end
-
-  it 'updates project' do
-    expect(assigns(:project).name).to eq valid_attributes['name']
-  end
-end
-
-shared_context 'failed project update' do
-  before { post :update, id: project.id, project: invalid_attributes }
-
-  it 'returns project errors' do
-    expect(assigns(:project).errors).not_to be_empty
-  end
-
-  it 'rerenders `edit` view' do
-    expect(response).to render_template :edit
   end
 end

@@ -631,23 +631,35 @@ describe ProjectsController do
         FactoryGirl.build(:project).attributes.reject {|k,v| v.nil?}
       end
 
+      shared_context 'project update' do
+        before { post :update, id: project.id, project: valid_attributes }
+        it 'redirects to project`s show' do
+          expect(response).to redirect_to project_path(project)
+        end
+        it 'updates project' do
+          expect(assigns(:project).name).to eq valid_attributes['name']
+        end
+      end
+
       context 'when not logged in' do
-        before { sign_in_nobody }
-
-        context 'trying to update public project' do
-          let(:public_project) { FactoryGirl.create :project }
-
-          it 'throws a hissy fit' do
-            expect{ post :update, id: public_project.id, project: valid_attributes }.to raise_exception("uncaught throw :warden")
+        shared_context 'authentication redirector' do
+          it 'throws uncaught :warden' do
+            expect{ post :update, id: project.id, project: valid_attributes }.to raise_exception("uncaught throw :warden")
           end
         end
 
-        context 'trying to edit private project' do
-          let(:private_project) { FactoryGirl.create :project_private }
+        before { sign_in_nobody }
 
-          it 'throws a hissy fit' do
-            expect{ post :update, id: private_project.id, project: valid_attributes }.to raise_exception("uncaught throw :warden")
-          end
+        context 'trying to update public project' do
+          let(:project) { FactoryGirl.create :project }
+
+          it_behaves_like 'authentication redirector'
+        end
+
+        context 'trying to edit private project' do
+          let(:project) { FactoryGirl.create :project_private }
+
+          it_behaves_like 'authentication redirector'
         end
       end
 
@@ -660,9 +672,7 @@ describe ProjectsController do
 
           before { post :update, id: public_project.id, project: valid_attributes }
 
-          it 'throws 403' do
-            expect(response.status).to eq 403
-          end
+          it_behaves_like 'unauthorized'
         end
 
         context 'trying to edit private project' do
@@ -670,9 +680,7 @@ describe ProjectsController do
 
           before { post :update, id: private_project.id, project: valid_attributes }
 
-          it 'throws 403' do
-            expect(response.status).to eq 403
-          end
+          it_behaves_like 'unauthorized'
         end
 
         context 'trying to edit user`s public project' do
@@ -749,6 +757,16 @@ describe ProjectsController do
 
     context 'with invalid attributes' do
       let(:invalid_attributes) { {name: '', game_id: '5'} }
+
+      shared_context 'failed project update' do
+        before { post :update, id: project.id, project: invalid_attributes }
+        it 'returns project errors' do
+          expect(assigns(:project).errors).not_to be_empty
+        end
+        it 'rerenders `edit` view' do
+          expect(response).to render_template :edit
+        end
+      end
 
       context 'when not logged in' do
         before { sign_in_nobody }
