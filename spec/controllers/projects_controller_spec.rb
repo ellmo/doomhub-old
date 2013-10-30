@@ -426,7 +426,204 @@ describe ProjectsController do
         end
       end
     end
+  end
 
+  describe "GET edit" do
+
+    context 'when not logged in' do
+      before { sign_in_nobody }
+
+      context 'trying to edit public project' do
+        let(:public_project) { FactoryGirl.create :project }
+
+        it 'throws a hissy fit' do
+          expect{ get :edit, id: public_project.id }.to raise_exception("uncaught throw :warden")
+        end
+      end
+
+      context 'trying to edit private project' do
+        let(:private_project) { FactoryGirl.create :project_private }
+
+        it 'throws a hissy fit' do
+          expect{ get :edit, id: private_project.id }.to raise_exception("uncaught throw :warden")
+        end
+      end
+    end
+
+    context 'when logged as user' do
+      let!(:user) { FactoryGirl.create :user }
+      before { sign_in user }
+
+      context 'trying to edit public project' do
+        let(:public_project) { FactoryGirl.create :project }
+
+        before { get :edit, id: public_project.id }
+
+        it 'throws 403' do
+          expect(response.status).to eq 403
+        end
+      end
+
+      context 'trying to edit private project' do
+        let(:private_project) { FactoryGirl.create :project_private }
+
+        before { get :edit, id: private_project.id }
+
+        it 'throws 403' do
+          expect(response.status).to eq 403
+        end
+      end
+
+      context 'trying to edit user`s public project' do
+        let(:users_project) { FactoryGirl.create :project, creator: user }
+
+        before { get :edit, id: users_project.id }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+
+      context 'trying to edit user`s public project' do
+        let(:users_project) { FactoryGirl.create :project_private, creator: user }
+
+        before { get :edit, id: users_project.id }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+    end
+
+    context 'when logged as admin' do
+      let!(:admin) { FactoryGirl.create :admin }
+      before { sign_in admin }
+
+      context 'trying to edit public project' do
+        let(:public_project) { FactoryGirl.create :project }
+
+        before { get :edit, id: public_project.id }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+
+      context 'trying to edit private project' do
+        let(:private_project) { FactoryGirl.create :project_private }
+
+        before { get :edit, id: private_project.id }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+
+      context 'trying to edit admin`s public project' do
+        let(:users_project) { FactoryGirl.create :project, creator: admin }
+
+        before { get :edit, id: users_project.id }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+
+      context 'trying to edit admin`s public project' do
+        let(:users_project) { FactoryGirl.create :project_private, creator: admin }
+
+        before { get :edit, id: users_project.id }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+    end
+
+    context 'when logged as superadmin' do
+      let!(:superadmin) { FactoryGirl.create :superadmin }
+      before { sign_in superadmin }
+
+      context 'trying to edit public project' do
+        let(:public_project) { FactoryGirl.create :project }
+
+        before { get :edit, id: public_project.id }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+
+      context 'trying to edit private project' do
+        let(:private_project) { FactoryGirl.create :project_private }
+
+        before { get :edit, id: private_project.id }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+
+      context 'trying to edit superadmin`s public project' do
+        let(:users_project) { FactoryGirl.create :project, creator: superadmin }
+
+        before { get :edit, id: users_project.id }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+
+      context 'trying to edit superadmin`s public project' do
+        let(:users_project) { FactoryGirl.create :project_private, creator: superadmin }
+
+        before { get :edit, id: users_project.id }
+
+        it 'is successful' do
+          expect(response).to be_success
+        end
+
+        it 'renders :edit' do
+          expect(response).to render_template :edit
+        end
+      end
+    end
   end
 end
 
@@ -436,43 +633,6 @@ end
       project = Project.create! valid_attributes
       get :edit, :id => project.id
       assigns(:project).should eq(project)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Project" do
-        expect {
-          post :create, :project => valid_attributes
-        }.to change(Project, :count).by(1)
-      end
-
-      it "assigns a newly created project as @project" do
-        post :create, :project => valid_attributes
-        assigns(:project).should be_a(Project)
-        assigns(:project).should be_persisted
-      end
-
-      it "redirects to the created project" do
-        post :create, :project => valid_attributes
-        response.should redirect_to(Project.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved project as @project" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Project.any_instance.stub(:save).and_return(false)
-        post :create, :project => {}
-        assigns(:project).should be_a_new(Project)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Project.any_instance.stub(:save).and_return(false)
-        post :create, :project => {}
-        response.should render_template("new")
-      end
     end
   end
 
