@@ -642,7 +642,7 @@ describe ProjectsController do
       end
 
       context 'when not logged in' do
-        shared_context 'authentication redirector' do
+        shared_examples 'authentication redirector' do
           it 'throws uncaught :warden' do
             expect{ post :update, id: project.id, project: valid_attributes }.to raise_exception("uncaught throw :warden")
           end
@@ -885,21 +885,131 @@ describe ProjectsController do
     end
   end
 
-end
-
-=begin
-  describe "DELETE destroy" do
-    it "destroys the requested project" do
-      project = Project.create! valid_attributes
-      expect {
-        delete :destroy, :id => project.id
-      }.to change(Project, :count).by(-1)
+  describe "POST destroy" do
+    shared_context 'project destruction' do
+      before { post :destroy, id: project.id }
+      it 'redirects to projects index' do
+        expect(response).to redirect_to projects_path
+      end
+      it 'destroys project' do
+        expect(Project.all).not_to include project
+      end
+      it 'puts project in deleted scope' do
+        expect(Project.only_deleted).to include project
+      end
     end
 
-    it "redirects to the projects list" do
-      project = Project.create! valid_attributes
-      delete :destroy, :id => project.id
-      response.should redirect_to(projects_url)
+    context 'when not logged in' do
+      shared_examples 'authentication redirector (destroy)' do
+        it 'throws uncaught :warden' do
+          expect{ post :destroy, id: project.id }.to raise_exception("uncaught throw :warden")
+        end
+      end
+
+      before { sign_in_nobody }
+
+      context 'trying to destroy public project' do
+        let(:project) { FactoryGirl.create :project }
+
+        it_behaves_like 'authentication redirector (destroy)'
+      end
+
+      context 'trying to destroy private project' do
+        let(:project) { FactoryGirl.create :project_private }
+
+        it_behaves_like 'authentication redirector (destroy)'
+      end
+    end
+
+    context 'when logged as user' do
+      let!(:user) { FactoryGirl.create :user }
+      before { sign_in user }
+
+      context 'trying to destroy public project' do
+        let(:public_project) { FactoryGirl.create :project }
+
+        before { post :destroy, id: public_project.id }
+
+        it_behaves_like 'unauthorized'
+      end
+
+      context 'trying to destroy private project' do
+        let(:private_project) { FactoryGirl.create :project_private }
+
+        before { post :destroy, id: private_project.id }
+
+        it_behaves_like 'unauthorized'
+      end
+
+      context 'trying to edit user`s public project' do
+        let(:project) { FactoryGirl.create :project, creator: user }
+
+        it_behaves_like 'project destruction'
+      end
+
+      context 'trying to edit user`s public project' do
+        let(:project) { FactoryGirl.create :project_private, creator: user }
+
+        it_behaves_like 'project destruction'
+      end
+    end
+
+    context 'when logged as admin' do
+      let!(:admin) { FactoryGirl.create :admin }
+      before { sign_in admin }
+
+      context 'trying to destroy public project' do
+        let(:project) { FactoryGirl.create :project }
+
+        it_behaves_like 'project destruction'
+      end
+
+      context 'trying to edit private project' do
+        let(:project) { FactoryGirl.create :project_private }
+
+        it_behaves_like 'project destruction'
+      end
+
+      context 'trying to edit admin`s public project' do
+        let(:project) { FactoryGirl.create :project, creator: admin }
+
+        it_behaves_like 'project destruction'
+      end
+
+      context 'trying to edit admin`s public project' do
+        let(:project) { FactoryGirl.create :project_private, creator: admin }
+
+        it_behaves_like 'project destruction'
+      end
+    end
+
+    context 'when logged as superadmin' do
+      let!(:superadmin) { FactoryGirl.create :superadmin }
+      before { sign_in superadmin }
+
+      context 'trying to destroy public project' do
+        let(:project) { FactoryGirl.create :project }
+
+        it_behaves_like 'project destruction'
+      end
+
+      context 'trying to edit private project' do
+        let(:project) { FactoryGirl.create :project_private }
+
+        it_behaves_like 'project destruction'
+      end
+
+      context 'trying to edit superadmin`s public project' do
+        let(:project) { FactoryGirl.create :project, creator: superadmin }
+
+        it_behaves_like 'project destruction'
+      end
+
+      context 'trying to edit superadmin`s public project' do
+        let(:project) { FactoryGirl.create :project_private, creator: superadmin }
+
+        it_behaves_like 'project destruction'
+      end
     end
   end
-=end
+end
