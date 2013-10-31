@@ -25,6 +25,7 @@ class ProjectsController < ApplicationController
 
   def show
     build_breadcrumbs
+    @maps = @project.maps
     @comments = @project.comments.page nil
     @comment = Comment.new
   end

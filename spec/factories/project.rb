@@ -12,7 +12,7 @@ FactoryGirl.define do
     end
 
     trait :public_join do
-      public_view true
+      public_join true
     end
 
     factory :project_private, traits: [:private_view]

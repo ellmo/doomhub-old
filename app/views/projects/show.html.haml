@@ -20,7 +20,7 @@
   %li.c333.black-border.project-maps#mapsTab
     .row
       .nine.columns
-        - @project.maps.each do |map|
+        - @maps.each do |map|
           .row
             %span= "#{map.lump}:"
             %span= link_to map.name, [@project, map]
