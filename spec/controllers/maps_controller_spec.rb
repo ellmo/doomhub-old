@@ -97,7 +97,7 @@ describe MapsController do
       it 'is successful' do
         expect(response).to be_success
       end
-      it "@map is assigned properly" do
+      it "@project is assigned properly" do
         expect(assigns :project).to eq project
       end
       it 'renders :new template' do
@@ -143,7 +143,6 @@ describe MapsController do
 
     context 'private join project' do
       let(:project) { FactoryGirl.create :project_private }
-      let(:map) { FactoryGirl.create :map, project: project }
 
       context 'when not logged in' do
         before { sign_in_nobody }
@@ -171,7 +170,6 @@ describe MapsController do
     context 'owned private join project' do
       let(:user) { FactoryGirl.create :user }
       let(:project) { FactoryGirl.create :project_private, creator: user }
-      let(:map) { FactoryGirl.create :map, project: project }
 
       context 'when logged in as user' do
         it_behaves_like 'map #new'
@@ -190,7 +188,7 @@ describe MapsController do
         expect(assigns :map).to eq map
       end
       it 'creates map' do
-        expect(project.reload.maps.count).to eq 1
+        expect(project.maps.count).to eq 1
       end
       it '@map gets proper attributes' do
         expect(assigns(:map).name).to eq attributes['name']
@@ -274,6 +272,247 @@ describe MapsController do
         end
       end
     end
+  end
+
+  describe "GET edit" do
+    shared_context 'map #edit' do
+      before do
+        sign_in user
+        get :edit, project_id: project.slug, id: map.id
+      end
+      it 'is successful' do
+        expect(response).to be_success
+      end
+      it "@project is assigned properly" do
+        expect(assigns :project).to eq project
+      end
+      it "@map is assigned properly" do
+        expect(assigns :map).to eq map
+      end
+      it 'renders :new template' do
+        expect(response).to render_template :edit
+      end
+    end
+
+    shared_context 'access denial' do
+      before do
+        sign_in user
+        get :edit, project_id: project.slug, id: map.id
+      end
+      it 'is denied' do
+        expect(response.status).to eq 403
+      end
+    end
+
+    context 'public join project' do
+      let(:project) { FactoryGirl.create :project_public }
+      let(:map) { FactoryGirl.create :map, project: project}
+
+      context 'when not logged in' do
+        before { sign_in_nobody }
+        it 'throws a hissy fit' do
+          expect{ get :edit, project_id: project.slug, id: map.id }.to raise_exception("uncaught throw :warden")
+        end
+      end
+
+      context 'when logged in as user' do
+        let(:user) { FactoryGirl.create :user }
+
+        context 'not owned map' do
+          let(:map) { FactoryGirl.create :map, project: project }
+          it_behaves_like 'access denial'
+        end
+
+        context 'owned map' do
+          let(:map) { FactoryGirl.create :map, project: project, author: user }
+          it_behaves_like 'map #edit'
+        end
+      end
+
+      context 'when logged in as admin' do
+        let(:user) { FactoryGirl.create :admin }
+        it_behaves_like 'map #edit'
+      end
+
+      context 'when logged in as superadmin' do
+        let(:user) { FactoryGirl.create :superadmin }
+        it_behaves_like 'map #edit'
+      end
+    end
+
+    context 'private join project' do
+      let(:project) { FactoryGirl.create :project_private }
+      let(:map) { FactoryGirl.create :map, project: project}
+
+      context 'when not logged in' do
+        before { sign_in_nobody }
+        it 'throws a hissy fit' do
+          expect{ get :edit, project_id: project.slug, id: map.id }.to raise_exception("uncaught throw :warden")
+        end
+      end
+
+      context 'when logged in as user' do
+        let(:user) { FactoryGirl.create :user }
+
+        context 'not owned map' do
+          let(:map) { FactoryGirl.create :map, project: project }
+          it_behaves_like 'access denial'
+        end
+
+        context 'owned map' do
+          let(:map) { FactoryGirl.create :map, project: project, author: user }
+          it_behaves_like 'access denial'
+        end
+      end
+
+      context 'when logged in as admin' do
+        let(:user) { FactoryGirl.create :admin }
+        it_behaves_like 'map #edit'
+      end
+
+      context 'when logged in as superadmin' do
+        let(:user) { FactoryGirl.create :superadmin }
+        it_behaves_like 'map #edit'
+      end
+    end
+
+    context 'owned private join project' do
+      let(:user) { FactoryGirl.create :user }
+      let(:project) { FactoryGirl.create :project_private, creator: user }
+
+      context 'not owned map' do
+        let(:map) { FactoryGirl.create :map, project: project }
+        it_behaves_like 'access denial'
+      end
+
+      context 'owned map' do
+        let(:map) { FactoryGirl.create :map, project: project, author: user }
+        it_behaves_like 'map #edit'
+      end
+    end
+  end
+
+  describe "POST update" do
+    shared_context 'map #update' do
+      before do
+        sign_in user
+        post :update, project_id: project.slug, id: map.id, map: attributes
+      end
+      it "@map is assigned properly" do
+        expect(assigns :map).to eq map.reload
+      end
+      it 'updates map' do
+        expect(assigns(:map).updated_at).not_to be nil
+      end
+      it '@map gets proper attributes' do
+        expect(assigns(:map).name).to eq attributes[:name]
+      end
+      it 'redirects to map`s show' do
+        expect(response).to redirect_to project_map_path(project, map.reload)
+      end
+    end
+
+    shared_context 'access denial' do
+      before do
+        sign_in user
+        post :update, project_id: project.slug, id: map.id, map: attributes
+      end
+      it 'is denied' do
+        expect(response.status).to eq 403
+      end
+    end
+
+    context 'valid attributes' do
+      let(:attributes) { {name: 'updated_map'} }
+
+      context 'public join project' do
+        let(:project) { FactoryGirl.create :project_public }
+        let(:map) { FactoryGirl.create :map, project: project }
+
+        context 'when not logged in' do
+          before { sign_in_nobody }
+          it 'throws a hissy fit' do
+            expect{ post :update, project_id: project.slug, id: map.id, map: attributes }.to raise_exception("uncaught throw :warden")
+          end
+        end
+
+        context 'when logged in as user' do
+          let(:user) { FactoryGirl.create :user }
+          context 'not owned map' do
+            let(:map) { FactoryGirl.create :map, project: project }
+            it_behaves_like 'access denial'
+          end
+          context 'owned map' do
+            let(:map) { FactoryGirl.create :map, project: project, author: user }
+            it_behaves_like 'map #update'
+          end
+        end
+
+        context 'when logged in as admin' do
+          let(:user) { FactoryGirl.create :admin }
+          it_behaves_like 'map #update'
+        end
+
+        context 'when logged in as superadmin' do
+          let(:user) { FactoryGirl.create :superadmin }
+          it_behaves_like 'map #update'
+        end
+      end
+
+      context 'private join project' do
+        let(:project) { FactoryGirl.create :project_private }
+        let(:map) { FactoryGirl.create :map, project: project }
+
+        context 'when not logged in' do
+          before { sign_in_nobody }
+          it 'throws a hissy fit' do
+            expect{ post :update, project_id: project.slug, id: map.id, map: attributes }.to raise_exception("uncaught throw :warden")
+          end
+        end
+
+        context 'when logged in as user' do
+          let(:user) { FactoryGirl.create :user }
+          context 'not owned map' do
+            let(:map) { FactoryGirl.create :map, project: project }
+            it_behaves_like 'access denial'
+          end
+          context 'owned map' do
+            let(:map) { FactoryGirl.create :map, project: project, author: user }
+            it_behaves_like 'access denial'
+          end
+        end
+
+        context 'when logged in as admin' do
+          let(:user) { FactoryGirl.create :admin }
+          it_behaves_like 'map #update'
+        end
+
+        context 'when logged in as superadmin' do
+          let(:user) { FactoryGirl.create :superadmin }
+          it_behaves_like 'map #update'
+        end
+      end
+
+      context 'private owned project' do
+        let(:user) { FactoryGirl.create :user }
+        let(:project) { FactoryGirl.create :project_private, creator: user }
+        let(:map) { FactoryGirl.create :map, project: project, author: user }
+
+        context 'when logged in as user' do
+          let(:user) { FactoryGirl.create :user }
+          context 'not owned map' do
+            let(:map) { FactoryGirl.create :map, project: project }
+            it_behaves_like 'access denial'
+          end
+          context 'owned map' do
+            let(:map) { FactoryGirl.create :map, project: project, author: user }
+            it_behaves_like 'map #update'
+          end
+        end
+      end
+    end
+
+
   end
 
 end
