@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Comment do
   context '::create' do
-    let!(:first_user) { FactoryGirl.create :user }
-    let!(:first_project) { FactoryGirl.create :project, creator: first_user }
-    let!(:other_user) { FactoryGirl.create :user }
+    let(:first_user) { FactoryGirl.create :user }
+    let(:first_project) { FactoryGirl.create :project, creator: first_user }
+    let(:other_user) { FactoryGirl.create :user }
 
     context 'on project' do
       let(:comment) { FactoryGirl.build :comment, commentable: first_project, user: other_user }
@@ -17,7 +17,7 @@ describe Comment do
     end
 
     context 'on map' do
-      let!(:first_map) { FactoryGirl.create :map, author: first_user, project: first_project }
+      let(:first_map) { FactoryGirl.create :map, author: first_user, project: first_project }
       let(:comment) { FactoryGirl.build :comment, commentable: first_map, user: other_user }
 
       it 'is valid and saves' do
@@ -29,14 +29,14 @@ describe Comment do
   end
 
   context '#update' do
-    let!(:first_user) { FactoryGirl.create :user }
-    let!(:first_project) { FactoryGirl.create :project, creator: first_user }
-    let!(:other_user) { FactoryGirl.create :user }
+    let(:first_user) { FactoryGirl.create :user }
+    let(:first_project) { FactoryGirl.create :project, creator: first_user }
+    let(:other_user) { FactoryGirl.create :user }
     let(:old_content) { 'old content' }
     let(:new_content) { 'new content' }
 
     context 'on project' do
-      let!(:comment) { FactoryGirl.create :comment, commentable: first_project, user: other_user, content: old_content }
+      let(:comment) { FactoryGirl.create :comment, commentable: first_project, user: other_user, content: old_content }
 
       context 'author is updating' do
         before do
