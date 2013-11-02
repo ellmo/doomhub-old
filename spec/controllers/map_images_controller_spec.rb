@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe MapImagesController do
 
+  def file_attachment(fixture_file='ellmo.png', mime='image/png')
+    file_path = "#{Rails.root}/spec/fixtures/#{fixture_file}"
+    Rack::Test::UploadedFile.new(file_path, mime)
+  end
+
   describe "GET new" do
     shared_context 'map_image #new' do
       before do
@@ -30,67 +35,169 @@ describe MapImagesController do
       end
     end
 
-    context 'public view project' do
-      let(:project) { FactoryGirl.create :project }
-      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+    context 'public join project' do
+      let(:project) { FactoryGirl.create :project_public }
 
-      context 'when not logged in' do
-        before { sign_in_nobody }
-        it 'throws a hissy fit' do
-          expect{ get :new, project_id: project.slug, map_id: map.slug }.to raise_exception("uncaught throw :warden")
+      context 'not owned map' do
+        let(:map) { FactoryGirl.create :map, project: project }
+
+        context 'when not logged in' do
+          before { sign_in_nobody }
+          it 'throws a hissy fit' do
+            expect{ get :new, project_id: project.slug, map_id: map.slug }.to raise_exception("uncaught throw :warden")
+          end
+        end
+
+        context 'when logged in as user' do
+          let(:user) { FactoryGirl.create :user }
+          it_behaves_like 'access denial'
+        end
+
+        context 'when logged in as admin' do
+          let(:user) { FactoryGirl.create :admin }
+          it_behaves_like 'map_image #new'
+        end
+
+        context 'when logged in as superadmin' do
+          let(:user) { FactoryGirl.create :superadmin }
+          it_behaves_like 'map_image #new'
         end
       end
 
-      context 'when logged in as user' do
-        let(:user) { FactoryGirl.create :user }
-        it_behaves_like 'access denial'
-      end
+      context 'owned map' do
+        let(:map) { FactoryGirl.create :map, project: project, author: user }
 
-      context 'when logged in as admin' do
-        let(:user) { FactoryGirl.create :admin }
-        it_behaves_like 'map_image #new'
-      end
+        context 'when logged in as user' do
+          let(:user) { FactoryGirl.create :user }
+          it_behaves_like 'map_image #new'
+        end
 
-      context 'when logged in as superadmin' do
-        let(:user) { FactoryGirl.create :superadmin }
-        it_behaves_like 'map_image #new'
+        context 'when logged in as admin' do
+          let(:user) { FactoryGirl.create :admin }
+          it_behaves_like 'map_image #new'
+        end
+
+        context 'when logged in as superadmin' do
+          let(:user) { FactoryGirl.create :superadmin }
+          it_behaves_like 'map_image #new'
+        end
       end
     end
 
-    # context 'private project' do
-    #   let(:project) { FactoryGirl.create :project_private }
-    #   let(:map) { FactoryGirl.create :map, project: project }
+    context 'private join project' do
+      let(:project) { FactoryGirl.create :project_public }
 
-    #   context 'when not logged in' do
-    #     let(:user) { User.new }
-    #     it_behaves_like 'access denial'
-    #   end
+      context 'not owned map' do
+        let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
 
-    #   context 'when logged in as user' do
-    #     let(:user) { FactoryGirl.create :user }
-    #     it_behaves_like 'access denial'
-    #   end
+        context 'when not logged in' do
+          before { sign_in_nobody }
+          it 'throws a hissy fit' do
+            expect{ get :new, project_id: project.slug, map_id: map.slug }.to raise_exception("uncaught throw :warden")
+          end
+        end
 
-    #   context 'when logged in as admin' do
-    #     let(:user) { FactoryGirl.create :admin }
-    #     it_behaves_like 'map #show'
-    #   end
+        context 'when logged in as user' do
+          let(:user) { FactoryGirl.create :user }
+          it_behaves_like 'access denial'
+        end
 
-    #   context 'when logged in as superadmin' do
-    #     let(:user) { FactoryGirl.create :superadmin }
-    #     it_behaves_like 'map #show'
-    #   end
-    # end
+        context 'when logged in as admin' do
+          let(:user) { FactoryGirl.create :admin }
+          it_behaves_like 'map_image #new'
+        end
 
-    # context 'owned private project' do
-    #   let(:user) { FactoryGirl.create :user }
-    #   let(:project) { FactoryGirl.create :project_private, creator: user }
-    #   let(:map) { FactoryGirl.create :map, project: project }
+        context 'when logged in as superadmin' do
+          let(:user) { FactoryGirl.create :superadmin }
+          it_behaves_like 'map_image #new'
+        end
+      end
+    end
 
-    #   context 'when logged in as user' do
-    #     it_behaves_like 'map #show'
-    #   end
-    # end
+    context 'owned private join project' do
+      let(:user) { FactoryGirl.create :user }
+      let(:project) { FactoryGirl.create :project_public, creator: user }
+      let(:map) { FactoryGirl.create :map, project: project, author: user }
+
+      it_behaves_like 'map_image #new'
+    end
   end
+
+  describe 'POST create' do
+    shared_context 'map_image #create' do
+      before do
+        sign_in user
+        post :create, project_id: project.slug, map_id: map.slug, map_image: attribtues
+      end
+      it 'is successful' do
+        expect(response).to redirect_to project_map_path(project, map)
+      end
+      it 'attaches the image' do
+        expect(map.reload.map_images).not_to be_empty
+      end
+    end
+
+    shared_context 'access denial' do
+      before do
+        sign_in user
+        get :new, project_id: project.slug, map_id: map.slug
+      end
+      it 'is denied' do
+        expect(response.status).to eq 403
+      end
+    end
+
+    let(:attribtues) { {image: file_attachment} }
+
+    context 'public join project' do
+      let(:project) { FactoryGirl.create :project_public }
+
+      context 'not owned map' do
+        let(:map) { FactoryGirl.create :map, project: project }
+
+        context 'when not logged in' do
+          before { sign_in_nobody }
+          it 'throws a hissy fit' do
+            expect{ post :create, project_id: project.slug, map_id: map.slug, map_image: attribtues }.to raise_exception("uncaught throw :warden")
+          end
+        end
+
+        context 'when logged in as user' do
+          let(:user) { FactoryGirl.create :user }
+          it_behaves_like 'access denial'
+        end
+
+        context 'when logged in as admin' do
+          let(:user) { FactoryGirl.create :admin }
+          it_behaves_like 'map_image #create'
+        end
+
+        context 'when logged in as superadmin' do
+          let(:user) { FactoryGirl.create :superadmin }
+          it_behaves_like 'map_image #create'
+        end
+      end
+
+      # context 'owned map' do
+      #   let(:map) { FactoryGirl.create :map, project: project, author: user }
+
+      #   context 'when logged in as user' do
+      #     let(:user) { FactoryGirl.create :user }
+      #     it_behaves_like 'map_image #new'
+      #   end
+
+      #   context 'when logged in as admin' do
+      #     let(:user) { FactoryGirl.create :admin }
+      #     it_behaves_like 'map_image #new'
+      #   end
+
+      #   context 'when logged in as superadmin' do
+      #     let(:user) { FactoryGirl.create :superadmin }
+      #     it_behaves_like 'map_image #new'
+      #   end
+      # end
+    end
+  end
+
 
 end
