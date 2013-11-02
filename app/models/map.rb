@@ -27,14 +27,15 @@ class Map < ActiveRecord::Base
 
   validates :name, :presence => true
   validate :has_5_wadfiles_max
+  validate :user_can_map
 
 #============
 #= CALLBACKS
 #==========
 
-  before_save :get_random_lumpname, if: ->(m) {m.lump.nil?}
+  before_save :get_default_lumpname, if: ->(m) {m.lump.nil?}
 
-  def get_random_lumpname
+  def get_default_lumpname
     self.lump = project.game.default_lumpname
   end
 
@@ -42,8 +43,14 @@ class Map < ActiveRecord::Base
 #= METHODS
 #========
 
+private
+
   def has_5_wadfiles_max
     errors.add(:base, "cannot have more than 5 wadfiles") if map_wadfiles.size > 5
+  end
+
+  def user_can_map
+    errors.add(:base, "user cannot add maps for this project") unless project.mappable_by?(author)
   end
 
 end

@@ -34,8 +34,8 @@ describe Map do
 
     context 'when using default lumpname' do
       context 'within a doom1 project' do
-        let!(:user) { FactoryGirl.create :project, game: Game.find_by_name('Doom') }
-        let!(:map) { FactoryGirl.create :map, project: Project.last, author: user }
+        let!(:project) { FactoryGirl.create :project_public, game: Game.find_by_name('Doom') }
+        let!(:map) { FactoryGirl.create :map, project: project }
 
         it 'lumpname should default to E1M1' do
           expect(map.lump).to eq 'E1M1'
@@ -43,8 +43,8 @@ describe Map do
       end
 
       context 'within a doom2 project' do
-        let!(:user) { FactoryGirl.create :project, game: Game.find_by_name('Doom 2') }
-        let!(:map) { FactoryGirl.create :map, project: Project.last, author: user }
+        let!(:project) { FactoryGirl.create :project_public, game: Game.find_by_name('Doom 2') }
+        let!(:map) { FactoryGirl.create :map, project: project }
 
         it 'lumpname should default to MAP01' do
           expect(map.lump).to eq 'MAP01'
@@ -52,8 +52,8 @@ describe Map do
       end
 
       context 'within a heretic project' do
-        let!(:user) { FactoryGirl.create :project, game: Game.find_by_name('Heretic') }
-        let!(:map) { FactoryGirl.create :map, project: Project.last, author: user }
+        let!(:project) { FactoryGirl.create :project_public, game: Game.find_by_name('Heretic') }
+        let!(:map) { FactoryGirl.create :map, project: project }
 
         it 'lumpname should default to E1M1' do
           expect(map.lump).to eq 'E1M1'
@@ -61,8 +61,8 @@ describe Map do
       end
 
       context 'within a hexen project' do
-        let!(:user) { FactoryGirl.create :project, game: Game.find_by_name('Hexen') }
-        let!(:map) { FactoryGirl.create :map, project: Project.last, author: user }
+        let!(:project) { FactoryGirl.create :project_public, game: Game.find_by_name('Hexen') }
+        let!(:map) { FactoryGirl.create :map, project: project }
 
         it 'lumpname should default to E1M1' do
           expect(map.lump).to eq 'MAP01'
@@ -70,8 +70,8 @@ describe Map do
       end
 
       context 'within a strife project' do
-        let!(:user) { FactoryGirl.create :project, game: Game.find_by_name('Strife') }
-        let!(:map) { FactoryGirl.create :map, project: Project.last, author: user }
+        let!(:project) { FactoryGirl.create :project_public, game: Game.find_by_name('Strife') }
+        let!(:map) { FactoryGirl.create :map, project: project }
 
         it 'lumpname should default to E1M1' do
           expect(map.lump).to eq 'MAP01'
@@ -80,8 +80,8 @@ describe Map do
     end
 
     context 'when using custom lumpname' do
-      let!(:user) { FactoryGirl.create :project, game: Game.find_by_name('Doom') }
-      let!(:map) { FactoryGirl.create :map, project: Project.last, author: User.last, lump: 'E1M7' }
+      let!(:project) { FactoryGirl.create :project_public, game: Game.find_by_name('Doom') }
+      let!(:map) { FactoryGirl.create :map, project: project, author: User.last, lump: 'E1M7' }
 
       it 'lumpname should default to E1M7' do
         expect(map.lump).to eq 'E1M7'

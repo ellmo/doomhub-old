@@ -29,7 +29,7 @@ describe MapsController do
 
     context 'public project' do
       let(:project) { FactoryGirl.create :project }
-      let(:map) { FactoryGirl.create :map, project: project }
+      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
 
       context 'when not logged in' do
         let(:user) { User.new }
@@ -54,7 +54,7 @@ describe MapsController do
 
     context 'private project' do
       let(:project) { FactoryGirl.create :project_private }
-      let(:map) { FactoryGirl.create :map, project: project }
+      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
 
       context 'when not logged in' do
         let(:user) { User.new }
@@ -80,7 +80,7 @@ describe MapsController do
     context 'owned private project' do
       let(:user) { FactoryGirl.create :user }
       let(:project) { FactoryGirl.create :project_private, creator: user }
-      let(:map) { FactoryGirl.create :map, project: project }
+      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
 
       context 'when logged in as user' do
         it_behaves_like 'map #show'
@@ -191,10 +191,10 @@ describe MapsController do
         expect(project.maps.count).to eq 1
       end
       it '@map gets proper attributes' do
-        expect(assigns(:map).name).to eq attributes['name']
+        expect(assigns(:map).name).to eq attributes[:name]
       end
       it 'redirects to map`s show' do
-        expect(response).to redirect_to project_map_path(project, map)
+        expect(response).to redirect_to project_map_path(project, map.reload)
       end
     end
 
@@ -209,7 +209,7 @@ describe MapsController do
     end
 
     context 'valid attributes' do
-      let(:attributes) { FactoryGirl.build(:map).attributes.reject {|k,v| v.nil?}  }
+      let(:attributes) { { name: 'a new great map'} }
 
       context 'public join project' do
         let(:project) { FactoryGirl.create :project_public }
@@ -306,7 +306,7 @@ describe MapsController do
 
     context 'public join project' do
       let(:project) { FactoryGirl.create :project_public }
-      let(:map) { FactoryGirl.create :map, project: project}
+      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
 
       context 'when not logged in' do
         before { sign_in_nobody }
@@ -342,7 +342,7 @@ describe MapsController do
 
     context 'private join project' do
       let(:project) { FactoryGirl.create :project_private }
-      let(:map) { FactoryGirl.create :map, project: project}
+      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
 
       context 'when not logged in' do
         before { sign_in_nobody }
@@ -353,16 +353,7 @@ describe MapsController do
 
       context 'when logged in as user' do
         let(:user) { FactoryGirl.create :user }
-
-        context 'not owned map' do
-          let(:map) { FactoryGirl.create :map, project: project }
-          it_behaves_like 'access denial'
-        end
-
-        context 'owned map' do
-          let(:map) { FactoryGirl.create :map, project: project, author: user }
-          it_behaves_like 'access denial'
-        end
+        it_behaves_like 'access denial'
       end
 
       context 'when logged in as admin' do
@@ -379,16 +370,8 @@ describe MapsController do
     context 'owned private join project' do
       let(:user) { FactoryGirl.create :user }
       let(:project) { FactoryGirl.create :project_private, creator: user }
-
-      context 'not owned map' do
-        let(:map) { FactoryGirl.create :map, project: project }
-        it_behaves_like 'access denial'
-      end
-
-      context 'owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: user }
-        it_behaves_like 'map #edit'
-      end
+      let(:map) { FactoryGirl.create :map, project: project, author: user }
+      it_behaves_like 'map #edit'
     end
   end
 
@@ -461,7 +444,7 @@ describe MapsController do
 
       context 'private join project' do
         let(:project) { FactoryGirl.create :project_private }
-        let(:map) { FactoryGirl.create :map, project: project }
+        let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
 
         context 'when not logged in' do
           before { sign_in_nobody }
@@ -472,14 +455,7 @@ describe MapsController do
 
         context 'when logged in as user' do
           let(:user) { FactoryGirl.create :user }
-          context 'not owned map' do
-            let(:map) { FactoryGirl.create :map, project: project }
-            it_behaves_like 'access denial'
-          end
-          context 'owned map' do
-            let(:map) { FactoryGirl.create :map, project: project, author: user }
-            it_behaves_like 'access denial'
-          end
+          it_behaves_like 'access denial'
         end
 
         context 'when logged in as admin' do
@@ -499,20 +475,12 @@ describe MapsController do
         let(:map) { FactoryGirl.create :map, project: project, author: user }
 
         context 'when logged in as user' do
-          let(:user) { FactoryGirl.create :user }
-          context 'not owned map' do
-            let(:map) { FactoryGirl.create :map, project: project }
-            it_behaves_like 'access denial'
-          end
           context 'owned map' do
-            let(:map) { FactoryGirl.create :map, project: project, author: user }
             it_behaves_like 'map #update'
           end
         end
       end
     end
-
-
   end
 
 end
