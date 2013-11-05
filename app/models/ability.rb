@@ -33,7 +33,7 @@ class Ability
   # map images
       can :create, MapImage, :map => {:author => {:id => user.id}}
       can :auth_url, MapImage, :map => {:project_id => Project.readable_by(user).map(&:id)}
-      can [:destroy, :update], MapImage do |mw|; mw.author == user; end
+      can [:destroy, :update], MapImage do |mi|; mi.user == user; end
   # map wadfiles
       can [:read, :create], MapWadfile, :map => {:project_id => Project.mappable_by(user).map(&:id)}
       can [:destroy, :update], MapWadfile do |mw|; mw.author == user; end
