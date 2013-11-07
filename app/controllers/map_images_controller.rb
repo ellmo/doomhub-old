@@ -41,6 +41,18 @@ class MapImagesController < ApplicationController
     end
   end
 
+  def destroy
+    respond_to do |format|
+      if @map_image.destroy
+        format.html { redirect_to [@project, @map], :notice => 'Image was successfully destroyed.' }
+        format.json { render :json => @map, :location => @map }
+      else
+        format.html { render :action => "new" }
+        format.json { render :status => :unprocessable_entity }
+      end
+    end
+  end
+
 #================
 #= OTHER ACTIONS
 #==============

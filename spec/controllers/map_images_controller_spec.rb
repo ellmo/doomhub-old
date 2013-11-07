@@ -255,7 +255,7 @@ describe MapImagesController do
         post :destroy, project_id: project.slug, map_id: map.slug, id: map_image.id
       end
       it 'is successful' do
-        # expect(response).to redirect_to project_map_path(project, map)
+        expect(response).to redirect_to project_map_path(project, map)
       end
       it 'attaches the image' do
         expect(map.reload.map_images).to be_empty
