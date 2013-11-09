@@ -41,6 +41,18 @@ class MapWadfilesController < ApplicationController
     end
   end
 
+  def destroy
+    respond_to do |format|
+      if @map_wadfile.destroy
+        format.html { redirect_to [@project, @map], :notice => 'Wadfile was successfully destroyed.' }
+        format.json { render :json => @map, :location => @map }
+      else
+        format.html { redirect_to [@project, @map], :error => 'Wadfile was NOT destroyed.' }
+        format.json { render :status => :unprocessable_entity }
+      end
+    end
+  end
+
 #================
 #= OTHER ACTIONS
 #==============
