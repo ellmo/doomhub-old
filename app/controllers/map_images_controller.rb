@@ -47,7 +47,7 @@ class MapImagesController < ApplicationController
         format.html { redirect_to [@project, @map], :notice => 'Image was successfully destroyed.' }
         format.json { render :json => @map, :location => @map }
       else
-        format.html { render :action => "new" }
+        format.html { redirect_to [@project, @map], :error => 'Image was NOT destroyed.' }
         format.json { render :status => :unprocessable_entity }
       end
     end
