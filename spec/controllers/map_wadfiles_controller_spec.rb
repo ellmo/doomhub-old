@@ -372,4 +372,122 @@ describe MapWadfilesController do
       end
     end
   end
+
+  describe 'GET download' do
+    shared_context 'map_wadfile #download' do
+      before do
+        sign_in user
+        get :download, project_id: project.slug, map_id: map.slug, id: map_wadfile.id
+      end
+      it 'it redirects to wadfile url' do
+        expect(response).to redirect_to(map_wadfile.wadfile.url)
+      end
+    end
+
+    shared_context 'access denial' do
+      before do
+        sign_in user
+        get :download, project_id: project.slug, map_id: map.slug, id: map_wadfile.id
+      end
+      it 'is denied' do
+        expect(response.status).to eq 403
+      end
+    end
+
+    let(:map_wadfile) { FactoryGirl.create :map_wadfile, map: map, author: map.author }
+
+    context 'public join project' do
+      let(:project) { FactoryGirl.create :project_public }
+
+      context 'not owned map' do
+        let(:map) { FactoryGirl.create :map, project: project }
+
+        context 'when not logged in' do
+          let(:user) { User.new }
+          it_behaves_like 'map_wadfile #download'
+        end
+
+        context 'when logged in as user' do
+          let(:user) { FactoryGirl.create :user }
+          it_behaves_like 'map_wadfile #download'
+        end
+
+        context 'when logged in as admin' do
+          let(:user) { FactoryGirl.create :admin }
+          it_behaves_like 'map_wadfile #download'
+        end
+
+        context 'when logged in as superadmin' do
+          let(:user) { FactoryGirl.create :superadmin }
+          it_behaves_like 'map_wadfile #download'
+        end
+      end
+
+      context 'owned map' do
+        let(:map) { FactoryGirl.create :map, project: project, author: user }
+
+        context 'when logged in as user' do
+          let(:user) { FactoryGirl.create :user }
+          it_behaves_like 'map_wadfile #download'
+        end
+
+        context 'when logged in as admin' do
+          let(:user) { FactoryGirl.create :admin }
+          it_behaves_like 'map_wadfile #download'
+        end
+
+        context 'when logged in as superadmin' do
+          let(:user) { FactoryGirl.create :superadmin }
+          it_behaves_like 'map_wadfile #download'
+        end
+      end
+    end
+
+    context 'private join project' do
+      let(:project) { FactoryGirl.create :project_private }
+
+      context 'not owned map' do
+        let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+
+        context 'when not logged in' do
+          let(:user) { User.new }
+          it_behaves_like 'access denial'
+        end
+
+        context 'when logged in as user' do
+          let(:user) { FactoryGirl.create :user }
+          it_behaves_like 'access denial'
+        end
+
+        context 'when logged in as admin' do
+          let(:user) { FactoryGirl.create :admin }
+          it_behaves_like 'map_wadfile #download'
+        end
+
+        context 'when logged in as superadmin' do
+          let(:user) { FactoryGirl.create :superadmin }
+          it_behaves_like 'map_wadfile #download'
+        end
+      end
+
+      context 'owned map' do
+        let(:map) { FactoryGirl.create :map, project: project, author: user }
+
+        context 'when logged in as user' do
+          let(:user) { project.creator }
+          it_behaves_like 'map_wadfile #download'
+        end
+
+        context 'when logged in as admin' do
+          let(:user) { FactoryGirl.create :admin }
+          it_behaves_like 'map_wadfile #download'
+        end
+
+        context 'when logged in as superadmin' do
+          let(:user) { FactoryGirl.create :superadmin }
+          it_behaves_like 'map_wadfile #download'
+        end
+      end
+    end
+  end
 end
