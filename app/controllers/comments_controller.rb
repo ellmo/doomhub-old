@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
 #==========
 
   inherit_resources
-  belongs_to :project, :finder => :find_by_slug!, :polymorphic => true
+  belongs_to :project, :finder => :find_by_slug!#, :polymorphic => true
   load_and_authorize_resource :project
   load_and_authorize_resource :comment, :through => :project
 
@@ -29,11 +29,6 @@ class CommentsController < ApplicationController
 
   def index
     redirect_to project_path(@project, :anchor => 'comments/p2', :page => params[:page]) if request.format == :html
-  end
-
-  def new
-    build_breadcrumbs
-    add_breadcrumb "New", new_project_comment_path(@project)
   end
 
   def edit
