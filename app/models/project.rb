@@ -84,6 +84,7 @@ class Project < ActiveRecord::Base
 #========
 
   def readable_by?(user)
+    return false unless user
     return true if user.admin?
     user == creator or
     public_view or
@@ -91,6 +92,7 @@ class Project < ActiveRecord::Base
   end
 
   def mappable_by?(user)
+    return false unless user
     return true if user.admin?
     user == creator or
     public_join or
