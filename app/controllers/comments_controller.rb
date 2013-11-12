@@ -31,11 +31,6 @@ class CommentsController < ApplicationController
     redirect_to project_path(@project, :anchor => 'comments/p2', :page => params[:page]) if request.format == :html
   end
 
-  def edit
-    build_breadcrumbs
-    add_breadcrumb "Edit", edit_project_comment_path(@project)
-  end
-
   def create
     @comment.user = current_user
     @comment.save ? load_by_pagination : render(json: {success: false})
