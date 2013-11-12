@@ -50,4 +50,5 @@ group :development, :test do
   gem 'mocha', require: false
   gem 'rspec-rails'
   gem 'sextant'
+  gem 'simplecov', :require => false
 end
