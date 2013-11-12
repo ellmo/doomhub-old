@@ -45,10 +45,11 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'capybara', '~> 1.1.2'
+  gem 'coveralls', require: false
   gem 'database_cleaner'
   gem 'factory_girl_rails', "~> 4.0"
   gem 'mocha', require: false
   gem 'rspec-rails'
   gem 'sextant'
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
 end

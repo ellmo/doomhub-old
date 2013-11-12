@@ -1,5 +1,10 @@
-require 'simplecov'
-SimpleCov.start 'rails' if ENV['COV'] or ENV['COVERAGE']
+if ENV['COV'] or ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails'
+end
+
+require 'coveralls'
+Coveralls.wear!
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
