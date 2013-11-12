@@ -2,6 +2,7 @@
 
 [![Code Climate](https://codeclimate.com/github/ellmo/doomhub.png)](https://codeclimate.com/github/ellmo/doomhub)
 [![Build Status](https://travis-ci.org/ellmo/doomhub.png)](https://travis-ci.org/ellmo/doomhub)
+[![Coverage Status](https://coveralls.io/repos/ellmo/doomhub/badge.png)](https://coveralls.io/r/ellmo/doomhub)
 
 This is the primary repository of the [Doomhub.com](http://doomhub.com) project.
 
@@ -16,3 +17,4 @@ Doomhub is a Doom community web application for managing and sharing various doo
 * [current milestone](http://doomhub.lighthouseapp.com/projects/96541-doomhub/milestones/current) on lighthouse
 * [travis ci](https://travis-ci.org/ellmo/doomhub/builds) build status
 * [code climate](https://codeclimate.com/github/ellmo/doomhub) metrics
+* [coveralls.io](https://coveralls.io/r/ellmo/doomhub) test coverage
