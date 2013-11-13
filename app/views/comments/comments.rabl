@@ -1,5 +1,5 @@
 attributes :id, :created_at, :bumped
-node(:owner) { |u| current_user and (current_user.admin? or u == current_user) }
+node(:owner) { |comment| current_user and (current_user.admin? or comment.user == current_user) }
 node(:human_created_at) {|comment| comment.created_at.to_formatted_s(:short) }
 node(:human_updated_at) {|comment| comment.updated_at.to_formatted_s(:short) }
 node(:path) {|comment| comment.path }
