@@ -6,9 +6,9 @@ class Doomhub.Libs.Comments
 
   @render: (json_data, pagination_element) ->
     $('#comment-list').html(JST['comments/list']({comments: json_data.comments}))
-    $('a[data-action="quote"]').live 'click', Doomhub.Libs.Comments.quote_callback
-    $('a[data-action="delete"]').live 'click', Doomhub.Libs.Comments.delete_callback
-    $('a[data-action="edit"]').live 'click', Doomhub.Libs.Comments.edit_callback
+    $('a[data-action="quote"]').on 'click', Doomhub.Libs.Comments.quote_callback
+    $('a[data-action="delete"]').on 'click', Doomhub.Libs.Comments.delete_callback
+    $('a[data-action="edit"]').on 'click', Doomhub.Libs.Comments.edit_callback
     _pag_helper = new Doomhub.Libs.PaginationHelper(json_data.pagination)
     _pag_helper.paginate(pagination_element)
     $(window).trigger('resize')
@@ -16,6 +16,7 @@ class Doomhub.Libs.Comments
   @quote_callback: (event) ->
     event.preventDefault()
     target = $(event.target).closest 'a'
+    target.off('click').on 'click', Doomhub.Libs.Comments.dummy_callback
     destination = $('#new_comment #comment_content')
     if destination
       $.getJSON target.attr('href'), (data) ->
@@ -24,6 +25,10 @@ class Doomhub.Libs.Comments
         quoted_lines = _.map c['raw_content'].split("\n"), (line) -> ("> " + line)
         destination.val(destination.val() + quoted_header + quoted_lines.join("\n"))
         $('#new_comment')[0].scrollIntoView()
+    setTimeout ->
+      target.on 'click', Doomhub.Libs.Comments.quote_callback
+    , 100
+
 
   @delete_callback: (event) ->
     event.preventDefault()
@@ -42,3 +47,7 @@ class Doomhub.Libs.Comments
         $(window).trigger('resize')
         $('form.edit_comment').live 'ajax:success', (event, data) ->
           Doomhub.Libs.Comments.fetchComments(window.location.pathname + '/c.json')
+
+  @dummy_callback: (event) ->
+    event.preventDefault()
+    return true
