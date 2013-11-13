@@ -5,6 +5,7 @@ class ProjectsController < ApplicationController
 #========
 
   before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :build_breadcrumbs, except: [:create, :update, :destroy]
 
 #============
 #= RESOURCES
@@ -20,18 +21,16 @@ class ProjectsController < ApplicationController
 #=============
 
   def index
-    build_breadcrumbs
+    @projects = Project.readable_by current_user
   end
 
   def show
-    build_breadcrumbs
     @maps = @project.maps
     @comments = @project.comments.page nil
     @comment = Comment.new
   end
 
   def new
-    build_breadcrumbs
     add_breadcrumb 'New', new_project_path
     respond_to do |format|
       format.html # new.html.erb
@@ -40,7 +39,6 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    build_breadcrumbs
     add_breadcrumb 'Edit', edit_project_path(@project)
   end
 

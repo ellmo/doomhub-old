@@ -14,8 +14,8 @@ describe ProjectsController do
       end
       it "@projects are assigned properly" do
         projects = Project.readable_by user
-        expect(projects.count).to eq project_count
-        expect(assigns :projects).to eq projects
+        expect(assigns(:projects).count).to eq project_count
+        expect(assigns(:projects) - projects).to be_empty
       end
       if user_type > 0 and private_projects
         it "@projects include users private project" do

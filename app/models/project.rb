@@ -54,29 +54,17 @@ class Project < ActiveRecord::Base
   scope :private_join, where{public_join == false}
 
   scope :readable_by, lambda { |user|
-    return all if user.admin?
-    if user.new_record?
-      public_view
-    else
-      includes(:item_invites).where{
-        (user_id == user.id) |
-        (public_view == true) |
-        (item_invites.user_id == user.id)
-      }
-    end
+    (mappable_by(user) + public_view).uniq
   }
 
   scope :mappable_by, lambda { |user|
+    return [] unless user
     return all if user.admin?
-    if user.new_record?
-      public_join
-    else
-      includes(:item_invites).where{
-        (user_id == user.id) |
-        (public_join == true) |
-        (item_invites.user_id == user.id)
-      }
-    end
+    includes(:item_invites).where{
+      (user_id == user.id) |
+      (public_join == true) |
+      (item_invites.user_id == user.id)
+    }
   }
 
 #==========
