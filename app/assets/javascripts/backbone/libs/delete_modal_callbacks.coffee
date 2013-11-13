@@ -29,7 +29,7 @@ class Doomhub.Libs.DeleteModal
       type: 'DELETE',
       dataType: 'json',
       success: (result, status) ->
-        Doomhub.Libs.Comments.fetchComments(reloadUrl)
+        Doomhub.Libs.Comments.render(result)
         Doomhub.Libs.DeleteModal.close()
       error: (XMLHttpRequest, textStatus, errorThrown) ->
         Doomhub.Libs.DeleteModal.close()

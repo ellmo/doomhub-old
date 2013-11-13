@@ -45,7 +45,9 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    unless @comment.destroy
+    if @comment.destroy
+      @comments = load_by_pagination
+    else
       render :json => { :success => false }, :status => 422
     end
   end

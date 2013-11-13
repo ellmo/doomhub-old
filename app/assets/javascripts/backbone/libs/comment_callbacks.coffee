@@ -5,6 +5,7 @@ class Doomhub.Libs.Comments
 #==========
 
   @render: (json_data, pagination_element) ->
+    pagination_element = $('pagination-div') unless pagination_element
     $('#comment-list').html(JST['comments/list']({comments: json_data.comments}))
     $('a[data-action="quote"]').on 'click', Doomhub.Libs.Comments.quote_callback
     $('a[data-action="delete"]').on 'click', Doomhub.Libs.Comments.delete_callback
@@ -32,7 +33,12 @@ class Doomhub.Libs.Comments
 
   @delete_callback: (event) ->
     event.preventDefault()
+    target = $(event.target).closest 'a'
+    target.off('click').on 'click', Doomhub.Libs.Comments.dummy_callback
     Doomhub.Libs.DeleteModal.open(event)
+    setTimeout ->
+      target.on 'click', Doomhub.Libs.Comments.delete_callback
+    , 100
 
   @edit_callback: (event) ->
     event.preventDefault()
