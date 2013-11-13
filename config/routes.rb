@@ -7,7 +7,7 @@ Doomhub::Application.routes.draw do
   get "/p/:project_id/m/:id/i" => redirect("/p/%{project_id}/m/%{id}#images")
 
   resources :projects, :path => '/p' do
-    resources :comments, :path => '/c', only: [:index, :create, :update, :destroy]
+    resources :comments, :path => '/c', except: [:edit]
     resources :maps, :path => '/m', :except => [:index] do
       resources :map_wadfiles, :path => '/w', :except => [:index] do
         member do
