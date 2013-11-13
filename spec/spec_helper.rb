@@ -3,8 +3,10 @@ if ENV['COV'] or ENV['COVERAGE']
   SimpleCov.start 'rails'
 end
 
-require 'coveralls'
-Coveralls.wear!
+if ENV['COVERALLS']
+  require 'coveralls'
+  Coveralls.wear!
+end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
