@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
 #=============
 
   def index
-    redirect_to project_path(@project, :anchor => 'comments/p2', :page => params[:page]) if request.format == :html
+    redirect_to project_path(@project, :anchor => "comments/p#{@comments.total_pages}") if request.format == :html
   end
 
   def create
