@@ -1,0 +1,31 @@
+.comment-div{ :data => { :id => @comment.id }}
+  .row.comment-top.c111
+    .six.columns.comment-author
+      %a{ :href => "/u/#{@comment.user.login}" }= @comment.user.login
+    .six.columns.comment-tools
+      %span.comment-date
+        = $.timeago(@comment.created_at)
+      %span.comment-icons
+        - if H.session
+          - if @comment.owner
+            %a{ :href => @comment.path, :data => { :action => 'edit' }}
+              %ico.fi-edit.icon.has-tip{ :title => 'Edit comment' }
+          - else
+            %ico.fi-edit.inactive.icon.has-tip{ :title => 'Edit comment' }
+          - if @comment.owner
+            %a{ :href => @comment.path, :data => { :action => 'delete' }}
+              %ico.fi-remove.icon.has-tip{ :title => 'Delete comment' }
+          - else
+            %ico.fi-remove.inactive.icon.has-tip{ :title => 'Delete comment' }
+          %a{ :href => @comment.path, :data => { :action => 'quote' }}
+            %ico.fi-soc-chat.icon.has-tip{ :title =>  'Quote comment' }
+  .row.comment-bottom
+    .twelve.columns.comment-content
+      .markdown
+        = @comment.content
+      -if @comment.edited or @comment.bumped
+        .bump-edit-notice
+          -if @comment.edited
+            = "last edited by #{@comment.edited_by.login} on #{@comment.human_updated_at}"
+          -if @comment.bumped
+            = "bumped on #{@comment.human_updated_at}"

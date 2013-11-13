@@ -38,7 +38,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update_attributes params[:comment].merge({:bumped => false, :user => current_user})
-      @comments = parent.comments
+      @comment
     else
       render :json => @comment.errors, :status => :unprocessable_entity
     end

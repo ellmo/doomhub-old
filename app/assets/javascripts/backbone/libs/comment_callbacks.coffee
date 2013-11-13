@@ -46,7 +46,7 @@ class Doomhub.Libs.Comments
           content: c.raw_content
         $(window).trigger('resize')
         $('form.edit_comment').live 'ajax:success', (event, data) ->
-          Doomhub.Libs.Comments.fetchComments(window.location.pathname + '/c.json')
+          div.html JST['comments/single']( comment: data.comment )
 
   @dummy_callback: (event) ->
     event.preventDefault()
