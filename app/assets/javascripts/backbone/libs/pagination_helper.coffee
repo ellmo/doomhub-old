@@ -32,7 +32,7 @@ class Doomhub.Libs.PaginationHelper
           _flat_parts.push(_.map page_parts, (page) =>
             @paged_href page, page, (page != @data.page))
       links_hash.push (_.map _flat_parts, (_fp) ->
-        _fp.join('')).join('<li>...</li>')
+        _fp.join('')).join("<li class='not-a'>...</p></li>")
     else
       links_hash.push (_.map [1..@data.total_pages], (page) =>
         @paged_href page, page, (page != @data.page)).join('')
@@ -40,11 +40,14 @@ class Doomhub.Libs.PaginationHelper
       @paged_href(@data.total_pages, "»", !@data.last)
     return links_hash
 
-  paged_href: (page, text, link=true)->
+  paged_href: (page, text, link=true) ->
     if link
       "<li><a href='#{@current_url + @anchor + '/p' + page}'>#{text}</a></li>"
     else
-      "<li>#{text}</li>"
+      unless isNaN parseInt(text)
+        "<li class='current'>#{text}</li>"
+      else
+        "<li class='not-a'>#{text}</li>"
 
   relevant_pages: () ->
     total_pages = @data.total_pages

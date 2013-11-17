@@ -1,9 +1,18 @@
 ul.pagination {
-  li.current{
-    background: #2BA6CB;
-    color: white;
-    font-weight: bold;
-    padding: 1px 7px 1px;
+  li{
+    &.not-a{
+      padding: 1px 7px 1px 20px;
+    }
+    &.current {
+      background: #2BA6CB;
+      color: white;
+      padding: 1px 7px 1px 7px;
+      margin-left: 18px;
+    }
+    a{
+      font-weight: bold;
+      color: $mainColor;
+    }
   }
 }
 
