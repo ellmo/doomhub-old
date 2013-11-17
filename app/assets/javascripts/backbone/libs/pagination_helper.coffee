@@ -55,9 +55,9 @@ class Doomhub.Libs.PaginationHelper
     links_mid = []
     if curr_page < 5
       links_left.push(3, 4, 5)
-    else if (curr_page > 4) and (pages_to_end >3)
+    else if (curr_page > 4) and (pages_to_end > 3)
       links_mid.push(curr_page - 1, curr_page, curr_page + 1)
-    else if pages_to_end < 3
+    else if pages_to_end <= 3
       links_right.unshift(total_pages - 4, total_pages - 3, total_pages - 2)
     return [links_left, links_mid, links_right]
 
