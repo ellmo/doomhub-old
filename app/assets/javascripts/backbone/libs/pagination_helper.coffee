@@ -18,31 +18,26 @@ class Doomhub.Libs.PaginationHelper
     $(el).html "<ul class=#{ul_class}></ul>"
     _pagination_ul = $(".#{ul_class}", el)
     _parts = @pagination_parts()
-    _pagination_ul.append _parts.first
-    _pagination_ul.append _parts.prev
-    _pagination_ul.append _parts.pages
-    _pagination_ul.append _parts.next
-    _pagination_ul.append _parts.last
+    _.map _parts, (part) ->
+      _pagination_ul.append part
 
   pagination_parts: () ->
-    links_hash =
-      first: @paged_href(1, "«", !@data.first),
-      prev: @paged_href(@data.page - 1, "‹", !@data.first),
-      next: @paged_href(@data.page + 1, "›", !@data.last),
-      last: @paged_href(@data.total_pages, "»", !@data.last)
+    links_hash = []
+    links_hash.push @paged_href(1, "«", !@data.first),
+      @paged_href(@data.page - 1, "‹", !@data.first)
     if @data.total_pages > 10
       _flat_parts = []
       _.map @relevant_pages(), (page_parts) =>
         unless page_parts.length == 0
           _flat_parts.push(_.map page_parts, (page) =>
             @paged_href page, page, (page != @data.page))
-      links_hash.pages = (_.map _flat_parts, (_fp) ->
-        _fp.join('')
-      ).join('<li>...</li>')
+      links_hash.push (_.map _flat_parts, (_fp) ->
+        _fp.join('')).join('<li>...</li>')
     else
-      links_hash.pages = (_.map [1..@data.total_pages], (page) =>
-        @paged_href page, page, (page != @data.page)
-      ).join('')
+      links_hash.push (_.map [1..@data.total_pages], (page) =>
+        @paged_href page, page, (page != @data.page)).join('')
+    links_hash.push @paged_href(@data.page + 1, "›", !@data.last),
+      @paged_href(@data.total_pages, "»", !@data.last)
     return links_hash
 
   paged_href: (page, text, link=true)->
