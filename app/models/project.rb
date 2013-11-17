@@ -72,7 +72,7 @@ class Project < ActiveRecord::Base
 #========
 
   def readable_by?(user)
-    return true if mappable_by?
+    return true if mappable_by? user
     return public_view
   end
 
