@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131025095805) do
+ActiveRecord::Schema.define(:version => 20131118233524) do
 
   create_table "authors", :force => true do |t|
     t.integer  "authorable_id"
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(:version => 20131025095805) do
     t.datetime "updated_at",                          :null => false
     t.boolean  "bumped",           :default => false, :null => false
     t.datetime "deleted_at"
+  end
+
+  create_table "file_links", :force => true do |t|
+    t.integer  "file_linkable_id"
+    t.string   "file_linkable_type"
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.string   "url"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "friendly_id_slugs", :force => true do |t|
@@ -153,26 +163,36 @@ ActiveRecord::Schema.define(:version => 20131025095805) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "",    :null => false
-    t.string   "encrypted_password",     :default => "",    :null => false
+    t.string   "email",                                 :default => "",    :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",                         :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
     t.string   "login"
-    t.integer  "user_role_id",           :default => 3
+    t.integer  "user_role_id",                          :default => 3
     t.datetime "deleted_at"
-    t.boolean  "banned",                 :default => false, :null => false
+    t.boolean  "banned",                                :default => false, :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "vs_database_diagrams", :id => false, :force => true do |t|
+    t.string   "name",     :limit => 80
+    t.text     "diadata"
+    t.string   "comment",  :limit => 1022
+    t.text     "preview"
+    t.string   "lockinfo", :limit => 80
+    t.datetime "locktime"
+    t.string   "version",  :limit => 80
+  end
 
 end
