@@ -36,7 +36,7 @@ class Ability
       can [:destroy, :update], MapImage do |mi|; mi.user == user; end
   # map wadfiles
       can [:read, :create], MapWadfile, map: {authorable: {id: user.id}, authorable_type: 'User'}
-      can [:destroy, :update], MapWadfile do |mw|; mw.author == user; end
+      can [:destroy, :update], MapWadfile do |mw|; mw.authorable == user; end
       can :download, MapWadfile, :map => {:project_id => Project.mappable_by(user).map(&:id)}
   # news
       can :read, News

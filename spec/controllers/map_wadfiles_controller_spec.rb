@@ -65,7 +65,7 @@ describe MapWadfilesController do
       end
 
       context 'owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: user }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: user }
 
         context 'when logged in as user' do
           let(:user) { FactoryGirl.create :user }
@@ -88,7 +88,7 @@ describe MapWadfilesController do
       let(:project) { FactoryGirl.create :project_public }
 
       context 'not owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: project.creator }
 
         context 'when not logged in' do
           before { sign_in_nobody }
@@ -117,7 +117,7 @@ describe MapWadfilesController do
     context 'owned private join project' do
       let(:user) { FactoryGirl.create :user }
       let(:project) { FactoryGirl.create :project_public, creator: user }
-      let(:map) { FactoryGirl.create :map, project: project, author: user }
+      let(:map) { FactoryGirl.create :map, project: project, authorable: user }
 
       it_behaves_like 'map_wadfile #new'
     end
@@ -179,7 +179,7 @@ describe MapWadfilesController do
       end
 
       context 'owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: user }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: user }
 
         context 'when logged in as user' do
           let(:user) { FactoryGirl.create :user }
@@ -202,7 +202,7 @@ describe MapWadfilesController do
       let(:project) { FactoryGirl.create :project_private }
 
       context 'not owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: project.creator }
 
         context 'when not logged in' do
           before { sign_in_nobody }
@@ -228,7 +228,7 @@ describe MapWadfilesController do
       end
 
       context 'owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: user }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: user }
 
         context 'when logged in as user' do
           let(:user) { project.creator }
@@ -272,7 +272,7 @@ describe MapWadfilesController do
       end
     end
 
-    let(:map_wadfile) { FactoryGirl.create :map_wadfile, map: map, author: map.author }
+    let(:map_wadfile) { FactoryGirl.create :map_wadfile, map: map, authorable: map.authorable }
 
     context 'public join project' do
       let(:project) { FactoryGirl.create :project_public }
@@ -304,7 +304,7 @@ describe MapWadfilesController do
       end
 
       context 'owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: user }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: user }
 
         context 'when logged in as user' do
           let(:user) { FactoryGirl.create :user }
@@ -327,7 +327,7 @@ describe MapWadfilesController do
       let(:project) { FactoryGirl.create :project_private }
 
       context 'not owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: project.creator }
 
         context 'when not logged in' do
           before { sign_in_nobody }
@@ -353,7 +353,7 @@ describe MapWadfilesController do
       end
 
       context 'owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: user }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: user }
 
         context 'when logged in as user' do
           let(:user) { project.creator }
@@ -394,7 +394,7 @@ describe MapWadfilesController do
       end
     end
 
-    let(:map_wadfile) { FactoryGirl.create :map_wadfile, map: map, author: map.author }
+    let(:map_wadfile) { FactoryGirl.create :map_wadfile, map: map, authorable: map.authorable }
 
     context 'public join project' do
       let(:project) { FactoryGirl.create :project_public }
@@ -424,7 +424,7 @@ describe MapWadfilesController do
       end
 
       context 'owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: user }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: user }
 
         context 'when logged in as user' do
           let(:user) { FactoryGirl.create :user }
@@ -447,7 +447,7 @@ describe MapWadfilesController do
       let(:project) { FactoryGirl.create :project_private }
 
       context 'not owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: project.creator }
 
         context 'when not logged in' do
           let(:user) { User.new }
@@ -471,7 +471,7 @@ describe MapWadfilesController do
       end
 
       context 'owned map' do
-        let(:map) { FactoryGirl.create :map, project: project, author: user }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: user }
 
         context 'when logged in as user' do
           let(:user) { project.creator }

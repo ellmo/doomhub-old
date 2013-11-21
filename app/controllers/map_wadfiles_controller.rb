@@ -28,7 +28,7 @@ class MapWadfilesController < ApplicationController
   def create
     params[:map_wadfile][:name] ||= @map.slug
     @map_wadfile = @map.map_wadfiles.build(params[:map_wadfile])
-    @map_wadfile.author = current_user unless (params[:map_wadfile][:author_id].present? and admin?)
+    @map_wadfile.authorable = current_user unless (params[:map_wadfile][:authorable_id].present? and admin?)
 
     respond_to do |format|
       if @map_wadfile.save
