@@ -34,7 +34,7 @@ class MapsController < ApplicationController
   end
 
   def create
-    @map.author = current_user unless (params[:map][:author_id].present? and admin?)
+    @map.authorable = current_user unless (params[:map][:authorable_id].present? and admin?)
     @map.lump = @project.game.default_lumpname unless (params[:map][:lump].present?)
 
     respond_to do |format|

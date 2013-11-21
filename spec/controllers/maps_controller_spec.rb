@@ -29,7 +29,7 @@ describe MapsController do
 
     context 'public project' do
       let(:project) { FactoryGirl.create :project }
-      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+      let(:map) { FactoryGirl.create :map, project: project, authorable: project.creator }
 
       context 'when not logged in' do
         let(:user) { User.new }
@@ -54,7 +54,7 @@ describe MapsController do
 
     context 'private project' do
       let(:project) { FactoryGirl.create :project_private }
-      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+      let(:map) { FactoryGirl.create :map, project: project, authorable: project.creator }
 
       context 'when not logged in' do
         let(:user) { User.new }
@@ -80,7 +80,7 @@ describe MapsController do
     context 'owned private project' do
       let(:user) { FactoryGirl.create :user }
       let(:project) { FactoryGirl.create :project_private, creator: user }
-      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+      let(:map) { FactoryGirl.create :map, project: project, authorable: project.creator }
 
       context 'when logged in as user' do
         it_behaves_like 'map #show'
@@ -306,7 +306,7 @@ describe MapsController do
 
     context 'public join project' do
       let(:project) { FactoryGirl.create :project_public }
-      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+      let(:map) { FactoryGirl.create :map, project: project, authorable: project.creator }
 
       context 'when not logged in' do
         before { sign_in_nobody }
@@ -324,7 +324,7 @@ describe MapsController do
         end
 
         context 'owned map' do
-          let(:map) { FactoryGirl.create :map, project: project, author: user }
+          let(:map) { FactoryGirl.create :map, project: project, authorable: user }
           it_behaves_like 'map #edit'
         end
       end
@@ -342,7 +342,7 @@ describe MapsController do
 
     context 'private join project' do
       let(:project) { FactoryGirl.create :project_private }
-      let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+      let(:map) { FactoryGirl.create :map, project: project, authorable: project.creator }
 
       context 'when not logged in' do
         before { sign_in_nobody }
@@ -370,7 +370,7 @@ describe MapsController do
     context 'owned private join project' do
       let(:user) { FactoryGirl.create :user }
       let(:project) { FactoryGirl.create :project_private, creator: user }
-      let(:map) { FactoryGirl.create :map, project: project, author: user }
+      let(:map) { FactoryGirl.create :map, project: project, authorable: user }
       it_behaves_like 'map #edit'
     end
   end
@@ -426,7 +426,7 @@ describe MapsController do
             it_behaves_like 'access denial'
           end
           context 'owned map' do
-            let(:map) { FactoryGirl.create :map, project: project, author: user }
+            let(:map) { FactoryGirl.create :map, project: project, authorable: user }
             it_behaves_like 'map #update'
           end
         end
@@ -444,7 +444,7 @@ describe MapsController do
 
       context 'private join project' do
         let(:project) { FactoryGirl.create :project_private }
-        let(:map) { FactoryGirl.create :map, project: project, author: project.creator }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: project.creator }
 
         context 'when not logged in' do
           before { sign_in_nobody }
@@ -472,7 +472,7 @@ describe MapsController do
       context 'private owned project' do
         let(:user) { FactoryGirl.create :user }
         let(:project) { FactoryGirl.create :project_private, creator: user }
-        let(:map) { FactoryGirl.create :map, project: project, author: user }
+        let(:map) { FactoryGirl.create :map, project: project, authorable: user }
 
         context 'when logged in as user' do
           context 'owned map' do
