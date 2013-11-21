@@ -4,11 +4,11 @@ describe MapWadfile do
   context '::create' do
     let(:first_user) { FactoryGirl.create :user }
     let(:first_project) { FactoryGirl.create :project, creator: first_user }
-    let(:first_map) { FactoryGirl.create :map, author: first_user, project: first_project }
+    let(:first_map) { FactoryGirl.create :map, authorable: first_user, project: first_project }
 
     context 'allowed mimetypes' do
       context 'zip archive' do
-        let(:map_wadfile) { FactoryGirl.build :map_wadfile, map: first_map, author: first_user }
+        let(:map_wadfile) { FactoryGirl.build :map_wadfile, map: first_map, authorable: first_user }
 
         it 'succeeds when valid' do
           expect(map_wadfile.valid?).to be_true
@@ -27,7 +27,7 @@ describe MapWadfile do
       end
 
       context 'rar archive' do
-        let(:map_wadfile) { FactoryGirl.build :map_wadfile_rar, map: first_map, author: first_user }
+        let(:map_wadfile) { FactoryGirl.build :map_wadfile_rar, map: first_map, authorable: first_user }
 
         it 'succeeds when valid' do
           expect(map_wadfile.valid?).to be_true
@@ -46,7 +46,7 @@ describe MapWadfile do
       end
 
       context '7z archive' do
-        let(:map_wadfile) { FactoryGirl.build :map_wadfile_7z, map: first_map, author: first_user }
+        let(:map_wadfile) { FactoryGirl.build :map_wadfile_7z, map: first_map, authorable: first_user }
 
         it 'succeeds when valid' do
           expect(map_wadfile.valid?).to be_true
@@ -67,7 +67,7 @@ describe MapWadfile do
 
     context 'unallowed mimetypes' do
       context 'size is within limit' do
-        let(:map_wadfile) { FactoryGirl.build :map_wadfile, map: first_map, author: first_user }
+        let(:map_wadfile) { FactoryGirl.build :map_wadfile, map: first_map, authorable: first_user }
 
         it 'does not succeed' do
           mock_attachments map_wadfile, 'wadfile', mime_type: 'application/bullshit'
@@ -80,7 +80,7 @@ describe MapWadfile do
       end
 
       context 'size exceeds limit' do
-        let(:map_wadfile) { FactoryGirl.build :map_wadfile, map: first_map, author: first_user }
+        let(:map_wadfile) { FactoryGirl.build :map_wadfile, map: first_map, authorable: first_user }
 
         it 'does not succeed' do
           mock_attachments map_wadfile, 'wadfile', mime_type: 'application/bullshit', size: 2.megabytes
