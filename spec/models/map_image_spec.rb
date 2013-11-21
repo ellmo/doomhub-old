@@ -4,7 +4,7 @@ describe MapImage do
   context '::create' do
     let(:first_user) { FactoryGirl.create :user }
     let(:first_project) { FactoryGirl.create :project, creator: first_user }
-    let(:first_map) { FactoryGirl.create :map, author: first_user, project: first_project }
+    let(:first_map) { FactoryGirl.create :map, authorable: first_user, project: first_project }
 
     context 'allowed mimetypes' do
       context 'png image' do

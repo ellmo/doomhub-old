@@ -15,7 +15,7 @@ class MapImage < ActiveRecord::Base
 #= ATTR
 #=====
 
-  attr_accessible :author_id, :author_type, :map_id, :name, :height, :width,
+  attr_accessible :user_id, :map_id, :name, :height, :width,
     :image, :image_file_name
 
 #============
