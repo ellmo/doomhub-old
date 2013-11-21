@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :map_wadfile do
     map
     name { |mw| mw.map.name }
-    author { |mw| mw.map.author }
+    authorable { |mw| mw.map.authorable }
     wadfile { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'wadfile.zip')) }
 
     trait :zip do

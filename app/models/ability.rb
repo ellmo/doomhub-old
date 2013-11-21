@@ -29,13 +29,13 @@ class Ability
   # maps
       can :read, Map
       can :create, Map, :project_id => Project.mappable_by(user).map(&:id)
-      can [:destroy, :update], Map do |m|; m.author == user; end
+      can [:destroy, :update], Map do |m|; m.authorable == user; end
   # map images
-      can :create, MapImage, :map => {:author => {:id => user.id}}
+      can :create, MapImage, map: {authorable: {id: user.id}, authorable_type: 'User'}
       can :auth_url, MapImage, :map => {:project_id => Project.readable_by(user).map(&:id)}
       can [:destroy, :update], MapImage do |mi|; mi.user == user; end
   # map wadfiles
-      can [:read, :create], MapWadfile, :map => {:author => {:id => user.id}}
+      can [:read, :create], MapWadfile, map: {authorable: {id: user.id}, authorable_type: 'User'}
       can [:destroy, :update], MapWadfile do |mw|; mw.author == user; end
       can :download, MapWadfile, :map => {:project_id => Project.mappable_by(user).map(&:id)}
   # news

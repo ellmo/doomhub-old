@@ -8,10 +8,10 @@ class Map < ActiveRecord::Base
 #= ASSOC
 #======
 
-  belongs_to :author, :polymorphic => true
+  belongs_to :authorable, polymorphic: true
   belongs_to :project
 
-  has_many :comments, :as => :commentable
+  has_many :comments, as: :commentable
   has_many :map_images
   has_many :map_wadfiles
 
@@ -50,7 +50,7 @@ private
   end
 
   def user_can_map
-    errors.add(:base, "user cannot add maps for this project") unless project.mappable_by?(author)
+    errors.add(:base, "user cannot add maps for this project") unless authorable.is_a?(User) and project.mappable_by?(authorable)
   end
 
 end

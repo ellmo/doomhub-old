@@ -7,9 +7,9 @@ class MapWadfile < ActiveRecord::Base
 #======
 
   belongs_to :map
-  belongs_to :author, :polymorphic => true
+  belongs_to :authorable, polymorphic: true
 
-  delegate :project, :to => :map
+  delegate :project, to: :map
 
 #=======
 #= ATTR

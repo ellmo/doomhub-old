@@ -19,13 +19,13 @@ describe Map do
         expect(User.count).to eq 2
       end
       it 'should succeed when creating 2 maps for the same user' do
-        FactoryGirl.create :map, author: user
+        FactoryGirl.create :map, authorable: user
         expect(User.count).to eq 1
         expect(Project.count).to eq 2
         expect(Map.count).to eq 2
       end
       it 'should succeed when creating 2 maps within the same project' do
-        FactoryGirl.create :map, author: user, project: project
+        FactoryGirl.create :map, authorable: user, project: project
         expect(User.count).to eq 1
         expect(Project.count).to eq 1
         expect(Map.count).to eq 2
@@ -81,7 +81,7 @@ describe Map do
 
     context 'when using custom lumpname' do
       let!(:project) { FactoryGirl.create :project_public, game: Game.find_by_name('Doom') }
-      let!(:map) { FactoryGirl.create :map, project: project, author: User.last, lump: 'E1M7' }
+      let!(:map) { FactoryGirl.create :map, project: project, authorable: User.last, lump: 'E1M7' }
 
       it 'lumpname should default to E1M7' do
         expect(map.lump).to eq 'E1M7'

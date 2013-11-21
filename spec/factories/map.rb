@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :map do
-    association :author, factory: :user
-    project { create :project, creator: author }
+    association :authorable, factory: :user
+    project { create :project, creator: authorable }
     name { generate :map_name }
   end
 end
