@@ -17,7 +17,7 @@ describe Comment do
     end
 
     context 'on map' do
-      let(:first_map) { FactoryGirl.create :map, author: first_user, project: first_project }
+      let(:first_map) { FactoryGirl.create :map, authorable: first_user, project: first_project }
       let(:comment) { FactoryGirl.build :comment, commentable: first_map, user: other_user }
 
       it 'is valid and saves' do
