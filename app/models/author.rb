@@ -7,5 +7,6 @@ class Author < ActiveRecord::Base
   has_many :maps, :as => :authorable
   has_many :map_wadfiles, as: :authorable
   has_many :map_images, as: :authorable
+  has_many :file_links, as: :authorable
 
 end

@@ -1,8 +1,8 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :file_link do
-    file_linkable nil
-    url "MyString"
+    association :authorable, factory: :user
+    # authorable { create :user }
+    file_linkable {|fl| FactoryGirl.create(:project, creator: fl.authorable) }
+    url 'http://www.mediafire.com/download/1234567890/example.zip'
   end
 end
