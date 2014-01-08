@@ -3,11 +3,6 @@
 .DS_Store
 .sass-cache/
 _rspec.html
-app/assets/images/demo1.jpg
-app/assets/images/demo2.jpg
-app/assets/images/demo3.jpg
-app/assets/images/doommy.jpg
-app/assets/images/source_ports_logos/*
 config/database.yml
 config/initializers/secret_token.rb
 config/secret.yml
