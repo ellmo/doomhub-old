@@ -28,7 +28,7 @@ test:
     project:
       map:
         image:
-          storage_path: "uploads/test/projects/:project_id/maps/:map_id/images/:name-:style-:id.:extension"
+          storage_path: "public/uploads/test/projects/:project_id/maps/:map_id/images/:name-:style-:id.:extension"
         wadfile:
-          storage_path: "uploads/test/projects/:project_id/maps/:map_id/wadfiles/:name-:id.:extension"
+          storage_path: "public/uploads/test/projects/:project_id/maps/:map_id/wadfiles/:name-:id.:extension"
 
