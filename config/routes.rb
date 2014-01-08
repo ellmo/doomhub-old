@@ -7,6 +7,7 @@ Doomhub::Application.routes.draw do
   get "/p/:project_id/m/:id/i" => redirect("/p/%{project_id}/m/%{id}#images")
 
   resources :projects, :path => '/p' do
+    resources :file_links, path: '/l', except: [:index]
     resources :comments, :path => '/c', except: [:edit]
     resources :maps, :path => '/m', :except => [:index] do
       resources :map_wadfiles, :path => '/w', :except => [:index] do
@@ -19,6 +20,7 @@ Doomhub::Application.routes.draw do
           get :auth_url
         end
       end
+      resources :file_links, path: '/l', except: [:index]
     end
   end
 

@@ -1,0 +1,17 @@
+%h1 Listing file_links
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @file_links.each do |file_link|
+    %tr
+      %td= link_to 'Show', file_link
+      %td= link_to 'Edit', edit_file_link_path(file_link)
+      %td= link_to 'Destroy', file_link, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New File link', new_file_link_path

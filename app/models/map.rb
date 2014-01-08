@@ -14,6 +14,7 @@ class Map < ActiveRecord::Base
   has_many :comments, as: :commentable
   has_many :map_images
   has_many :map_wadfiles
+  has_many :file_links, as: :file_linkable
 
 #==============
 #= FRIENDLY_ID

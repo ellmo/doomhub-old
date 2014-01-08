@@ -12,6 +12,7 @@ class Project < ActiveRecord::Base
   belongs_to :source_port
 
   has_many :comments, :as => :commentable
+  has_many :file_links, as: :file_linkable
   has_many :item_invites, :as => :invitable
   has_many :map_images, :through => :maps
   has_many :maps, :dependent => :delete_all

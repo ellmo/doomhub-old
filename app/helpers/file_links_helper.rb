@@ -1,0 +1,2 @@
+module FileLinksHelper
+end

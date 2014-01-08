@@ -38,6 +38,21 @@ class Ability
       can [:read, :create], MapWadfile, map: {authorable: {id: user.id}, authorable_type: 'User'}
       can [:destroy, :update], MapWadfile do |mw|; mw.authorable == user; end
       can :download, MapWadfile, :map => {:project_id => Project.mappable_by(user).map(&:id)}
+# file_links
+      can [:read, :create], FileLink do |fl|
+        if fl.file_linkable.class == Project
+          fl.file_linkable.mappable_by?(user)
+        else
+          fl.file_linkable.project.mappable_by?(user)
+        end
+      end
+      can [:destroy, :update], FileLink do |fl|
+        if fl.file_linkable.class == Project
+          fl.file_linkable.mappable_by?(user) && fl.authorable == user
+        else
+          fl.file_linkable.project.mappable_by?(user) && fl.authorable == user
+        end
+      end
   # news
       can :read, News
   # comments
@@ -53,6 +68,8 @@ class Ability
       can :read, Project, :public_view => true
   # maps
       can :read, Map
+  # map images
+      can :read, FileLink
   # map images
       can [:read, :auth_url], MapImage
   # map wadfiles
