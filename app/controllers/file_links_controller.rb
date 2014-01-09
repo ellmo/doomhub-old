@@ -26,17 +26,22 @@ class FileLinksController < ApplicationController
   end
 
   def create
-    @file_link = @map.map_images.build(params[:file_link])
-    @file_link.name = params[:file_link][:name].present? ? params[:file_link][:name] : @map.slug
-    @file_link.auhtorable = current_user unless (params[:file_link][:authorable_id].present? and admin?)
+    @file_link = parent.file_links.build(params[:file_link])
+    @file_link.authorable = current_user unless (params[:file_link][:authorable_id].present? and admin?)
 
     respond_to do |format|
       if @file_link.save
-        format.html { redirect_to [@project, @map], :notice => 'File link was successfully added.' }
-        format.json { render :json => @map, :status => :created, :location => @map }
+        format.html do
+          if @project == parent
+            redirect_to @project, :notice => 'File link was successfully added.'
+          else
+            redirect_to [@project, parent], :notice => 'File link was successfully added.'
+          end
+        end
+        format.json { render :json => parent, :status => :created, :location => parent }
       else
         format.html { render :action => "new" }
-        format.json { render :json => @map.errors, :status => :unprocessable_entity }
+        format.json { render :json => resource.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -44,7 +49,13 @@ class FileLinksController < ApplicationController
   def destroy
     respond_to do |format|
       if @file_link.destroy
-        format.html { redirect_to [@project, @map], :notice => 'Image was successfully destroyed.' }
+        format.html do
+          if @project == parent
+            redirect_to @project, :notice => 'File link was successfully destroyed.'
+          else
+            redirect_to [@project, parent], :notice => 'File link was successfully destroyed.'
+          end
+        end
         format.json { render :json => @map, :location => @map }
       else
         format.html { redirect_to [@project, @map], :error => 'Image was NOT destroyed.' }

@@ -1,7 +1,13 @@
-= simple_form_for(@file_link) do |f|
-  = f.error_notification
+- if @project == parent
+  = simple_form_for([@project, resource]) do |f|
+    = f.error_notification
+    = f.input :url
+    .centered-actions
+      = f.button :submit
 
-  .form-inputs
-
-  .form-actions
-    = f.button :submit
+- else
+  = simple_form_for([@project, parent, resource]) do |f|
+    = f.error_notification
+    = f.input :url
+    .centered-actions
+      = f.button :submit
