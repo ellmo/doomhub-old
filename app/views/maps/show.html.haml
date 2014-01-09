@@ -2,13 +2,13 @@
 
 %dl.nice.contained.tabs
   %dd= link_to 'Overwiew', '#overview', :class => 'active'
-  %dd= link_to 'Wadfiles', '#wadfiles'
+  %dd= link_to 'Resources', '#resources'
   %dd= link_to 'Screens', '#screens'
 
 %ul.nice.contained.tabs-content
   %li.panel.c333.black-border.project-overview.active#overviewTab
     =render @map
-  %li.panel.c333.black-border.map-wadfiles#wadfilesTab
+  %li.panel.c333.black-border.map-wadfiles#resourcesTab
     .row
       .ten.columns
         - @map.map_wadfiles.each do |mwf|
@@ -24,6 +24,6 @@
                 %span )
       .two.columns.resource-actions
         - if @project.mappable_by? current_user
-          = link_to 'New Wadfile', new_project_map_map_wadfile_path(@project, @map), :class => 'small white nice button radius'
+          = link_to 'New Resource', new_project_map_resource_path(@project, @map), :class => 'small white nice button radius'
   %li.panel.c333.black-border.map-screens#screensTab
     %p coming soon

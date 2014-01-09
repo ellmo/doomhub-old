@@ -9,18 +9,16 @@ Doomhub::Application.routes.draw do
   resources :projects, :path => '/p' do
     resources :file_links, path: '/l', except: [:index]
     resources :comments, :path => '/c', except: [:edit]
+    resources :resources, :path => '/r', only: [:new, :index]
     resources :maps, :path => '/m', :except => [:index] do
       resources :map_wadfiles, :path => '/w', :except => [:index] do
-        member do
-          get :download
-        end
+        member { get :download }
       end
       resources :map_images, :path => '/i', :except => [:index] do
-        member do
-          get :auth_url
-        end
+        member { get :auth_url }
       end
       resources :file_links, path: '/l', except: [:index]
+      resources :resources, :path => '/r', only: [:new, :index]
     end
   end
 

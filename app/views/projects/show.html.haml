@@ -35,4 +35,5 @@
     = render 'titlebar', :project => @project, :title => "#{@project.name} gallery", :buttons => []
     = render 'shared/image_gallery', :project => @project
   %li.c333.black-border.project-resources#resourcesTab
-    coming soon
+    -if @project.mappable_by? current_user
+      = link_to 'New Resource', new_resource_path(@project), :class => 'small white nice button radius'

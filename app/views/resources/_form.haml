@@ -1,0 +1,29 @@
+- unless @map
+  .six.columns
+    = simple_form_for([@project, @map_wadfile]) do |f|
+      = f.error_notification
+      = f.input :name, :placeholder => @project.slug
+      = f.input :wadfile
+      .centered-actions
+        = f.button :submit
+  .six.columns
+    = simple_form_for([@project, resource]) do |f|
+      = f.error_notification
+      = f.input :url
+      .centered-actions
+        = f.button :submit
+
+- else
+  .six.columns
+    = simple_form_for([@project, @map, @map_wadfile]) do |f|
+      = f.error_notification
+      = f.input :name, :placeholder => @map.slug
+      = f.input :wadfile
+      .centered-actions
+        = f.button :submit
+  .six.columns
+    = simple_form_for([@project, @map, @file_link]) do |f|
+      = f.error_notification
+      = f.input :url
+      .centered-actions
+        = f.button :submit
