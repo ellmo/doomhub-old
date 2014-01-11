@@ -24,9 +24,9 @@
           .row
             %span= "#{map.lump}:"
             %span= link_to map.name, [@project, map]
-            -unless map.map_wadfiles.empty?
+            -unless map.uploads.empty?
               %span (
-              = link_to "wadfiles", project_map_path(@project, map, :anchor => 'wadfiles')
+              = link_to "uploads", project_map_path(@project, map, :anchor => 'uploads')
               %span )
       .three.columns.resource-actions
         -if @project.mappable_by? current_user

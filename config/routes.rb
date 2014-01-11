@@ -3,7 +3,7 @@ Doomhub::Application.routes.draw do
   root :to => 'news#index'
 
   get "/p/:id/m" => redirect("/p/%{id}#maps")
-  get "/p/:project_id/m/:id/w" => redirect("/p/%{project_id}/m/%{id}#wadfiles")
+  get "/p/:project_id/m/:id/f" => redirect("/p/%{project_id}/m/%{id}#files")
   get "/p/:project_id/m/:id/i" => redirect("/p/%{project_id}/m/%{id}#images")
 
   resources :projects, :path => '/p' do
@@ -11,7 +11,7 @@ Doomhub::Application.routes.draw do
     resources :comments, :path => '/c', except: [:edit]
     resources :resources, :path => '/r', only: [:new, :index]
     resources :maps, :path => '/m', :except => [:index] do
-      resources :map_wadfiles, :path => '/w', :except => [:index] do
+      resources :uploads, :path => '/f', :except => [:index] do
         member { get :download }
       end
       resources :map_images, :path => '/i', :except => [:index] do

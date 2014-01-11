@@ -1,4 +1,4 @@
-class @Doomhub.Routers.MapWadfiles extends Doomhub.Routers.BASE
+class @Doomhub.Routers.Uploads extends Doomhub.Routers.BASE
 
   index: ()->
     H.log 'not implemented'
@@ -7,4 +7,4 @@ class @Doomhub.Routers.MapWadfiles extends Doomhub.Routers.BASE
     @form()
 
   form: ()->
-    @view ?= new Doomhub.Views.MapWadfiles.Form({ el: $('#topmost'), col: @collection })
+    @view ?= new Doomhub.Views.Uploads.Form({ el: $('#topmost'), col: @collection })

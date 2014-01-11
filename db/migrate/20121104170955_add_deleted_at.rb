@@ -4,7 +4,7 @@ class AddDeletedAt < ActiveRecord::Migration
     add_column :projects, :deleted_at, :datetime
     add_column :maps, :deleted_at, :datetime
     add_column :map_images, :deleted_at, :datetime
-    add_column :map_wadfiles, :deleted_at, :datetime
+    add_column :uploads, :deleted_at, :datetime
     add_column :news, :deleted_at, :datetime
     add_column :users, :deleted_at, :datetime
   end
@@ -14,7 +14,7 @@ class AddDeletedAt < ActiveRecord::Migration
     remove_column :projects, :deleted_at
     remove_column :maps, :deleted_at
     remove_column :map_images, :deleted_at
-    remove_column :map_wadfiles, :deleted_at
+    remove_column :uploads, :deleted_at
     remove_column :news, :deleted_at
     remove_column :user, :deleted_at
   end

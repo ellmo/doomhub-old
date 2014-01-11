@@ -1,7 +1,7 @@
 class MoveAttachmentFromMapToMapWadfile < ActiveRecord::Migration
   def self.up
     drop_attached_file :maps, :wadfile
-    change_table :map_wadfiles do |t|
+    change_table :uploads do |t|
       t.has_attached_file :wadfile
     end
   end
@@ -10,6 +10,6 @@ class MoveAttachmentFromMapToMapWadfile < ActiveRecord::Migration
     change_table :maps do |t|
       t.has_attached_file :wadfile
     end
-    drop_attached_file :map_wadfiles, :wadfile
+    drop_attached_file :uploads, :wadfile
   end
 end

@@ -1,4 +1,4 @@
-class MapWadfile < ActiveRecord::Base
+class Upload < ActiveRecord::Base
 
   acts_as_paranoid
 
@@ -16,17 +16,17 @@ class MapWadfile < ActiveRecord::Base
 #=====
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :wadfile, :name
+  attr_accessible :archive, :name
 
 #============
 #= PAPERCLIP
 #==========
   ALLOWED_MIMES = ["application/zip", "application/x-7z-compressed", "application/x-rar-compressed"]
 
-  has_attached_file :wadfile,
+  has_attached_file :archive,
                     :keep_old_files => true,
                     :url => ":path",
-                    :path => Settings.paperclip.project.map.wadfile.storage_path
+                    :path => Settings.paperclip.project.map.archive.storage_path
 
   Paperclip.interpolates :project_id do |attachment, style|
     attachment.instance.project.id
@@ -49,17 +49,17 @@ class MapWadfile < ActiveRecord::Base
   validate :check_if_can_add_to_map
 
   def check_attachment
-    if (MIME::Types.type_for(wadfile_file_name).map(&:to_s) & ALLOWED_MIMES).empty?
-      errors[:wadfile] << "File must be a valid zip / rar / 7z achive"
+    if (MIME::Types.type_for(archive_file_name).map(&:to_s) & ALLOWED_MIMES).empty?
+      errors[:archive] << "File must be a valid zip / rar / 7z achive"
     end
-    if wadfile.size > 1.megabyte
-      errors[:wadfile] << "File must not be over 1 MB"
+    if archive.size > 1.megabyte
+      errors[:archive] << "File must not be over 1 MB"
     end
   end
 
   def check_if_can_add_to_map
-    errors[:map] << 'Cannot add more than 5 wadfiles per map' \
-      if map.map_wadfiles.count >= 5
+    errors[:map] << 'Cannot add more than 5 uploads per map' \
+      if map.uploads.count >= 5
   end
 
 #==========

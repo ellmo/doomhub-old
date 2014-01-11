@@ -34,11 +34,11 @@ class Ability
       can :create, MapImage, map: {authorable: {id: user.id}, authorable_type: 'User'}
       can :auth_url, MapImage, :map => {:project_id => Project.readable_by(user).map(&:id)}
       can [:destroy, :update], MapImage do |mi|; mi.user == user; end
-  # map wadfiles
-      can [:read, :create], MapWadfile, map: {authorable: {id: user.id}, authorable_type: 'User'}
-      can [:destroy, :update], MapWadfile do |mw|; mw.authorable == user; end
-      can :download, MapWadfile, :map => {:project_id => Project.mappable_by(user).map(&:id)}
-# file_links
+  # uploads
+      can [:read, :create], Upload, map: {authorable: {id: user.id}, authorable_type: 'User'}
+      can [:destroy, :update], Upload do |mw|; mw.authorable == user; end
+      can :download, Upload, :map => {:project_id => Project.mappable_by(user).map(&:id)}
+  # file_links
       can [:read, :create], FileLink do |fl|
         if fl.file_linkable.class == Project
           fl.file_linkable.mappable_by?(user)
@@ -72,8 +72,8 @@ class Ability
       can :read, FileLink
   # map images
       can [:read, :auth_url], MapImage
-  # map wadfiles
-      can [:read, :download], MapWadfile
+  # upload
+      can [:read, :download], Upload
   # news
       can :read, News
   # comments

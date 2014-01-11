@@ -92,7 +92,7 @@ describe Map do
   context 'adding WADFILES' do
     before do
       FactoryGirl.create :map
-      5.times { FactoryGirl.create :map_wadfile, map: map }
+      5.times { FactoryGirl.create :upload, map: map }
     end
 
     let(:map) { Map.last }
@@ -101,30 +101,30 @@ describe Map do
       it 'should be valid' do
         expect(map.valid?).to be_true
         expect(map.errors[:base]).to be_empty
-        expect(map.map_wadfiles.count).to eq 5
+        expect(map.uploads.count).to eq 5
       end
     end
 
     context 'adding more than five' do
       it 'should raise RecordInvalid' do
-        expect { FactoryGirl.create :map_wadfile, map: map }.to raise_error(ActiveRecord::RecordInvalid)
+        expect { FactoryGirl.create :upload, map: map }.to raise_error(ActiveRecord::RecordInvalid)
         expect(map.valid?).to be_true
-        expect(map.map_wadfiles.count).to eq 5
+        expect(map.uploads.count).to eq 5
       end
     end
 
     context 'adding new after deleting old' do
-      before { map.map_wadfiles.last.destroy }
+      before { map.uploads.last.destroy }
 
       it 'should respect paranoid entries' do
-        expect(map.map_wadfiles.count).to eq 4
-        expect(map.map_wadfiles.unscoped.count).to eq 5
+        expect(map.uploads.count).to eq 4
+        expect(map.uploads.unscoped.count).to eq 5
       end
 
-      it 'should be valid when new wadfile is added' do
-        FactoryGirl.create :map_wadfile, map: map
-        expect(map.map_wadfiles.count).to eq 5
-        expect(map.map_wadfiles.unscoped.count).to eq 6
+      it 'should be valid when new upload is added' do
+        FactoryGirl.create :upload, map: map
+        expect(map.uploads.count).to eq 5
+        expect(map.uploads.unscoped.count).to eq 6
         expect(map.valid?).to be_true
       end
     end
@@ -133,36 +133,36 @@ describe Map do
   context 'recovering WADFILES' do
     before do
       FactoryGirl.create :map
-      5.times { FactoryGirl.create :map_wadfile, map: map }
+      5.times { FactoryGirl.create :upload, map: map }
     end
 
     let(:map) { Map.last }
 
-    context 'when less than 5 wadfiles' do
-      before { map.map_wadfiles.last.destroy }
+    context 'when less than 5 uploads' do
+      before { map.uploads.last.destroy }
 
       it 'should be possible' do
-        expect(map.reload.map_wadfiles.count).to eq 4
-        expect(map.map_wadfiles.only_deleted.last.recover).to be_true
-        expect(map.reload.map_wadfiles.unscoped.count).to eq 5
-        expect(map.map_wadfiles.only_deleted.count).to eq 0
-        expect(map.map_wadfiles.count).to eq 5
+        expect(map.reload.uploads.count).to eq 4
+        expect(map.uploads.only_deleted.last.recover).to be_true
+        expect(map.reload.uploads.unscoped.count).to eq 5
+        expect(map.uploads.only_deleted.count).to eq 0
+        expect(map.uploads.count).to eq 5
         expect(map.valid?).to be_true
       end
     end
 
-    context 'when there are 5 wadfiles already' do
+    context 'when there are 5 uploads already' do
       before do
-        map.map_wadfiles.last.destroy
-        FactoryGirl.create :map_wadfile, map: map
+        map.uploads.last.destroy
+        FactoryGirl.create :upload, map: map
       end
 
       it 'should not be possible' do
-        expect(map.reload.map_wadfiles.count).to eq 5
-        expect(map.map_wadfiles.only_deleted.last.recover).to be_false
-        expect(map.reload.map_wadfiles.unscoped.count).to eq 6
-        expect(map.map_wadfiles.only_deleted.count).to eq 1
-        expect(map.map_wadfiles.count).to eq 5
+        expect(map.reload.uploads.count).to eq 5
+        expect(map.uploads.only_deleted.last.recover).to be_false
+        expect(map.reload.uploads.unscoped.count).to eq 6
+        expect(map.uploads.only_deleted.count).to eq 1
+        expect(map.uploads.count).to eq 5
         expect(map.valid?).to be_true
       end
     end

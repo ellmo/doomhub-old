@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131119004808) do
+ActiveRecord::Schema.define(:version => 20140111154040) do
 
   create_table "authors", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -95,20 +95,6 @@ ActiveRecord::Schema.define(:version => 20131119004808) do
     t.datetime "deleted_at"
   end
 
-  create_table "map_wadfiles", :force => true do |t|
-    t.integer  "map_id"
-    t.integer  "authorable_id"
-    t.string   "authorable_type"
-    t.string   "name"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
-    t.string   "wadfile_file_name"
-    t.string   "wadfile_content_type"
-    t.integer  "wadfile_file_size"
-    t.datetime "wadfile_updated_at"
-    t.datetime "deleted_at"
-  end
-
   create_table "maps", :force => true do |t|
     t.integer  "project_id"
     t.string   "name"
@@ -153,6 +139,20 @@ ActiveRecord::Schema.define(:version => 20131119004808) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "uploads", :force => true do |t|
+    t.integer  "map_id"
+    t.integer  "authorable_id"
+    t.string   "authorable_type"
+    t.string   "name"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.string   "archive_file_name"
+    t.string   "archive_content_type"
+    t.integer  "archive_file_size"
+    t.datetime "archive_updated_at"
+    t.datetime "deleted_at"
   end
 
   create_table "user_roles", :force => true do |t|

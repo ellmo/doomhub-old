@@ -5,8 +5,8 @@ class FixAuthorsAndAuthorables < ActiveRecord::Migration
     add_column :authors, :login, :string
     rename_column :file_links, :author_id, :authorable_id
     rename_column :file_links, :author_type, :authorable_type
-    rename_column :map_wadfiles, :author_id, :authorable_id
-    rename_column :map_wadfiles, :author_type, :authorable_type
+    rename_column :uploads, :author_id, :authorable_id
+    rename_column :uploads, :author_type, :authorable_type
     rename_column :maps, :author_id, :authorable_id
     rename_column :maps, :author_type, :authorable_type
   end

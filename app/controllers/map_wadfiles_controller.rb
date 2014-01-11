@@ -1,4 +1,4 @@
-class MapWadfilesController < ApplicationController
+class UploadsController < ApplicationController
 
 #==========
 #= FILTERS
@@ -15,7 +15,7 @@ class MapWadfilesController < ApplicationController
   belongs_to :map, :optional => true, :finder => :find_by_slug!
   load_and_authorize_resource :project
   load_and_authorize_resource :map, :through => :project
-  load_and_authorize_resource :map_wadfile, :through => :map
+  load_and_authorize_resource :uploads, :through => :map
 
 #===============
 #= CRUD ACTIONS
@@ -26,13 +26,13 @@ class MapWadfilesController < ApplicationController
   end
 
   def create
-    params[:map_wadfile][:name] ||= @map.slug
-    @map_wadfile = @map.map_wadfiles.build(params[:map_wadfile])
-    @map_wadfile.authorable = current_user unless (params[:map_wadfile][:authorable_id].present? and admin?)
+    params[:upload][:name] ||= @map.slug
+    @upload = @map.uploads.build(params[:upload])
+    @upload.authorable = current_user unless (params[:upload][:authorable_id].present? and admin?)
 
     respond_to do |format|
-      if @map_wadfile.save
-        format.html { redirect_to [@project, @map], :notice => 'Wad file was successfully added.' }
+      if @upload.save
+        format.html { redirect_to [@project, @map], :notice => 'Upload was successfully added.' }
         format.json { render :json => @map, :status => :created, :location => @map }
       else
         format.html { render :action => "new" }
@@ -43,11 +43,11 @@ class MapWadfilesController < ApplicationController
 
   def destroy
     respond_to do |format|
-      if @map_wadfile.destroy
-        format.html { redirect_to [@project, @map], :notice => 'Wadfile was successfully destroyed.' }
+      if @upload.destroy
+        format.html { redirect_to [@project, @map], :notice => 'Upload was successfully destroyed.' }
         format.json { render :json => @map, :location => @map }
       else
-        format.html { redirect_to [@project, @map], :error => 'Wadfile was NOT destroyed.' }
+        format.html { redirect_to [@project, @map], :error => 'Upload was NOT destroyed.' }
         format.json { render :status => :unprocessable_entity }
       end
     end
@@ -59,9 +59,9 @@ class MapWadfilesController < ApplicationController
 
   def download
     if Rails.env.production?
-      redirect_to @map_wadfile.wadfile.expiring_url(10)
+      redirect_to @upload.archive.expiring_url(10)
     else
-      redirect_to @map_wadfile.wadfile.url
+      redirect_to @upload.archive.url
     end
   end
 
@@ -76,7 +76,7 @@ class MapWadfilesController < ApplicationController
     add_breadcrumb @project.name, project_path(@project)
     add_breadcrumb "Maps", project_path(@project, :anchor => 'maps')
     add_breadcrumb @map.name, project_map_path(@project, @map)
-    add_breadcrumb "Map Wadfiles", project_map_path(@project, @map, :anchor => 'wadfiles')
+    add_breadcrumb "Map Uploads", project_map_path(@project, @map, :anchor => 'uploads')
   end
 
 end

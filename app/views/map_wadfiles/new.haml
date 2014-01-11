@@ -2,11 +2,11 @@
   .row
     .eight.columns.centered.c222.black-border
       .c222
-        %h5= "Adding a new WAD archive for `#{@map.name}`, keep in mind:"
+        %h5= "Adding a new archive for `#{@map.name}`, keep in mind:"
         %ul
           %li Only Zip and 7z archives are allowed
           %li The maximum size of an archive is 1 MB
           %li You can add up to 5 archives per map.
       .form-border
-        %h2 New Wadfile
+        %h2 New Upload
         = render 'form'

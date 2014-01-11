@@ -9,7 +9,7 @@ window.Doomhub =
   Views:
     Maps: {}
     Projects: {}
-    MapWadfiles: {}
+    Uploads: {}
     DeviseRegistrations: {}
   Models: {}
   Collections: {}

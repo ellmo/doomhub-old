@@ -3,7 +3,7 @@ class @Doomhub.Routers.Maps extends Doomhub.Routers.BASE
   routes:
     '' : 'overview'
     'overview' : 'overview'
-    'wadfiles' : 'wadfiles'
+    'uploads' : 'uploads'
     'screens' : 'screens'
 
   constructor: ->
@@ -24,8 +24,8 @@ class @Doomhub.Routers.Maps extends Doomhub.Routers.BASE
   overview: ->
     @ztb.switch_to_tab('overview')
 
-  wadfiles: ->
-    @ztb.switch_to_tab('wadfiles')
+  uploads: ->
+    @ztb.switch_to_tab('uploads')
 
   screens: ->
     @ztb.switch_to_tab('screens')

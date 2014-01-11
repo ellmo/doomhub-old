@@ -13,7 +13,7 @@ class Map < ActiveRecord::Base
 
   has_many :comments, as: :commentable
   has_many :map_images
-  has_many :map_wadfiles
+  has_many :uploads
   has_many :file_links, as: :file_linkable
 
 #==============
@@ -27,7 +27,7 @@ class Map < ActiveRecord::Base
 #============
 
   validates :name, :presence => true
-  validate :has_5_wadfiles_max
+  validate :has_5_uploads_max
   validate :user_can_map
 
 #============
@@ -46,8 +46,8 @@ class Map < ActiveRecord::Base
 
 private
 
-  def has_5_wadfiles_max
-    errors.add(:base, "cannot have more than 5 wadfiles") if map_wadfiles.size > 5
+  def has_5_uploads_max
+    errors.add(:base, "cannot have more than 5 uploads") if uploads.size > 5
   end
 
   def user_can_map

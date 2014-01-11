@@ -1,10 +1,10 @@
-class @Doomhub.Views.MapWadfiles.Form extends Doomhub.Views.BASE
+class @Doomhub.Views.Uploads.Form extends Doomhub.Views.BASE
 
   constructor: (options)->
     super
-    #$('#map_wadfile_wadfile_wrapper').hide()
+    #$('#upload_wrapper').hide()
 
-    # $('#map_wadfile_wadfile_dummy').file().choose (e, input) ->
-    #   $('#map_wadfile_wadfile_wrapper').append(
-    #     $(input).attr('id', 'map_wadfile_wadfile').attr('name', 'map_wadfile[wadfile]'))
-    #   $('#map_wadfile_wadfile_dummy').attr 'placeholder', input.val().split("\\").pop()
+    # $('#upload_archive_dummy').file().choose (e, input) ->
+    #   $('#upload_wrapper').append(
+    #     $(input).attr('id', 'upload_archive').attr('name', 'upload[archive]'))
+    #   $('#upload_archive_dummy').attr 'placeholder', input.val().split("\\").pop()

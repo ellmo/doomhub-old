@@ -8,8 +8,8 @@ development:
       map:
         image:
           storage_path: "dev/uploads/projects/:project_id/maps/:map_id/images/:name-:style-:id.:extension"
-        wadfile:
-          storage_path: "dev/uploads/projects/:project_id/maps/:map_id/wadfiles/:name-:id.:extension"
+        archive:
+          storage_path: "dev/uploads/projects/:project_id/maps/:map_id/archives/:name-:id.:extension"
 
 
 production:
@@ -19,8 +19,8 @@ production:
       map:
         image:
           storage_path: "uploads/projects/:project_id/maps/:map_id/images/:name-:style-:id.:extension"
-        wadfile:
-          storage_path: "uploads/projects/:project_id/maps/:map_id/wadfiles/:name-:id.:extension"
+        archive:
+          storage_path: "uploads/projects/:project_id/maps/:map_id/archives/:name-:id.:extension"
 
 test:
   <<: *defaults
@@ -29,6 +29,6 @@ test:
       map:
         image:
           storage_path: "public/uploads/test/projects/:project_id/maps/:map_id/images/:name-:style-:id.:extension"
-        wadfile:
-          storage_path: "public/uploads/test/projects/:project_id/maps/:map_id/wadfiles/:name-:id.:extension"
+        archive:
+          storage_path: "public/uploads/test/projects/:project_id/maps/:map_id/archives/:name-:id.:extension"
 

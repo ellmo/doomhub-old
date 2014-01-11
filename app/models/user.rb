@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   belongs_to :role, :class_name => "UserRole", :foreign_key => :user_role_id
 
   has_many :comments
-  has_many :map_wadfiles, as: :authorable
+  has_many :uploads, as: :authorable
   has_many :map_images, as: :authorable
   has_many :maps, as: :authorable
   has_many :projects

@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe MapWadfilesController do
+describe UploadsController do
 
-  def file_attachment(fixture_file='wadfile.zip', mime='application/zip')
+  def file_attachment(fixture_file='upload.zip', mime='application/zip')
     file_path = "#{Rails.root}/spec/fixtures/#{fixture_file}"
     Rack::Test::UploadedFile.new(file_path, mime)
   end
 
   describe "GET new" do
-    shared_context 'map_wadfile #new' do
+    shared_context 'upload #new' do
       before do
         sign_in user
         get :new, project_id: project.slug, map_id: map.slug
@@ -55,12 +55,12 @@ describe MapWadfilesController do
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #new'
+          it_behaves_like 'upload #new'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #new'
+          it_behaves_like 'upload #new'
         end
       end
 
@@ -69,17 +69,17 @@ describe MapWadfilesController do
 
         context 'when logged in as user' do
           let(:user) { FactoryGirl.create :user }
-          it_behaves_like 'map_wadfile #new'
+          it_behaves_like 'upload #new'
         end
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #new'
+          it_behaves_like 'upload #new'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #new'
+          it_behaves_like 'upload #new'
         end
       end
     end
@@ -104,12 +104,12 @@ describe MapWadfilesController do
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #new'
+          it_behaves_like 'upload #new'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #new'
+          it_behaves_like 'upload #new'
         end
       end
     end
@@ -119,35 +119,35 @@ describe MapWadfilesController do
       let(:project) { FactoryGirl.create :project_public, creator: user }
       let(:map) { FactoryGirl.create :map, project: project, authorable: user }
 
-      it_behaves_like 'map_wadfile #new'
+      it_behaves_like 'upload #new'
     end
   end
 
   describe 'POST create' do
-    shared_context 'map_wadfile #create' do
+    shared_context 'upload #create' do
       before do
         sign_in user
-        post :create, project_id: project.slug, map_id: map.slug, map_wadfile: attribtues
+        post :create, project_id: project.slug, map_id: map.slug, upload: attribtues
       end
       it 'is successful' do
         expect(response).to redirect_to project_map_path(project, map)
       end
       it 'attaches the image' do
-        expect(map.reload.map_wadfiles).not_to be_empty
+        expect(map.reload.uploads).not_to be_empty
       end
     end
 
     shared_context 'access denial' do
       before do
         sign_in user
-        post :create, project_id: project.slug, map_id: map.slug, map_wadfile: attribtues
+        post :create, project_id: project.slug, map_id: map.slug, upload: attribtues
       end
       it 'is denied' do
         expect(response.status).to eq 403
       end
     end
 
-    let(:attribtues) { {wadfile: file_attachment} }
+    let(:attribtues) { {upload: file_attachment} }
 
     context 'public join project' do
       let(:project) { FactoryGirl.create :project_public }
@@ -158,7 +158,7 @@ describe MapWadfilesController do
         context 'when not logged in' do
           before { sign_in_nobody }
           it 'throws a hissy fit' do
-            expect{ post :create, project_id: project.slug, map_id: map.slug, map_wadfile: attribtues }.to raise_exception("uncaught throw :warden")
+            expect{ post :create, project_id: project.slug, map_id: map.slug, upload: attribtues }.to raise_exception("uncaught throw :warden")
           end
         end
 
@@ -169,12 +169,12 @@ describe MapWadfilesController do
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #create'
+          it_behaves_like 'upload #create'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #create'
+          it_behaves_like 'upload #create'
         end
       end
 
@@ -183,17 +183,17 @@ describe MapWadfilesController do
 
         context 'when logged in as user' do
           let(:user) { FactoryGirl.create :user }
-          it_behaves_like 'map_wadfile #create'
+          it_behaves_like 'upload #create'
         end
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #create'
+          it_behaves_like 'upload #create'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #create'
+          it_behaves_like 'upload #create'
         end
       end
     end
@@ -218,12 +218,12 @@ describe MapWadfilesController do
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #create'
+          it_behaves_like 'upload #create'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #create'
+          it_behaves_like 'upload #create'
         end
       end
 
@@ -232,47 +232,47 @@ describe MapWadfilesController do
 
         context 'when logged in as user' do
           let(:user) { project.creator }
-          it_behaves_like 'map_wadfile #create'
+          it_behaves_like 'upload #create'
         end
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #create'
+          it_behaves_like 'upload #create'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #create'
+          it_behaves_like 'upload #create'
         end
       end
     end
   end
 
   describe 'POST destroy' do
-    shared_context 'map_wadfile #destroy' do
+    shared_context 'upload #destroy' do
       before do
         sign_in user
-        post :destroy, project_id: project.slug, map_id: map.slug, id: map_wadfile.id
+        post :destroy, project_id: project.slug, map_id: map.slug, id: upload.id
       end
       it 'is successful' do
         expect(response).to redirect_to project_map_path(project, map)
       end
       it 'attaches the image' do
-        expect(map.reload.map_wadfiles).to be_empty
+        expect(map.reload.uploads).to be_empty
       end
     end
 
     shared_context 'access denial' do
       before do
         sign_in user
-        post :destroy, project_id: project.slug, map_id: map.slug, id: map_wadfile.id
+        post :destroy, project_id: project.slug, map_id: map.slug, id: upload.id
       end
       it 'is denied' do
         expect(response.status).to eq 403
       end
     end
 
-    let(:map_wadfile) { FactoryGirl.create :map_wadfile, map: map, authorable: map.authorable }
+    let(:upload) { FactoryGirl.create :upload, map: map, authorable: map.authorable }
 
     context 'public join project' do
       let(:project) { FactoryGirl.create :project_public }
@@ -283,7 +283,7 @@ describe MapWadfilesController do
         context 'when not logged in' do
           before { sign_in_nobody }
           it 'throws a hissy fit' do
-            expect{ post :destroy, project_id: project.slug, map_id: map.slug, id: map_wadfile.id }.to raise_exception("uncaught throw :warden")
+            expect{ post :destroy, project_id: project.slug, map_id: map.slug, id: upload.id }.to raise_exception("uncaught throw :warden")
           end
         end
 
@@ -294,12 +294,12 @@ describe MapWadfilesController do
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #destroy'
+          it_behaves_like 'upload #destroy'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #destroy'
+          it_behaves_like 'upload #destroy'
         end
       end
 
@@ -308,17 +308,17 @@ describe MapWadfilesController do
 
         context 'when logged in as user' do
           let(:user) { FactoryGirl.create :user }
-          it_behaves_like 'map_wadfile #destroy'
+          it_behaves_like 'upload #destroy'
         end
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #destroy'
+          it_behaves_like 'upload #destroy'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #destroy'
+          it_behaves_like 'upload #destroy'
         end
       end
     end
@@ -332,7 +332,7 @@ describe MapWadfilesController do
         context 'when not logged in' do
           before { sign_in_nobody }
           it 'throws a hissy fit' do
-            expect{ post :destroy, project_id: project.slug, map_id: map.slug, id: map_wadfile.id }.to raise_exception("uncaught throw :warden")
+            expect{ post :destroy, project_id: project.slug, map_id: map.slug, id: upload.id }.to raise_exception("uncaught throw :warden")
           end
         end
 
@@ -343,12 +343,12 @@ describe MapWadfilesController do
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #destroy'
+          it_behaves_like 'upload #destroy'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #destroy'
+          it_behaves_like 'upload #destroy'
         end
       end
 
@@ -357,44 +357,44 @@ describe MapWadfilesController do
 
         context 'when logged in as user' do
           let(:user) { project.creator }
-          it_behaves_like 'map_wadfile #destroy'
+          it_behaves_like 'upload #destroy'
         end
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #destroy'
+          it_behaves_like 'upload #destroy'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #destroy'
+          it_behaves_like 'upload #destroy'
         end
       end
     end
   end
 
   describe 'GET download' do
-    shared_context 'map_wadfile #download' do
+    shared_context 'upload #download' do
       before do
         sign_in user
-        get :download, project_id: project.slug, map_id: map.slug, id: map_wadfile.id
+        get :download, project_id: project.slug, map_id: map.slug, id: upload.id
       end
-      it 'it redirects to wadfile url' do
-        expect(response).to redirect_to(map_wadfile.wadfile.url)
+      it 'it redirects to upload url' do
+        expect(response).to redirect_to(upload.upload.url)
       end
     end
 
     shared_context 'access denial' do
       before do
         sign_in user
-        get :download, project_id: project.slug, map_id: map.slug, id: map_wadfile.id
+        get :download, project_id: project.slug, map_id: map.slug, id: upload.id
       end
       it 'is denied' do
         expect(response.status).to eq 403
       end
     end
 
-    let(:map_wadfile) { FactoryGirl.create :map_wadfile, map: map, authorable: map.authorable }
+    let(:upload) { FactoryGirl.create :upload, map: map, authorable: map.authorable }
 
     context 'public join project' do
       let(:project) { FactoryGirl.create :project_public }
@@ -404,22 +404,22 @@ describe MapWadfilesController do
 
         context 'when not logged in' do
           let(:user) { User.new }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
 
         context 'when logged in as user' do
           let(:user) { FactoryGirl.create :user }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
       end
 
@@ -428,17 +428,17 @@ describe MapWadfilesController do
 
         context 'when logged in as user' do
           let(:user) { FactoryGirl.create :user }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
       end
     end
@@ -461,12 +461,12 @@ describe MapWadfilesController do
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
       end
 
@@ -475,17 +475,17 @@ describe MapWadfilesController do
 
         context 'when logged in as user' do
           let(:user) { project.creator }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
 
         context 'when logged in as admin' do
           let(:user) { FactoryGirl.create :admin }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
 
         context 'when logged in as superadmin' do
           let(:user) { FactoryGirl.create :superadmin }
-          it_behaves_like 'map_wadfile #download'
+          it_behaves_like 'upload #download'
         end
       end
     end

@@ -1,7 +1,7 @@
-= simple_form_for([@project, @map, @map_wadfile]) do |f|
+= simple_form_for([@project, @map, @upload]) do |f|
   = f.error_notification
 
   = f.input :name, :placeholder => @map.slug
-  = f.input :wadfile
+  = f.input :upload
   .centered-actions
     = f.button :submit

@@ -11,7 +11,7 @@ class ResourcesController < ApplicationController
 
   def new
     @file_link = parent.file_links.build
-    @map_wadfile = parent.map_wadfiles.build
+    @upload = parent.uploads.build
   end
 
 end
