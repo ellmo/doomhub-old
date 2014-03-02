@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe UploadsController do
 
-  def file_attachment(fixture_file='upload.zip', mime='application/zip')
+  def file_attachment(fixture_file='wadfile.zip', mime='application/zip')
     file_path = "#{Rails.root}/spec/fixtures/#{fixture_file}"
     Rack::Test::UploadedFile.new(file_path, mime)
   end
