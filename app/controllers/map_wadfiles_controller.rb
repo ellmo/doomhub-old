@@ -15,7 +15,7 @@ class UploadsController < ApplicationController
   belongs_to :map, :optional => true, :finder => :find_by_slug!
   load_and_authorize_resource :project
   load_and_authorize_resource :map, :through => :project
-  load_and_authorize_resource :uploads, :through => :map
+  load_and_authorize_resource :upload, :through => :map
 
 #===============
 #= CRUD ACTIONS
