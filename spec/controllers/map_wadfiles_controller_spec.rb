@@ -147,7 +147,7 @@ describe UploadsController do
       end
     end
 
-    let(:attribtues) { {upload: file_attachment} }
+    let(:attribtues) { {archive: file_attachment} }
 
     context 'public join project' do
       let(:project) { FactoryGirl.create :project_public }
@@ -380,7 +380,7 @@ describe UploadsController do
         get :download, project_id: project.slug, map_id: map.slug, id: upload.id
       end
       it 'it redirects to upload url' do
-        expect(response).to redirect_to(upload.upload.url)
+        expect(response).to redirect_to(upload.archive.url)
       end
     end
 
